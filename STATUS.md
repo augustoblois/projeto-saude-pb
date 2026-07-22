@@ -15,7 +15,7 @@
 - **Planejamos o projeto de ponta a ponta**, usando um método de organização de projetos que o Augusto usa. Isso gerou alguns documentos novos na pasta `docs/` — você não precisa ler nenhum deles pra trabalhar (sua referência continua sendo este arquivo aqui), mas pra você saber o que é cada um:
   - `docs/briefing.md` — o resumo da intenção do projeto (o problema, pra quem é, o que não pode faltar).
   - `docs/prd.md` — o plano detalhado: as 5 perguntas que a análise vai responder, de onde vem cada dado, como será o painel e o cronograma até o dia 07/08.
-  - `docs/backlog.md` e `TASKS.md` — a lista de tarefas do Augusto, quebrada em pedaços pequenos com critério de "pronto". (O `TASKS.md` é a lista de trabalho dele; o seu guia é sempre o `STATUS.md`.)
+  - `docs/backlog.md` — a lista de tarefas do Augusto, quebrada em pedaços pequenos com critério de "pronto". (O seu guia é sempre o `STATUS.md`.)
 - **Três decisões importantes ficaram fechadas:**
   1. O painel será feito em **Streamlit** (ferramenta de Python que transforma análise em site interativo) — consideramos algo mais sofisticado visualmente, mas o professor avalia a análise e a aplicação real, não o visual.
   2. Vamos incluir também os **paraibanos que internaram em outros estados** (Pernambuco, Rio Grande do Norte e Ceará) — descobrimos que esses pacientes ficam nos arquivos dos outros estados, então o script vai baixar e filtrar isso também.
