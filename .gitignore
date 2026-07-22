@@ -10,6 +10,11 @@ __pycache__/
 data/raw/*.dbc
 data/raw/*.dbf
 
+# Referência de IA / uso interno — não vai pro repo
+CLAUDE.md
+TASKS.md
+saude-pesquisa/
+
 # SO / editor
 .DS_Store
 Thumbs.db
