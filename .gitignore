@@ -1,0 +1,15 @@
+# Ambiente
+.venv/
+__pycache__/
+*.pyc
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Dados brutos pesados — só os parquet congelados são versionados
+data/raw/*.dbc
+data/raw/*.dbf
+
+# SO / editor
+.DS_Store
+Thumbs.db

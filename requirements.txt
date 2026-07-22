@@ -1,0 +1,5 @@
+pandas
+pyarrow
+jupyter
+streamlit
+pysus==2.7.0
