@@ -23,7 +23,7 @@
 
 ## Pra você, Pedro
 
-1. **Preparar o computador (uma vez só):** instalar o Python (versão 3.11 ou mais nova, em python.org). Depois, abrir o terminal na pasta do projeto e rodar: `pip install -r requirements.txt` — isso instala tudo que o projeto usa.
+1. **Preparar o projeto (uma vez só):** abrir o terminal na pasta do projeto e rodar: `pip install -r requirements.txt` — isso instala tudo que o projeto usa.
 2. **Abrir os dados — agora com o ano inteiro:** rodar `jupyter notebook` no terminal (abre no navegador uma ferramenta pra mexer nos dados). Num notebook novo, carregar todos os meses de uma vez:
    ```python
    import pandas as pd
@@ -32,8 +32,7 @@
    ```
    Cada linha é uma internação. As duas colunas mais importantes: `MUNIC_RES` (código da cidade onde o paciente **mora**) e `MUNIC_MOV` (código da cidade onde ele **internou**). Quando as duas são diferentes, o paciente viajou pra internar — é isso que o projeto investiga.
 3. **Explorar e anotar:** salvar seu notebook na pasta `notebooks/` com nome começando em `90-` (ex: `90-eda-pedro.ipynb`). Perguntas boas pra começar: o movimento de internações muda ao longo do ano? Quais cidades mais "mandam" pacientes pra fora? Pra onde eles vão?
-4. **A partir de ~26/07 começa a sua parte principal:** montar a comunicação do resultado (textos e apresentação, na pasta `reports/`) em cima dos números que o Augusto for fechando. Este arquivo vai te avisar quando a base estiver pronta pra isso.
-5. **Terminou?** GitHub Desktop → **Commit** (dar um nome pro que você fez) → **Push** (enviar pro GitHub, pro Augusto ver).
+4. **Terminou?** GitHub Desktop → **Commit** (dar um nome pro que você fez) → **Push** (enviar pro GitHub, pro Augusto ver).
 
 ## Combinados pra trabalharmos sem conflito
 
