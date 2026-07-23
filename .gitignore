@@ -13,6 +13,7 @@ data/raw/*.dbf
 # Referência de IA / uso interno — não vai pro repo
 CLAUDE.md
 TASKS.md
+.claude/
 saude-pesquisa/
 
 # SO / editor

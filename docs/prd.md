@@ -62,7 +62,9 @@ Quase metade das internações da Paraíba (47,8% em jan/2025; 20.029 internaç�
 | Malha município → região de saúde da PB | Base do índice de dependência (EP-03) | Pública (CNES/SAGE/SES-PB) — fonte exata a validar no EP-01 (ver Premissas) |
 | GeoJSON dos municípios da PB | Mapa interativo **offline** (RNF-01) | Pública (malhas IBGE), versionada localmente |
 
-**Avaliação de viabilidade:** já validada na prática — os dados de 2025 estão baixados e congelados em parquet no repositório; o fluxo FTP foi comprovado por smoke test. Completude verificada em 22/07/2026: 12/12 meses congelados, 19,2k–23,2k internações/mês (~258k no ano), zero nulos em `MUNIC_RES`/`MUNIC_MOV`; nov/dez na faixa sazonal esperada (comparável a fevereiro).
+**Avaliação de viabilidade:** já validada na prática **para a PB** — os dados de 2025 estão baixados e congelados em parquet no repositório; o fluxo FTP foi comprovado por smoke test. Completude verificada em 22/07/2026: 12/12 meses congelados, 19,2k–23,2k internações/mês (~258k no ano), zero nulos em `MUNIC_RES`/`MUNIC_MOV`; nov/dez na faixa sazonal esperada (comparável a fevereiro).
+
+⚠️ **Exceção (decisão D-1):** a PA-5 (fluxo interestadual) depende de congelamento **adicional ainda não realizado** — RD 2025 de PE, RN e CE (~36 arquivos) do mesmo FTP instável. Essa parte da viabilidade NÃO está validada; risco correspondente registrado em Riscos & dependências.
 
 ## Produto final
 O que a banca vê no dia 07/08/2026 — dois entregáveis complementares:
@@ -155,6 +157,7 @@ EP-07 (`P2`) não tem janela reservada: só entra se alguma etapa terminar antes
 - **Mapeamento município→região de saúde**: fonte pública pode estar desatualizada ou divergente entre órgãos; escolha errada distorce o índice de dependência (o produto central). Validar cedo, dentro do EP-01.
 - **Geometria do mapa offline**: mapa interativo bonito e offline no Streamlit exige geojson local e biblioteca adequada; risco de sumidouro de horas de visual. Guard-rail do briefing: "sem virar projeto de frontend".
 - **Dependência da colaboração assíncrona com Pedro** (não-técnico, GitHub Desktop, só `main`): EP-05 depende do território dele; os épicos técnicos (EP-01–04) não podem bloquear nele.
+- **Congelamento PE/RN/CE (decisão D-1, sustenta a PA-5)**: reabre a dependência do FTP instável do DATASUS que o congelamento da PB tinha eliminado — ~36 arquivos novos, dentro da janela de 16 dias. Mitigação: guard-rail de degradação na US-08 (se o congelamento não fechar no prazo, PA-5 reduz para nota metodológica).
 
 ## Autoavaliação (handoff)
 - **Parte mais fraca:** a definição do índice de dependência (EP-03) está delegada a uma premissa — é o produto-assinatura do projeto e ainda não tem fórmula fechada. Se a definição escolhida for questionável, o diferencial inteiro enfraquece.

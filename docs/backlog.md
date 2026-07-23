@@ -129,6 +129,7 @@ Uma story só é semeada quando tem: aceite Given/When/Then · dependências ide
 **Critérios de aceite**
 - **Dado** o pipeline estendido, **quando** rodo `src/congelar_sih.py` para PE/RN/CE 2025, **então** os 12 meses de cada UF são baixados, filtrados para apenas registros com `MUNIC_RES` em municípios da PB, e salvos como parquet(s) enxutos separados em `data/raw/` (ex.: `sih_ufs_vizinhas_res_pb_2025.parquet`), com placar de completude por UF×mês; `.dbc`/`.dbf` ficam fora do git — só o parquet filtrado entra.
 - **Dado** os dados interestaduais congelados, **quando** rodo a seção PA-5, **então** sai o % da evasão total que é interestadual, o recorte por região de saúde de fronteira, e o veredito da hipótese (< 15%, concentrada na fronteira), com visualização.
+- **Guard-rail anti-estouro:** **dado** o fim da janela do EP-02 (29/07), **quando** o congelamento PE/RN/CE ainda não estiver completo e validado (12 meses × 3 UFs), **então** a PA-5 degrada para nota metodológica (dimensão interestadual declarada como limitação, sem número) — decisão registrada, e as demais stories seguem sem bloqueio (nenhuma depende da US-08).
 
 **Tasks**
 - [ ] Estender `src/congelar_sih.py`: baixar RD de PE/RN/CE 2025, filtrar `MUNIC_RES` na PB, salvar parquet enxuto separado em `data/raw/`
