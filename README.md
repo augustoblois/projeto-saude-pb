@@ -45,6 +45,6 @@ STATUS.md      # estado atual do projeto em linguagem simples
 ## Equipe
 
 - Augusto Blois — dados e código (`src/`, `notebooks/01-*`)
-- Pedro — análises e relatórios (`notebooks/90-*`, `reports/`)
+- Pedro Luna — análises e relatórios (`notebooks/90-*`, `reports/`)
 
 O andamento do projeto está sempre resumido no [`STATUS.md`](STATUS.md).
