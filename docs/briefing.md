@@ -7,7 +7,7 @@
 Um painel Streamlit que mostra de onde saem e pra onde vão os pacientes internados na Paraíba (SIH/DATASUS 2025), com índice de dependência por região de saúde — uma ferramenta que a SES-PB poderia usar de verdade em decisões de regionalização/PPI.
 
 ## Problema
-Quase metade das internações da PB acontece fora do município de residência do paciente (47,8% em jan/2025), e nenhum painel público mostra esse fluxo origem→destino. O gestor estadual decide pactuação (PPI) e regionalização sem enxergar a evasão assistencial. No contexto acadêmico: o professor cobra explicitamente **viabilidade real** — um produto que *possa* ser usado no mundo real (governo, jornalistas, profissionais de saúde), não um exercício de sala.
+Quase metade das internações da PB acontece fora do município de residência do paciente (49,8% em jan/2025), e nenhum painel público mostra esse fluxo origem→destino. O gestor estadual decide pactuação (PPI) e regionalização sem enxergar a evasão assistencial. No contexto acadêmico: o professor cobra explicitamente **viabilidade real** — um produto que *possa* ser usado no mundo real (governo, jornalistas, profissionais de saúde), não um exercício de sala.
 
 ## Público / personas
 - **Professor da disciplina (avaliador real)** — quem dá a nota · job: verificar que o produto tem aplicação prática real, análise consolidada, comunicação executiva e reprodutibilidade (rubrica P3, 40% da média).

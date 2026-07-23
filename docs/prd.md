@@ -7,7 +7,7 @@
 - **Troca de projeto ainda não formalizada com o professor.** Ele sinalizou aceite, mas a conversa não aconteceu. Todo o escopo abaixo assume aprovação — é o único evento capaz de invalidar o PRD inteiro.
 
 ## Problema & visão
-Quase metade das internações da Paraíba (47,8% em jan/2025; 20.029 internações no mês) acontece fora do município de residência do paciente, e **nenhum painel público mostra esse fluxo origem→destino**. O gestor da SES-PB decide pactuação (PPI) e regionalização sem enxergar a evasão assistencial. Este projeto entrega a peça que falta: uma matriz origem→destino das internações de 2025 (SIH/DATASUS) + um índice de dependência por região de saúde, num painel Streamlit que um gestor real poderia abrir amanhã. No contexto acadêmico, é a entrega P3 (40% da nota, demo ao vivo em 07/08/2026), cujo critério nº 1 é exatamente **viabilidade real**.
+Quase metade das internações da Paraíba (49,8% em jan/2025; 20.029 internações no mês) acontece fora do município de residência do paciente, e **nenhum painel público mostra esse fluxo origem→destino**. O gestor da SES-PB decide pactuação (PPI) e regionalização sem enxergar a evasão assistencial. Este projeto entrega a peça que falta: uma matriz origem→destino das internações de 2025 (SIH/DATASUS) + um índice de dependência por região de saúde, num painel Streamlit que um gestor real poderia abrir amanhã. No contexto acadêmico, é a entrega P3 (40% da nota, demo ao vivo em 07/08/2026), cujo critério nº 1 é exatamente **viabilidade real**.
 
 ## Objetivos (mensuráveis)
 - **O1 — Demo ao vivo aprovável na rubrica P3.** · métrica: no dia 07/08/2026, o painel abre com `streamlit run`, 100% offline (nenhuma chamada de rede), e cobre os 5 itens da rubrica (análise consolidada, visualizações, comunicação executiva, recomendações, reprodutibilidade).
@@ -36,7 +36,7 @@ Quase metade das internações da Paraíba (47,8% em jan/2025; 20.029 internaç�
 **Acesso:** FTP direto do DATASUS, via pipeline próprio de congelamento (`src/congelar_sih.py`) — a API de conveniência do PySUS foi descartada por instabilidade (decisão registrada na wiki do projeto)
 **Formato:** `.dbc` (origem) → **parquet** versionado no repositório (`.dbc`/`.dbf` ficam fora do git)
 **Janela:** jan–dez/2025 · **UF:** Paraíba (unidade de registro: AIH)
-**Escala de referência:** jan/2025 = 20.029 internações, 47,8% fora do município de residência
+**Escala de referência:** jan/2025 = 20.029 internações, 49,8% fora do município de residência *(corrigido em 23/07/2026: o valor original 47,8% vinha da fase de pesquisa, sem cálculo rastreável; 49,8% é o valor reproduzível — investigação na seção 4 de `notebooks/01-matriz-od.ipynb`)*
 
 **Variáveis de interesse (layout RD):**
 

@@ -38,6 +38,16 @@ Conferimos tudo contra as fontes oficiais do DATASUS (informe técnico em PDF + 
 **POR QUÊ:** A matriz O-D e o índice de dependência — o produto do projeto — são por região de saúde (16 na PB), a unidade de planejamento da Secretaria. Validações: 223 municípios cobertos, 1 região cada; zero linhas perdidas; zero nulos. Primeiro retrato: região de João Pessoa 41,3% + Campina Grande 26,4% ≈ ⅔ das internações do estado. Aprovado em revisão independente que refez as contas do zero.
 **ONDE:** `notebooks/01-regiao-saude.ipynb`, `src/baixar_base_territorial.py`, `data/processed/regioes_saude_pb.csv`, `data/processed/sih_pb_2025_regioes.parquet`
 
+## Etapa 7 — US-04: matriz origem→destino ✅
+**O QUE:** Construímos a matriz O-D: internações contadas por (município residência × município internação × mês) e por (região × região × mês), com flag de evasão e taxas de evasão por região de origem. Validação-âncora jan/2025: volume bateu exato (20.029); a taxa recalculada deu **49,8%, não os 47,8% do PRD** — investigamos 5 variantes de cálculo (inclusive a pegadinha `UF_ZI` do SIH), nenhuma reproduz o número antigo (fase de pesquisa, sem código rastreável), e **adotamos 49,8%** — corrigido em PRD/briefing/backlog. Ano fechado: evasão municipal 50,5%; extremos regionais 1,8% (região de JP) vs 84,5% (3ª região); top fluxo Santa Rita→JP (5.645).
+**POR QUÊ:** A matriz é o coração do produto — análises PA-1..PA-4, índice de dependência e painel consomem essas agregações, não a base linha-a-linha. Aprovada em revisão independente que refez todas as contas do zero.
+**ONDE:** `notebooks/01-matriz-od.ipynb` (§4 = investigação da divergência), `data/processed/matriz_od_municipal_mensal.parquet`, `matriz_od_regional_mensal.csv`, `taxas_evasao_regional.csv`
+
+## Etapa 8 — US-08 (parte 1): paraibanos internados fora do estado ✅ (congelamento)
+**O QUE:** Estendemos o pipeline (`src/congelar_sih_vizinhos.py`) pra baixar os 12 meses de 2025 de PE/RN/CE (~1,9 mi de internações), filtrar residentes da PB e congelar um parquet enxuto: **3.682 internações** (PE 2.147, RN 1.359, CE 176). Validado: 36/36 arquivos, 100% residentes PB, 12 meses sem buracos.
+**POR QUÊ:** Os arquivos do SIH são organizados pela UF do hospital — paraibano internado em Recife está no arquivo de PE. Sem esse passo, a evasão interestadual (PA-5) seria invisível. Achado preliminar: volume ~1,4% do interno → a evasão da PB é quase toda dentro do estado. Falta a parte 2: análise PA-5 (% e recorte de fronteira).
+**ONDE:** `src/congelar_sih_vizinhos.py`, `data/raw/sih_pb_residentes_fora_2025.parquet`
+
 ---
 
-*Próximas etapas previstas (ordem do backlog): US-04 (matriz origem→destino) + US-08 (fluxo interestadual PE/RN/CE) → análises PA-1..PA-5 → índice de dependência → painel Streamlit.*
+*Próximas etapas previstas (ordem do backlog): PA-1..PA-4 (análises sobre a matriz) + análise PA-5 (interestadual) → índice de dependência → painel Streamlit.*

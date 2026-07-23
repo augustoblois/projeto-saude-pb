@@ -78,7 +78,7 @@ Uma story só é semeada quando tem: aceite Given/When/Then · dependências ide
 **Critérios de aceite**
 - **Dado** a base enriquecida, **quando** rodo o notebook da matriz, **então** a soma de todas as células da matriz município×município é igual ao total de internações da base (100% classificadas "no município" / "fora do município" — O2).
 - **Dado** a matriz, **quando** agrego por região de saúde, **então** a soma da matriz regional bate com a municipal (nenhuma perda na agregação).
-- **Dado** jan/2025, **quando** calculo a taxa de evasão do mês, **então** reproduzo os 47,8% / 20.029 internações citados no PRD (sanity check contra o número de referência).
+- **Dado** jan/2025, **quando** calculo a taxa de evasão do mês, **então** reproduzo os 49,8% / 20.029 internações citados no PRD (sanity check contra o número de referência; valor corrigido em 23/07/2026 na US-04 — o 47,8% original da fase de pesquisa não era rastreável, ver `notebooks/01-matriz-od.ipynb` §4).
 - **Dado** as matrizes validadas, **quando** olho `data/processed/`, **então** as agregações estão salvas (município×município×mês e região×região×mês) prontas para consumo pelo painel.
 
 **Tasks**

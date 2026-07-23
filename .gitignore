@@ -10,6 +10,7 @@ __pycache__/
 data/raw/*.dbc
 data/raw/*.dbf
 data/raw/*.zip
+data/raw/_staging_vizinhos/
 
 # Referência de IA / uso interno — não vai pro repo
 CLAUDE.md
