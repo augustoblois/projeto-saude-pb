@@ -9,6 +9,7 @@ __pycache__/
 # Dados brutos pesados — só os parquet congelados são versionados
 data/raw/*.dbc
 data/raw/*.dbf
+data/raw/*.zip
 
 # Referência de IA / uso interno — não vai pro repo
 CLAUDE.md

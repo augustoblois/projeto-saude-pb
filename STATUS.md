@@ -8,29 +8,30 @@
 - **Todos os dados de 2025 já estão no projeto:** os 12 meses de internações da PB, direto do sistema do Ministério da Saúde (DATASUS). São **cerca de 258 mil internações no ano** (entre 19 mil e 23 mil por mês), conferidas uma a uma: nenhuma linha com informação faltando nas colunas que importam. O achado que motiva tudo segue de pé: **quase metade dos pacientes interna fora da cidade onde mora**.
 - **O plano do projeto inteiro está escrito, revisado e aprovado** — o que vamos analisar, em que ordem, e quem faz o quê até a apresentação. Os documentos vivem na pasta `docs/` (você não precisa ler; sua referência é este arquivo).
 - **Decisões já fechadas e registradas:** painel em **Streamlit** (ferramenta de Python que transforma análise em site interativo); os **paraibanos internados em outros estados** (PE/RN/CE) entram na análise; e o **índice de dependência** — o número principal do projeto — é a porcentagem dos moradores de cada região que precisou internar FORA da própria região.
-- **A análise começou:** já existe um arquivo único com as 258 mil internações de 2025 e os nomes das cidades legíveis, e agora também um **dicionário de dados** — um documento que explica o que cada coluna da base significa e quais são confiáveis pra usar (detalhes na seção abaixo).
+- **A análise avançou mais um degrau:** além do arquivo único com as 258 mil internações e do dicionário de dados (que diz quais colunas são confiáveis), agora **cada internação sabe a qual "região de saúde" pertence** — tanto a região onde o paciente mora quanto a região do hospital. Região de saúde é a divisão oficial que o governo usa pra organizar o SUS: a Paraíba tem 16 delas, cada uma agrupando municípios vizinhos. É a unidade que o nosso produto final vai usar.
 - **Prazo:** apresentação dia 07/08/2026 (15 dias).
 
-## O que aconteceu na última sessão (23/07/2026)
+## O que aconteceu na última sessão (23/07/2026 — segunda sessão do dia)
 
-- **Fizemos o "dicionário de dados" da base.** A base de internações tem 118 colunas com nomes em código (tipo `CAR_INT`, `ESPEC`...), e antes de usar qualquer uma numa análise precisávamos saber: o que ela significa oficialmente, e o que ela contém DE VERDADE nos nossos dados. Conferimos as 118, uma a uma: significado, valores que aparecem, e quantos registros vêm vazios.
-- **Resultado: ~46 colunas aprovadas pra uso e ~72 descartadas.** As descartadas quase todas vêm vazias ou com valor repetido em tudo (são campos do formulário nacional que não se aplicam ao nosso caso — não é defeito dos nossos dados). Tudo documentado em `docs/dicionario-dados.md`, com veredito e justificativa coluna por coluna.
-- **Conferimos contra os documentos oficiais do Ministério da Saúde** — baixamos o manual técnico (está em `docs/IT_SIHSUS_1603.pdf`) e a tabela oficial de códigos. A conferência valeu: 3 códigos estavam descritos errado no nosso rascunho e foram corrigidos.
-- **Descobertas boas pra nossa análise final:** 75% das internações são de urgência (só 25% agendadas), e temos colunas confiáveis de diagnóstico, idade, uso de UTI, valor pago e óbito — dá pra caracterizar bem "quem viaja pra internar e por quê".
-- **Criamos o `docs/diario-do-projeto.md`** — uma linha do tempo do projeto, etapa por etapa, que vai virar o roteiro da apresentação. Vale a leitura: é um resumo de tudo que foi feito até agora.
+- **Colocamos a "região de saúde" em cada uma das 258 mil internações.** Por quê: o resultado final do projeto (o mapa de quem depende de quem) é por região de saúde, não por cidade — é assim que a Secretaria de Saúde planeja. Sem esse passo, nenhuma análise regional existiria.
+- **De onde veio a informação:** baixamos a tabela oficial do próprio Ministério da Saúde (DATASUS) que diz a qual região cada município pertence — a mesma tabela que os sistemas oficiais do governo usam. Fonte, endereço e data do download ficaram documentados, pra citar na apresentação.
+- **Conferências (todas passaram):** os 223 municípios da Paraíba receberam região, cada um em exatamente 1 das 16 regiões; nenhuma internação se perdeu no processo (entraram 258.125, saíram 258.125); e nenhuma linha ficou sem região. Pacientes que moram em outros estados (1.502 internações — a maioria de Pernambuco e Rio Grande do Norte) foram marcados como "Fora da PB".
+- **Primeiro retrato regional:** a região de João Pessoa concentra 41% das internações e a de Campina Grande 26% — juntas, dois terços do estado. É exatamente o padrão de "polos que atraem pacientes" que o projeto quer medir.
+- **Revisão independente:** todo esse trabalho foi conferido por uma segunda checagem, que refez as contas do zero e bateu os mesmos números antes de darmos a etapa por concluída.
 
 ## Pra você, Pedro
 
 1. **Preparar o projeto (uma vez só, se ainda não fez):** abrir o terminal na pasta do projeto e rodar: `pip install -r requirements.txt` — isso instala tudo que o projeto usa.
-2. **Novidade boa: agora existe um arquivo único, já com nomes de cidade.** Você não precisa mais juntar os 12 meses na mão — esse trabalho está feito. Rodar `jupyter notebook` no terminal e, num notebook novo:
+2. **Novidade: use o arquivo mais novo, que já vem com a região de saúde.** Rodar `jupyter notebook` no terminal e, num notebook novo:
    ```python
    import pandas as pd
-   df = pd.read_parquet("data/processed/sih_pb_2025_tratado.parquet")
+   df = pd.read_parquet("data/processed/sih_pb_2025_regioes.parquet")
    ```
-   Cada linha é uma internação. As colunas mais úteis pra você agora têm nome legível: `nome_mun_res` (cidade onde o paciente **mora**), `nome_mun_mov` (cidade onde ele **internou**), e `uf_res` (estado onde mora). Quando mora numa cidade e internou em outra, o paciente viajou — é isso que o projeto investiga.
+   Cada linha é uma internação. As colunas mais úteis pra você: `nome_mun_res` (cidade onde o paciente **mora**), `nome_mun_mov` (cidade onde ele **internou**), `regiao_res` (região de saúde onde mora — ou "Fora da PB" se mora em outro estado) e `regiao_int` (região do hospital). Quando mora num lugar e internou em outro, o paciente viajou — é isso que o projeto investiga, agora também no nível de região.
 3. **Se quiser entender como esse arquivo foi montado:** abrir `notebooks/01-tratamento-base.ipynb` — ele foi escrito com explicações em português a cada passo, dá pra ler como um texto.
-4. **Explorar e anotar:** salvar seu notebook na pasta `notebooks/` com nome começando em `90-` (ex: `90-eda-pedro.ipynb`). Perguntas boas pra começar: quais cidades mais "mandam" pacientes pra fora? Pra onde eles vão? O movimento muda ao longo do ano? (Agora dá pra responder usando nomes, sem decorar código de cidade.)
-   - **Novidade desta sessão que ajuda você:** se quiser usar outras colunas da base (idade, diagnóstico, valor...), consulte antes o `docs/dicionario-dados.md` — ele diz o que cada coluna significa e se ela é confiável. E o `docs/diario-do-projeto.md` conta a história do projeto até aqui, em poucas páginas.
+4. **Explorar e anotar:** salvar seu notebook na pasta `notebooks/` com nome começando em `90-` (ex: `90-eda-pedro.ipynb`). Perguntas boas pra começar: quais cidades mais "mandam" pacientes pra fora? Pra onde eles vão? E no nível de região: quais das 16 regiões mais "perdem" moradores pra hospitais de fora? (Dica: comparar `regiao_res` com `regiao_int` — quando são diferentes, o paciente saiu da própria região.)
+   - Se quiser usar outras colunas da base (idade, diagnóstico, valor...), consulte antes o `docs/dicionario-dados.md` — ele diz o que cada coluna significa e se ela é confiável. E o `docs/diario-do-projeto.md` conta a história do projeto até aqui, em poucas páginas.
+   - Se quiser ver como a região de saúde foi colocada na base, o `notebooks/01-regiao-saude.ipynb` explica passo a passo, dá pra ler como um texto.
 5. **Terminou?** GitHub Desktop → **Commit** (dar um nome pro que você fez) → **Push** (enviar pro GitHub, pro Augusto ver).
 
 ## Combinados pra trabalharmos sem conflito

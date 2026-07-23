@@ -33,6 +33,11 @@
 Conferimos tudo contra as fontes oficiais do DATASUS (informe técnico em PDF + tabela de códigos), baixadas por FTP — a conferência corrigiu 3 códigos de especialidade que estavam descritos errado na primeira versão.
 **ONDE:** `docs/dicionario-dados.md`, `docs/IT_SIHSUS_1603.pdf`
 
+## Etapa 6 — US-02: região de saúde em cada internação ✅
+**O QUE:** Atribuímos a cada uma das 258.125 internações a região de saúde de residência (`regiao_res`) e a de internação (`regiao_int`), usando a base territorial oficial do DATASUS (`ftp.datasus.gov.br/territorio/tabelas/2025/10-base_territorial_out25.zip`, baixada em 23/07/2026) — a mesma relação município→região que o TabWin do Ministério usa. Residentes de outros estados (1.502 internações, maioria PE/RN) marcados "Fora da PB".
+**POR QUÊ:** A matriz O-D e o índice de dependência — o produto do projeto — são por região de saúde (16 na PB), a unidade de planejamento da Secretaria. Validações: 223 municípios cobertos, 1 região cada; zero linhas perdidas; zero nulos. Primeiro retrato: região de João Pessoa 41,3% + Campina Grande 26,4% ≈ ⅔ das internações do estado. Aprovado em revisão independente que refez as contas do zero.
+**ONDE:** `notebooks/01-regiao-saude.ipynb`, `src/baixar_base_territorial.py`, `data/processed/regioes_saude_pb.csv`, `data/processed/sih_pb_2025_regioes.parquet`
+
 ---
 
-*Próximas etapas previstas (ordem do backlog): US-02 (região de saúde por internação) → US-04 (matriz origem→destino) → análises PA-1..PA-5 → índice de dependência → painel Streamlit.*
+*Próximas etapas previstas (ordem do backlog): US-04 (matriz origem→destino) + US-08 (fluxo interestadual PE/RN/CE) → análises PA-1..PA-5 → índice de dependência → painel Streamlit.*

@@ -1,0 +1,224 @@
+codigo_municipio,nome_municipio,codigo_regiao_saude,nome_regiao_saude
+250010,Agua Branca,25011,11ª Região - PB
+250020,Aguiar,25007,7ª Região - PB
+250030,Alagoa Grande,25003,3ª Região - PB
+250040,Alagoa Nova,25003,3ª Região - PB
+250050,Alagoinha,25002,2ª Região - PB
+250053,Alcantil,25015,15ª Região - PB
+250057,Algodao De Jandaira,25003,3ª Região - PB
+250060,Alhandra,25001,1ª Região Mata Atlântica - PB
+250070,Sao Joao Do Rio Do Peixe,25009,9ª Região - PB
+250073,Amparo,25005,5ª Região - PB
+250077,Aparecida,25010,10ª Região - PB
+250080,Aracagi,25002,2ª Região - PB
+250090,Arara,25003,3ª Região - PB
+250100,Araruna,25002,2ª Região - PB
+250110,Areia,25003,3ª Região - PB
+250115,Areia De Baraunas,25006,6ª Região - PB
+250120,Areial,25003,3ª Região - PB
+250130,Aroeiras,25015,15ª Região - PB
+250135,Assuncao,25016,16ª Região - PB
+250140,Baia Da Traicao,25014,14ª Região - PB
+250150,Bananeiras,25002,2ª Região - PB
+250153,Barauna,25004,4ª Região - PB
+250157,Barra De Santana,25015,15ª Região - PB
+250160,Barra De Santa Rosa,25004,4ª Região - PB
+250170,Barra De Sao Miguel,25015,15ª Região - PB
+250180,Bayeux,25001,1ª Região Mata Atlântica - PB
+250190,Belem,25002,2ª Região - PB
+250200,Belem Do Brejo Do Cruz,25008,8ª Região - PB
+250205,Bernardino Batista,25009,9ª Região - PB
+250210,Boa Ventura,25007,7ª Região - PB
+250215,Boa Vista,25016,16ª Região - PB
+250220,Bom Jesus,25009,9ª Região - PB
+250230,Bom Sucesso,25008,8ª Região - PB
+250240,Bonito De Santa Fe,25009,9ª Região - PB
+250250,Boqueirao,25015,15ª Região - PB
+250260,Igaracy,25007,7ª Região - PB
+250270,Borborema,25002,2ª Região - PB
+250280,Brejo Do Cruz,25008,8ª Região - PB
+250290,Brejo Dos Santos,25008,8ª Região - PB
+250300,Caapora,25001,1ª Região Mata Atlântica - PB
+250310,Cabaceiras,25015,15ª Região - PB
+250320,Cabedelo,25001,1ª Região Mata Atlântica - PB
+250330,Cachoeira Dos Indios,25009,9ª Região - PB
+250340,Cacimba De Areia,25006,6ª Região - PB
+250350,Cacimba De Dentro,25002,2ª Região - PB
+250355,Cacimbas,25006,6ª Região - PB
+250360,Caicara,25002,2ª Região - PB
+250370,Cajazeiras,25009,9ª Região - PB
+250375,Cajazeirinhas,25013,13ª Região - PB
+250380,Caldas Brandao,25012,12ª Região - PB
+250390,Camalau,25005,5ª Região - PB
+250400,Campina Grande,25016,16ª Região - PB
+250403,Capim,25014,14ª Região - PB
+250407,Caraubas,25005,5ª Região - PB
+250410,Carrapateira,25009,9ª Região - PB
+250415,Casserengue,25002,2ª Região - PB
+250420,Catingueira,25006,6ª Região - PB
+250430,Catole Do Rocha,25008,8ª Região - PB
+250435,Caturite,25015,15ª Região - PB
+250440,Conceicao,25007,7ª Região - PB
+250450,Condado,25006,6ª Região - PB
+250460,Conde,25001,1ª Região Mata Atlântica - PB
+250470,Congo,25005,5ª Região - PB
+250480,Coremas,25007,7ª Região - PB
+250485,Coxixola,25005,5ª Região - PB
+250490,Cruz Do Espirito Santo,25001,1ª Região Mata Atlântica - PB
+250500,Cubati,25004,4ª Região - PB
+250510,Cuite,25004,4ª Região - PB
+250520,Cuitegi,25002,2ª Região - PB
+250523,Cuite De Mamanguape,25014,14ª Região - PB
+250527,Curral De Cima,25014,14ª Região - PB
+250530,Curral Velho,25007,7ª Região - PB
+250535,Damiao,25004,4ª Região - PB
+250540,Desterro,25006,6ª Região - PB
+250550,Vista Serrana,25006,6ª Região - PB
+250560,Diamante,25007,7ª Região - PB
+250570,Dona Ines,25002,2ª Região - PB
+250580,Duas Estradas,25002,2ª Região - PB
+250590,Emas,25006,6ª Região - PB
+250600,Esperanca,25003,3ª Região - PB
+250610,Fagundes,25016,16ª Região - PB
+250620,Frei Martinho,25004,4ª Região - PB
+250625,Gado Bravo,25015,15ª Região - PB
+250630,Guarabira,25002,2ª Região - PB
+250640,Gurinhem,25012,12ª Região - PB
+250650,Gurjao,25005,5ª Região - PB
+250660,Ibiara,25007,7ª Região - PB
+250670,Imaculada,25011,11ª Região - PB
+250680,Inga,25012,12ª Região - PB
+250690,Itabaiana,25012,12ª Região - PB
+250700,Itaporanga,25007,7ª Região - PB
+250710,Itapororoca,25014,14ª Região - PB
+250720,Itatuba,25012,12ª Região - PB
+250730,Jacarau,25014,14ª Região - PB
+250740,Jerico,25008,8ª Região - PB
+250750,Joao Pessoa,25001,1ª Região Mata Atlântica - PB
+250760,Juarez Tavora,25012,12ª Região - PB
+250770,Juazeirinho,25016,16ª Região - PB
+250780,Junco Do Serido,25006,6ª Região - PB
+250790,Juripiranga,25012,12ª Região - PB
+250800,Juru,25011,11ª Região - PB
+250810,Lagoa,25013,13ª Região - PB
+250820,Lagoa De Dentro,25002,2ª Região - PB
+250830,Lagoa Seca,25003,3ª Região - PB
+250840,Lastro,25010,10ª Região - PB
+250850,Livramento,25016,16ª Região - PB
+250855,Logradouro,25002,2ª Região - PB
+250860,Lucena,25001,1ª Região Mata Atlântica - PB
+250870,Mae D'Agua,25006,6ª Região - PB
+250880,Malta,25006,6ª Região - PB
+250890,Mamanguape,25014,14ª Região - PB
+250900,Manaira,25011,11ª Região - PB
+250905,Marcacao,25014,14ª Região - PB
+250910,Mari,25001,1ª Região Mata Atlântica - PB
+250915,Marizopolis,25010,10ª Região - PB
+250920,Massaranduba,25016,16ª Região - PB
+250930,Mataraca,25014,14ª Região - PB
+250933,Matinhas,25003,3ª Região - PB
+250937,Mato Grosso,25008,8ª Região - PB
+250939,Matureia,25006,6ª Região - PB
+250940,Mogeiro,25012,12ª Região - PB
+250950,Montadas,25003,3ª Região - PB
+250960,Monte Horebe,25009,9ª Região - PB
+250970,Monteiro,25005,5ª Região - PB
+250980,Mulungu,25002,2ª Região - PB
+250990,Natuba,25015,15ª Região - PB
+251000,Nazarezinho,25010,10ª Região - PB
+251010,Nova Floresta,25004,4ª Região - PB
+251020,Nova Olinda,25007,7ª Região - PB
+251030,Nova Palmeira,25004,4ª Região - PB
+251040,Olho D'Agua,25007,7ª Região - PB
+251050,Olivedos,25016,16ª Região - PB
+251060,Ouro Velho,25005,5ª Região - PB
+251065,Parari,25005,5ª Região - PB
+251070,Passagem,25006,6ª Região - PB
+251080,Patos,25006,6ª Região - PB
+251090,Paulista,25013,13ª Região - PB
+251100,Pedra Branca,25007,7ª Região - PB
+251110,Pedra Lavrada,25004,4ª Região - PB
+251120,Pedras De Fogo,25012,12ª Região - PB
+251130,Pianco,25007,7ª Região - PB
+251140,Picui,25004,4ª Região - PB
+251150,Pilar,25012,12ª Região - PB
+251160,Piloes,25002,2ª Região - PB
+251170,Piloezinhos,25002,2ª Região - PB
+251180,Pirpirituba,25002,2ª Região - PB
+251190,Pitimbu,25001,1ª Região Mata Atlântica - PB
+251200,Pocinhos,25016,16ª Região - PB
+251203,Poco Dantas,25009,9ª Região - PB
+251207,Poco De Jose De Moura,25009,9ª Região - PB
+251210,Pombal,25013,13ª Região - PB
+251220,Prata,25005,5ª Região - PB
+251230,Princesa Isabel,25011,11ª Região - PB
+251240,Puxinana,25016,16ª Região - PB
+251250,Queimadas,25015,15ª Região - PB
+251260,Quixaba,25006,6ª Região - PB
+251270,Remigio,25003,3ª Região - PB
+251272,Pedro Regis,25014,14ª Região - PB
+251274,Riachao,25002,2ª Região - PB
+251275,Riachao Do Bacamarte,25012,12ª Região - PB
+251276,Riachao Do Poco,25001,1ª Região Mata Atlântica - PB
+251278,Riacho De Santo Antonio,25015,15ª Região - PB
+251280,Riacho Dos Cavalos,25008,8ª Região - PB
+251290,Rio Tinto,25014,14ª Região - PB
+251300,Salgadinho,25006,6ª Região - PB
+251310,Salgado De Sao Felix,25012,12ª Região - PB
+251315,Santa Cecilia,25015,15ª Região - PB
+251320,Santa Cruz,25010,10ª Região - PB
+251330,Santa Helena,25009,9ª Região - PB
+251335,Santa Ines,25007,7ª Região - PB
+251340,Santa Luzia,25006,6ª Região - PB
+251350,Santana De Mangueira,25007,7ª Região - PB
+251360,Santana Dos Garrotes,25007,7ª Região - PB
+251365,Joca Claudino,25009,9ª Região - PB
+251370,Santa Rita,25001,1ª Região Mata Atlântica - PB
+251380,Santa Teresinha,25006,6ª Região - PB
+251385,Santo Andre,25016,16ª Região - PB
+251390,Sao Bento,25008,8ª Região - PB
+251392,Sao Bentinho,25013,13ª Região - PB
+251394,Sao Domingos Do Cariri,25015,15ª Região - PB
+251396,Sao Domingos,25013,13ª Região - PB
+251398,Sao Francisco,25010,10ª Região - PB
+251400,Sao Joao Do Cariri,25005,5ª Região - PB
+251410,Sao Joao Do Tigre,25005,5ª Região - PB
+251420,Sao Jose Da Lagoa Tapada,25010,10ª Região - PB
+251430,Sao Jose De Caiana,25007,7ª Região - PB
+251440,Sao Jose De Espinharas,25006,6ª Região - PB
+251445,Sao Jose Dos Ramos,25012,12ª Região - PB
+251450,Sao Jose De Piranhas,25009,9ª Região - PB
+251455,Sao Jose De Princesa,25011,11ª Região - PB
+251460,Sao Jose Do Bonfim,25006,6ª Região - PB
+251465,Sao Jose Do Brejo Do Cruz,25008,8ª Região - PB
+251470,Sao Jose Do Sabugi,25006,6ª Região - PB
+251480,Sao Jose Dos Cordeiros,25005,5ª Região - PB
+251490,Sao Mamede,25006,6ª Região - PB
+251500,Sao Miguel De Taipu,25012,12ª Região - PB
+251510,Sao Sebastiao De Lagoa De Roca,25003,3ª Região - PB
+251520,Sao Sebastiao Do Umbuzeiro,25005,5ª Região - PB
+251530,Sape,25001,1ª Região Mata Atlântica - PB
+251540,Sao Vicente Do Serido,25004,4ª Região - PB
+251550,Serra Branca,25005,5ª Região - PB
+251560,Serra Da Raiz,25002,2ª Região - PB
+251570,Serra Grande,25007,7ª Região - PB
+251580,Serra Redonda,25016,16ª Região - PB
+251590,Serraria,25002,2ª Região - PB
+251593,Sertaozinho,25002,2ª Região - PB
+251597,Sobrado,25001,1ª Região Mata Atlântica - PB
+251600,Solanea,25002,2ª Região - PB
+251610,Soledade,25016,16ª Região - PB
+251615,Sossego,25004,4ª Região - PB
+251620,Sousa,25010,10ª Região - PB
+251630,Sume,25005,5ª Região - PB
+251640,Tacima,25002,2ª Região - PB
+251650,Taperoa,25016,16ª Região - PB
+251660,Tavares,25011,11ª Região - PB
+251670,Teixeira,25006,6ª Região - PB
+251675,Tenorio,25016,16ª Região - PB
+251680,Triunfo,25009,9ª Região - PB
+251690,Uirauna,25009,9ª Região - PB
+251700,Umbuzeiro,25015,15ª Região - PB
+251710,Varzea,25006,6ª Região - PB
+251720,Vieiropolis,25010,10ª Região - PB
+251740,Zabele,25005,5ª Região - PB
