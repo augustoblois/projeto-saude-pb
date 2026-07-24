@@ -29,30 +29,30 @@
   - [x] Agregação região×região×mês + taxas de evasão por origem
   - [x] Validações de soma + sanity check jan/2025 (49,8% / 20.029 — divergência do 47,8% do PRD investigada e documentada)
   - [x] Salvar agregações em `data/processed/`
-- [ ] US-05 — PA-1: concentração de destino (Augusto · 2 pts · dep: US-04)
-  - [ ] Ranking de destinos de não-residentes + % acumulado dos 2 polos
-  - [ ] Visualização título-afirmação em `outputs/` + veredito escrito
-- [ ] US-06 — PA-3: evasão × porte do município (Augusto · 3 pts · dep: US-04 · D-3: população IBGE)
-  - [ ] Baixar estimativa populacional IBGE mais recente por município; versionar como CSV no repo
-  - [ ] Taxa de evasão por município × população (faixas de porte documentadas); saldo dos polos
-  - [ ] Visualização + veredito
-- [ ] US-07 — PA-4: estabilidade temporal do fluxo (Augusto · 3 pts · dep: US-04)
-  - [ ] Top 20 pares O-D anuais e por mês; medida de permanência
-  - [ ] Visualização + veredito
-- [ ] US-08 — PA-5: fluxo interestadual (Augusto · 5 pts · dep: US-02 · D-1: pipeline estendido)
+- [x] US-05 — PA-1: concentração de destino (Augusto · 2 pts · dep: US-04)
+  - [x] Ranking de destinos de não-residentes + % acumulado dos 2 polos
+  - [x] Visualização título-afirmação em `outputs/` + veredito escrito
+- [x] US-06 — PA-3: evasão × porte do município (Augusto · 3 pts · dep: US-04 · D-3: população IBGE)
+  - [x] Baixar estimativa populacional IBGE mais recente por município; versionar como CSV no repo
+  - [x] Taxa de evasão por município × população (faixas de porte documentadas); saldo dos polos
+  - [x] Visualização + veredito
+- [x] US-07 — PA-4: estabilidade temporal do fluxo (Augusto · 3 pts · dep: US-04)
+  - [x] Top 20 pares O-D anuais e por mês; medida de permanência
+  - [x] Visualização + veredito
+- [x] US-08 — PA-5: fluxo interestadual (Augusto · 5 pts · dep: US-02 · D-1: pipeline estendido)
   - [x] Estender `src/congelar_sih.py`: baixar RD de PE/RN/CE 2025, filtrar `MUNIC_RES` na PB, salvar parquet enxuto separado em `data/raw/`
   - [x] Congelar e validar completude (12 meses × 3 UFs); `.dbc`/`.dbf` fora do git, só o parquet filtrado entra
-  - [ ] % interestadual + recorte de fronteira; visualização + veredito
+  - [x] % interestadual + recorte de fronteira; visualização + veredito
   - ⚠️ Guard-rail (regra de decisão, não entrega): congelamento PE/RN/CE incompleto até 29/07 → PA-5 degrada p/ nota metodológica (registrar decisão)
 
 ## EP-03 — Índice de dependência por região de saúde (P0 · 28–30/07)
 - [ ] US-09 — Definição do índice redigida e testada (Augusto · 2 pts · dep: US-02 · D-2: fórmula fechada = % das internações de residentes da região realizadas FORA dela)
   - [ ] Redigir definição: fórmula, exemplo real, interpretação leiga, limitações
   - [ ] Teste de leitura com o Pedro; ajustar texto
-- [ ] US-10 — Índice calculado p/ 100% das regiões + PA-2 (Augusto · 3 pts · dep: US-09, US-04)
-  - [ ] Índice por região + validação cruzada contra a matriz regional
-  - [ ] Ranking + interpretação escrita por faixa
-  - [ ] Veredito PA-2 + visualização; tabela em `data/processed/`
+- [x] US-10 — Índice calculado p/ 100% das regiões + PA-2 (Augusto · 3 pts · dep: US-09, US-04)
+  - [x] Índice por região + validação cruzada contra a matriz regional
+  - [x] Ranking + interpretação escrita por faixa
+  - [x] Veredito PA-2 + visualização; tabela em `data/processed/`
 
 ## EP-04 — Painel Streamlit (P0 · 30/07–04/08)
 - [ ] US-11 — Aba matriz O-D com filtros, offline e rápida (Augusto · 5 pts · dep: US-04)

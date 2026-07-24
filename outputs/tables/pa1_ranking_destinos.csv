@@ -1,0 +1,56 @@
+posicao,cod_mun_int,nome_mun_int,regiao_int,internacoes,pct,pct_acumulado
+1,250750,João Pessoa,1ª Região Mata Atlântica - PB,43624,33.46,33.46
+2,250400,Campina Grande,16ª Região - PB,32817,25.17,58.63
+3,251080,Patos,6ª Região - PB,11147,8.55,67.18
+4,251370,Santa Rita,1ª Região Mata Atlântica - PB,6507,4.99,72.17
+5,250370,Cajazeiras,9ª Região - PB,4573,3.51,75.68
+6,250890,Mamanguape,14ª Região - PB,4308,3.3,78.98
+7,250630,Guarabira,2ª Região - PB,4267,3.27,82.25
+8,251620,Sousa,10ª Região - PB,2862,2.2,84.45
+9,251210,Pombal,13ª Região - PB,2504,1.92,86.37
+10,250430,Catolé do Rocha,8ª Região - PB,2444,1.87,88.24
+11,250690,Itabaiana,12ª Região - PB,2316,1.78,90.02
+12,251140,Picuí,4ª Região - PB,2299,1.76,91.78
+13,251250,Queimadas,15ª Região - PB,1988,1.52,93.3
+14,250970,Monteiro,5ª Região - PB,1942,1.49,94.79
+15,251130,Piancó,7ª Região - PB,1852,1.42,96.21
+16,251650,Taperoá,16ª Região - PB,1362,1.04,97.25
+17,251600,Solânea,2ª Região - PB,754,0.58,97.83
+18,250190,Belém,2ª Região - PB,402,0.31,98.14
+19,251230,Princesa Isabel,11ª Região - PB,321,0.25,98.39
+20,251630,Sumé,5ª Região - PB,315,0.24,98.63
+21,251200,Pocinhos,16ª Região - PB,309,0.24,98.87
+22,251340,Santa Luzia,6ª Região - PB,229,0.18,99.05
+23,251550,Serra Branca,5ª Região - PB,205,0.16,99.21
+24,250440,Conceição,7ª Região - PB,159,0.12,99.33
+25,250320,Cabedelo,1ª Região Mata Atlântica - PB,120,0.09,99.42
+26,250700,Itaporanga,7ª Região - PB,108,0.08,99.5
+27,250710,Itapororoca,14ª Região - PB,103,0.08,99.58
+28,250480,Coremas,7ª Região - PB,74,0.06,99.64
+29,250250,Boqueirão,15ª Região - PB,70,0.05,99.69
+30,250070,São João do Rio do Peixe,9ª Região - PB,64,0.05,99.74
+31,251530,Sapé,1ª Região Mata Atlântica - PB,61,0.05,99.79
+32,250150,Bananeiras,2ª Região - PB,55,0.04,99.83
+33,251390,São Bento,8ª Região - PB,41,0.03,99.86
+34,250830,Lagoa Seca,3ª Região - PB,28,0.02,99.88
+35,251120,Pedras de Fogo,12ª Região - PB,22,0.02,99.9
+36,251450,São José de Piranhas,9ª Região - PB,21,0.02,99.92
+37,250510,Cuité,4ª Região - PB,20,0.02,99.94
+38,251690,Uiraúna,9ª Região - PB,20,0.02,99.96
+39,251090,Paulista,13ª Região - PB,15,0.01,99.97
+40,251660,Tavares,11ª Região - PB,11,0.01,99.98
+41,250180,Bayeux,1ª Região Mata Atlântica - PB,8,0.01,99.99
+42,250240,Bonito de Santa Fé,9ª Região - PB,6,0.0,99.99
+43,250600,Esperança,3ª Região - PB,6,0.0,99.99
+44,250300,Caaporã,1ª Região Mata Atlântica - PB,3,0.0,99.99
+45,250010,Água Branca,11ª Região - PB,3,0.0,99.99
+46,251700,Umbuzeiro,15ª Região - PB,3,0.0,99.99
+47,250770,Juazeirinho,16ª Região - PB,2,0.0,99.99
+48,251610,Soledade,16ª Região - PB,2,0.0,99.99
+49,250350,Cacimba de Dentro,2ª Região - PB,1,0.0,99.99
+50,250040,Alagoa Nova,3ª Região - PB,1,0.0,99.99
+51,250030,Alagoa Grande,3ª Região - PB,1,0.0,99.99
+52,250200,Belém do Brejo do Cruz,8ª Região - PB,1,0.0,99.99
+53,250800,Juru,11ª Região - PB,1,0.0,99.99
+54,250920,Massaranduba,16ª Região - PB,1,0.0,99.99
+55,250740,Jericó,8ª Região - PB,1,0.0,99.99

@@ -48,6 +48,33 @@ Conferimos tudo contra as fontes oficiais do DATASUS (informe técnico em PDF + 
 **POR QUÊ:** Os arquivos do SIH são organizados pela UF do hospital — paraibano internado em Recife está no arquivo de PE. Sem esse passo, a evasão interestadual (PA-5) seria invisível. Achado preliminar: volume ~1,4% do interno → a evasão da PB é quase toda dentro do estado. Falta a parte 2: análise PA-5 (% e recorte de fronteira).
 **ONDE:** `src/congelar_sih_vizinhos.py`, `data/raw/sih_pb_residentes_fora_2025.parquet`
 
+## Etapa 9 — US-05: PA-1, concentração de destino ✅
+**O QUE:** Agrupamos as 130.379 internações de não-residentes pelo município do hospital, com percentual acumulado. **JP 33,5% + CG 25,2% = 58,6%**; com Patos, 67,2%; 7 municípios = 80% do fluxo. Achado não previsto: **só 62 dos 223 municípios da PB registraram alguma internação SUS em 2025**. Robustez: excluir residentes de outros estados move 0,1 p.p. (58,5%); mês a mês a fatia dos polos nunca cai de 56% (oscila 56,6%–61,3%).
+**POR QUÊ:** É a prova de que a rede é **funil, não malha** — sustenta a recomendação de regionalização. Os dois testes extras existem para blindar contra as objeções óbvias da banca ("e se for efeito de gente de fora?" / "e se for sazonal?").
+**ONDE:** `notebooks/01-pa1-concentracao.ipynb`, `outputs/tables/pa1_ranking_destinos.csv`, `outputs/figures/pa1_concentracao_destino.png`
+
+## Etapa 10 — US-06: PA-3, evasão × porte do município ✅
+**O QUE:** Cruzamos a taxa de evasão de cada município com sua população (estimativa IBGE congelada em CSV, `src/baixar_populacao_ibge.py`). Queda monotônica: **98,1%** (≤10 mil hab., 140 cidades) → 80,4% → 64,9% → 53,0% → **9,3%** (>100 mil, 4 cidades). **133 das 140 cidades pequenas têm evasão de exatamente 100%** — não internaram nenhum morador no ano. Saldo (recebidos − enviados): JP **+41.761**, CG **+32.233**.
+**POR QUÊ:** Muda o enquadramento político da conclusão: não é má gestão municipal, é impossibilidade estrutural — cidade pequena não sustenta hospital. A solução tem que ser regional. Armadilha resolvida: código IBGE do SIH tem 6 dígitos e o do IBGE tem 7 (o último é verificador); o join reaproveita a solução da US-01 — 223/223, zero órfãos.
+**ONDE:** `notebooks/01-pa3-porte.ipynb`, `src/baixar_populacao_ibge.py`, `outputs/tables/pa3_*.csv`, `outputs/figures/pa3_evasao_x_porte.png`
+
+## Etapa 11 — US-07: PA-4, estabilidade temporal ✅
+**O QUE:** Medimos quantos meses cada par origem→destino do top 20 anual permanece no top 20 mensal. **13 dos 20 pares aparecem nos 12 meses**; sobreposição média 17,1/20 (85%); Spearman mês×ano entre 0,908 e 0,950. A instabilidade fica nas posições 14–20, onde 3–4 casos mudam o ranking.
+**POR QUÊ:** Define a natureza da recomendação. Fluxo **estrutural** = pode ser pactuado na PPI com números fixos; fluxo conjuntural exigiria outra política. Achado de processo: um código IBGE hardcoded errado (250190 = Belém/PB em vez de 250180 = Bayeux) foi pego por `assert` — o código era de município **real**, então sem o assert teria passado silencioso.
+**ONDE:** `notebooks/01-pa4-estabilidade.ipynb`, `outputs/tables/pa4_*.csv`, `outputs/figures/pa4_estabilidade_fluxo.png`
+
+## Etapa 12 — US-08 (parte 2): PA-5, análise do fluxo interestadual ✅
+**O QUE:** Sobre os 3.682 residentes PB internados em PE/RN/CE. Denominador correto = residentes PB internados na PB (256.623) + fora (3.682) = 260.305 → **1,41%** (o denominador ingênuo, 258.125, misturaria não-residentes). Destinos: Recife 41,3%, **Alexandria/RN 23,3%** (2º — hospital regional que atende o sertão da divisa; investigado, achado genuíno), Natal 9,3%. Fronteira via proxy de distância entre centroides (não há malha de polígonos no repo), corte de 20 km declarado como arbitrário.
+**POR QUÊ:** Separa "pegou o hospital mais perto" de "atravessou o estado atrás de alta complexidade". **O achado robusto é a razão, não a fração:** o grupo do interior tem taxa de alta complexidade 1,7× a 2,8× maior que o da fronteira em **todos** os cortes testados (10–30 km), e custo médio o dobro (R$ 5.061 vs R$ 1.992). A fração de volume (42%/58%) é frágil — varia de 11,5% a 58,5% conforme o corte, e chega a inverter. Na apresentação: usar a razão, nunca cravar a fração.
+**ONDE:** `notebooks/01-pa5-interestadual.ipynb`, `outputs/tables/pa5_*.csv`, `outputs/figures/pa5_*.png`
+
+## Etapa 13 — US-10: índice de dependência calculado (US-09 em aberto) ✅⚠️
+**O QUE:** Índice para as 16 regiões = % das internações de residentes da região realizadas fora dela (decisão D-2). **8 das 16 acima de 50%** → hipótese PA-2 (previa ≥ 1/3, registrada no PRD antes do cálculo) **confirmada**. Extremos: 3ª Região 84,5%; 1ª (JP) 1,8%; 16ª (CG) 4,1%. Validação por **3 caminhos independentes** (matriz regional, matriz municipal remapeada do zero, base linha a linha por AIH) + o CSV pré-existente: delta 0,0 nos três pares, com asserts.
+**POR QUÊ:** É o diferencial do projeto — não existe em painel público. A tripla validação existe porque um número que ninguém mais publica não tem com o que ser comparado externamente; a única defesa é a consistência interna. **US-09 segue aberta**: falta o teste de leitura com o Pedro (ação humana), critério de aceite que nenhuma automação pode cumprir.
+**ONDE:** `docs/definicao-indice-dependencia.md`, `notebooks/01-indice-dependencia.ipynb`, `data/processed/indice_dependencia_regional.csv`, `outputs/figures/indice_ranking_dependencia.png`
+
 ---
 
-*Próximas etapas previstas (ordem do backlog): PA-1..PA-4 (análises sobre a matriz) + análise PA-5 (interestadual) → índice de dependência → painel Streamlit.*
+*Nota de método (vale pra apresentação):* as cinco análises foram construídas em paralelo e cada uma passou por revisão independente que refez as contas do zero. Quatro voltaram reprovadas na primeira rodada — e **nenhuma reprovação foi erro de cálculo**: em todos os casos o número estava certo e o texto ao redor dele estava desatualizado ou afirmava mais do que o dado sustentava (título dizendo "sete" com oito barras no gráfico; conclusão contradita pela tabela logo acima; número de validação não derivável). O padrão: texto escrito antes da execução final e nunca reconferido.
+
+*Próximas etapas previstas (ordem do backlog): US-09 (teste de leitura) → painel Streamlit (US-11..14) → narrativa executiva e recomendações (US-16).*

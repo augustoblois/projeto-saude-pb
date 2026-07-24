@@ -1,0 +1,17 @@
+posicao,regiao,internacoes_residentes,internacoes_realizadas_dentro,internacoes_realizadas_fora,indice_dependencia_pct,faixa_dependencia
+1,3ª Região - PB,10815,1672,9143,84.5,alta
+2,12ª Região - PB,10420,2941,7479,71.8,alta
+3,15ª Região - PB,9540,2714,6826,71.6,alta
+4,7ª Região - PB,8919,3890,5029,56.4,alta
+5,11ª Região - PB,4280,1951,2329,54.4,alta
+6,2ª Região - PB,16531,7545,8986,54.4,alta
+7,4ª Região - PB,7075,3238,3837,54.2,alta
+8,14ª Região - PB,10095,4846,5249,52.0,alta
+9,5ª Região - PB,8458,4866,3592,42.5,média
+10,13ª Região - PB,4277,2802,1475,34.5,média
+11,8ª Região - PB,7592,5048,2544,33.5,média
+12,6ª Região - PB,14273,10799,3474,24.3,baixa
+13,10ª Região - PB,7084,5492,1592,22.5,baixa
+14,9ª Região - PB,13385,10493,2892,21.6,baixa
+15,16ª Região - PB,42305,40552,1753,4.1,baixa
+16,1ª Região Mata Atlântica - PB,81574,80141,1433,1.8,baixa

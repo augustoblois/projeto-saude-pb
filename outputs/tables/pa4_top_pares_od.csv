@@ -1,0 +1,21 @@
+posicao,par,nome_mun_res,uf_res,nome_mun_int,internacoes_ano,pct_da_evasao,meses_no_top20,nucleo_duro_12_meses
+1,251370>250750,Santa Rita,PB,João Pessoa,5638,4.32,12,True
+2,250180>250750,Bayeux,PB,João Pessoa,4307,3.3,12,True
+3,250320>250750,Cabedelo,PB,João Pessoa,2151,1.65,12,True
+4,251530>250750,Sapé,PB,João Pessoa,1910,1.46,12,True
+5,250460>250750,Conde,PB,João Pessoa,1714,1.31,12,True
+6,251250>250400,Queimadas,PB,Campina Grande,1629,1.25,12,True
+7,250750>251370,João Pessoa,PB,Santa Rita,1461,1.12,12,True
+8,250830>250400,Lagoa Seca,PB,Campina Grande,1357,1.04,12,True
+9,250630>250750,Guarabira,PB,João Pessoa,1338,1.03,12,True
+10,250890>250750,Mamanguape,PB,João Pessoa,1248,0.96,12,True
+11,250600>250400,Esperança,PB,Campina Grande,1183,0.91,12,True
+12,250060>250750,Alhandra,PB,João Pessoa,1182,0.91,12,True
+13,251120>250750,Pedras de Fogo,PB,João Pessoa,1126,0.86,12,True
+14,250300>250750,Caaporã,PB,João Pessoa,919,0.7,10,False
+15,250040>250400,Alagoa Nova,PB,Campina Grande,867,0.66,7,False
+16,251200>250400,Pocinhos,PB,Campina Grande,856,0.66,6,False
+17,251240>250400,Puxinanã,PB,Campina Grande,854,0.66,6,False
+18,250970>250400,Monteiro,PB,Campina Grande,839,0.64,7,False
+19,250130>250400,Aroeiras,PB,Campina Grande,806,0.62,6,False
+20,250030>250400,Alagoa Grande,PB,Campina Grande,794,0.61,7,False
