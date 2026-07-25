@@ -2,4 +2,5 @@ pandas
 pyarrow
 jupyter
 streamlit
+plotly
 pysus==2.7.0

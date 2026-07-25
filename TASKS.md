@@ -67,9 +67,9 @@
   - ⚠️ Guard-rail (regra de decisão, não entrega): >1 dia sem funcionar → degradar p/ coroplético (registrar decisão)
   - ✅ Decisão do guard-rail (25/07): mapa funcionou dentro da janela; a degradação **não** foi acionada. A cor do coroplético mudou de "taxa de evasão" para "destino principal" (área de captação) por motivo empírico — mediana da taxa de evasão municipal = 100%, 173/223 municípios > 90%, a cor não discriminava. Registro em `docs/diario-do-projeto.md` (Etapa 16).
   - ⏳ Bloqueio p/ o checkbox (build-reviewer, 25/07): critério 2 — teste de leitura com o Pedro (1 min, nomear os polos sem ajuda) segue valendo como aceite por decisão explícita da Etapa 14. Parte técnica já aprovada na revisão.
-- [ ] US-13 — Aba do índice de dependência (Augusto · 2 pts · dep: US-10, US-11)
-  - [ ] Ranking/visualização do índice + texto da definição aprovada
-  - [ ] Conferência dos números contra `data/processed/`
+- [x] US-13 — Aba do índice de dependência (Augusto · 2 pts · dep: US-10, US-11)
+  - [x] Ranking/visualização do índice + texto da definição aprovada
+  - [x] Conferência dos números contra `data/processed/`
 - [ ] US-14 — Aba achados & recomendações (Augusto · 2 pts · dep: US-11, US-16)
   - [ ] Estruturar aba com textos fechados na US-16 (fonte única: `reports/`)
   - [ ] Vincular recomendação→evidência; conferir números contra notebooks

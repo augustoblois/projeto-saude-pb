@@ -204,8 +204,8 @@ Uma story só é semeada quando tem: aceite Given/When/Then · dependências ide
 - **Dado** os números exibidos, **quando** confiro contra a tabela da US-10, **então** batem exatamente.
 
 **Tasks**
-- [ ] Aba: ranking/visualização do índice por região + texto da definição
-- [ ] Conferência dos números contra `data/processed/`
+- [x] Aba: ranking/visualização do índice por região + texto da definição
+- [x] Conferência dos números contra `data/processed/`
 
 ### US-14 — Aba achados & recomendações · 2 pts · Augusto · depende de: US-11, US-16
 **Como** professor, **quero** ler no painel as respostas às perguntas analíticas e as recomendações em linguagem executiva **para** avaliar análise consolidada e comunicação na própria demo (RF-04, RF-05).

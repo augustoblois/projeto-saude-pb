@@ -13,25 +13,31 @@
 - **Também já sabemos quantos paraibanos internaram FORA do estado em 2025: 3.682** (a maioria em Pernambuco e no Rio Grande do Norte). Baixamos os dados dos 3 estados vizinhos e filtramos só quem mora na PB. É pouco perto das 258 mil internações internas — sinal de que o problema de "viajar pra internar" acontece quase todo DENTRO do estado.
 - **As cinco análises principais do projeto estão prontas e conferidas.** Em uma linha cada: os pacientes que saem da própria cidade se concentram em **João Pessoa e Campina Grande (58,6% do movimento)**; **cidade pequena perde muito mais** (até 10 mil habitantes, 98% dos moradores internam fora; acima de 100 mil, só 9%); os **caminhos não mudam** ao longo do ano (13 dos 20 trajetos mais usados aparecem nos 12 meses); quem **sai do estado** são 3.682 pessoas (1,41%), por dois motivos que convivem — estar na divisa e buscar tratamento grave — sem que dê pra dizer quanto é de cada; e **8 das 16 regiões de saúde passam de 50%** de dependência.
 - **Toda a parte de análise do projeto está concluída.** Do dia 25/07 em diante não há mais conta a fazer: o que falta é montar o painel (o site interativo) e escrever o texto de recomendações para a apresentação.
-- **O painel saiu do papel e já roda na máquina.** Ele tem quatro abas previstas; **duas já funcionam**: a tabela de quem vai de onde pra onde, e o **mapa da Paraíba**. As outras duas (o índice de dependência e os achados/recomendações) ainda estão vazias, esperando serem construídas.
+- **O painel saiu do papel e já roda na máquina.** Ele tem quatro abas previstas; **três já funcionam**: a tabela de quem vai de onde pra onde, o **mapa da Paraíba** e o **ranking do índice de dependência**. Só a última (os achados e recomendações) ainda está vazia — e ela depende do texto que a gente ainda vai escrever.
 - **O mapa mostra uma coisa que ninguém tinha desenhado ainda:** cada cidade da Paraíba está pintada com a cor da cidade para onde a maioria dos seus moradores acaba internada. O resultado é um mapa de "territórios": dá pra ver no olho o **território de Campina Grande (62 cidades), o de João Pessoa (48) e o de Patos (30)**.
 - **Prazo:** apresentação dia 07/08/2026 (13 dias).
 
-## O que aconteceu na última sessão (25/07/2026 — segunda sessão do dia)
+## O que aconteceu na última sessão (25/07/2026 — terceira sessão do dia)
 
-**O painel começou a existir.** Até hoje o projeto era análise: tabelas, contas conferidas, textos. Nesta sessão nasceu o site interativo que a gente vai mostrar no dia 07/08.
+**Ficou pronta a terceira aba do painel: o ranking do índice de dependência.** É a aba que mostra o número principal do projeto — quanto cada uma das 16 regiões de saúde depende de hospital de fora para cuidar da própria gente.
 
-**1. A primeira aba: a tabela de quem vai de onde pra onde.**
-Você escolhe uma cidade (ou uma região) e um mês, e ela mostra para onde os moradores dali foram internar, do fluxo maior para o menor. Dá pra copiar qualquer número direto da tela pra citar na apresentação. Ela abre em cerca de 6 segundos e responde a cada clique quase instantaneamente — porque o painel **não faz conta nenhuma na hora**: ele só lê tabelas que já foram calculadas antes e guardadas prontas. Isso é de propósito: no dia da apresentação, nada pode travar.
+**1. O ranking, em barras.**
+As 16 regiões aparecem em ordem, da que mais depende de fora (3ª Região, 84,5%) para a que menos depende (a região de João Pessoa, 1,8%). A barra é verde, amarela ou vermelha conforme a dependência ser baixa, média ou alta. Tem duas linhas pontilhadas atravessando o gráfico: uma na **média da Paraíba (26,4%)** e outra na **metade (50%)** — quem passa da segunda é uma região onde a maioria das internações dos moradores acontece fora de casa. São 8 das 16.
 
-**2. A segunda aba: o mapa da Paraíba.**
-Cada uma das 223 cidades aparece desenhada, pintada com a cor da cidade para onde a maioria dos seus moradores vai internar. Por cima, linhas ligam as cidades que mais mandam pacientes aos hospitais que mais recebem, e a linha fica mais grossa quanto maior o movimento. O mapa é montado a partir de um arquivo com o contorno de cada cidade que **baixamos uma vez e guardamos dentro do projeto** — então ele funciona com a internet desligada, que é a regra do projeto para a apresentação.
+**2. A ficha de cada região.**
+Escolhendo uma região numa listinha, aparece o índice dela, a posição no ranking, quantas internações os moradores tiveram no ano, quantas ficaram em casa, quantas saíram — e **para onde foi a maior parte de quem saiu**. Exemplo real: da 3ª Região saíram 9.143 internações, e 7.639 delas foram para a região de Campina Grande. Na prática a 3ª Região funciona como quintal de Campina Grande, e a ficha mostra isso em uma linha.
 
-**3. Uma descoberta que apareceu enquanto montávamos o mapa.**
-A ideia original era pintar cada cidade pela porcentagem de moradores que interna fora. Ao fazer, o mapa saiu de uma cor só — e o motivo é o próprio dado: **na metade das cidades da Paraíba, 100% dos moradores internam fora**, e em 173 das 223 esse número passa de 90%. Ou seja, a esmagadora maioria das cidades do estado simplesmente não interna ninguém em casa. Isso muda como a gente conta a história: os 50,5% de internações fora da cidade de origem **não são gente escolhendo um hospital melhor — é falta de leito onde a pessoa mora**. Vale usar isso na apresentação.
+**3. A explicação do número mora dentro do painel.**
+Aquele texto que explica o índice (fórmula, exemplo, o que o número não consegue dizer) agora aparece na própria aba, em blocos que abrem e fecham. Foi feito de um jeito específico: o painel **lê o texto do arquivo original na hora de mostrar**, em vez de ter uma cópia dele por dentro. Assim, se a gente corrigir uma frase no arquivo, o painel corrige junto — nunca vão existir duas versões diferentes da mesma explicação, uma delas errada. O motivo de isso importar: no dia 07/08, se alguém perguntar "de onde vem esse número?", a resposta está na tela, e é a mesma que está escrita no projeto.
 
-**4. Um erro que quase passou batido, e é bom de contar na banca.**
-O mapa passou em todas as conferências automáticas — números certos, tempos bons, nenhum erro no programa — e mesmo assim aparecia na tela como um retângulo colorido sólido, sem cidade nenhuma. O motivo: o arquivo do IBGE lista os pontos do contorno de cada cidade numa certa ordem, e a ferramenta que desenha o mapa entende essa ordem ao contrário — para ela, aquilo significava "o planeta inteiro **menos** esta cidade". Corrigimos na origem, deixamos o motivo escrito no código, e criamos uma conferência automática que reprova se o erro voltar. **A lição:** conferência automática garante que o programa roda, não que o desenho está certo — para isso, alguém precisa abrir e olhar.
+**4. Uma decisão de cuidado com o número.**
+Em toda tela dessa aba, o índice aparece **junto com o volume** (quantas internações a região tem). Isso é de propósito: a maior região tem 81 mil internações no ano e a menor tem 4 mil, então nas pequenas poucas dezenas de internações mexem no índice. Mostrar índice sem o tamanho ao lado convida a comparação injusta — e é o tipo de coisa que um professor pergunta.
+
+**5. Dois erros pegos porque alguém leu as frases da tela, não só os números.**
+As contas estavam certas desde o começo, mas uma regrinha de formatação de número (a que troca ponto por vírgula, como em "84,5%") estava trocando também os **pontos finais das frases** por vírgulas — o texto ficava com pontuação errada no meio. E, num segundo caso, a aba simplesmente quebrava ao trocar de região, por um conflito de nomes dentro do programa que não aparecia na primeira abertura. Os dois foram corrigidos. **A lição é irmã da do mapa:** conferir que os números batem não é a mesma coisa que conferir que as frases estão certas.
+
+**6. Um detalhe chato que atrapalharia você, Pedro.**
+Desde a sessão passada faltava anotar na lista de instalação do projeto uma das ferramentas que o painel usa para desenhar gráficos. Quem instalasse o projeto do zero — você, ou o professor — receberia uma mensagem de erro ao tentar abrir o painel. Já está corrigido: rodar `pip install -r requirements.txt` de novo resolve.
 
 *(O detalhe das etapas anteriores está resumido em "Onde estamos", acima, e contado por inteiro em `docs/diario-do-projeto.md`.)*
 
@@ -41,17 +47,22 @@ O mapa passou em todas as conferências automáticas — números certos, tempos
 
 O mapa está pronto, mas **ele só conta como entregue depois que você olhar**. O combinado do projeto é que um mapa que precisa de explicação não serve, porque no dia 07/08 quem estiver assistindo vai vê-lo pela primeira vez, exatamente como você agora. Então o teste é você mesmo:
 
-1. Abrir o terminal na pasta do projeto e rodar:
+1. Abrir o terminal na pasta do projeto e rodar **primeiro** `pip install -r requirements.txt` (nesta sessão faltava uma ferramenta nessa lista — sem isso o painel dá erro), e depois:
    ```
    streamlit run app.py
    ```
-   (se der erro dizendo que não encontrou, rode antes `pip install -r requirements.txt`)
 2. Vai abrir uma página no navegador. Clicar na aba **Mapa**, no alto.
 3. **Olhar por 1 minuto, sem ler nada em volta e sem me perguntar nada.** Depois me dizer, com suas palavras: **quais são as cidades que puxam pacientes de toda a Paraíba?**
 
 Se as duas cidades principais saltarem aos olhos sozinhas, o mapa passou. Se você precisar procurar, ou ficar na dúvida, **o mapa é que está errado, não você** — e aí eu conserto antes da apresentação, que é justamente pra isso que serve este teste. Me responde por WhatsApp mesmo.
 
 *(Isso é diferente daquela tarefa de leitura que eu tirei do caminho — veja mais abaixo. Aquela era um texto longo e virou opcional; esta aqui é olhar uma imagem por 1 minuto, e continua valendo.)*
+
+### Já que você vai abrir o painel: dá uma olhada na aba nova também
+
+Não é tarefa, é atalho pra você. Depois do mapa, clique na aba **Índice de dependência**. Ela é a que mais rende pra apresentação, porque tem o número principal do projeto em forma de ranking, e **a explicação dele está ali do lado**, em blocos que abrem e fecham. Se um dia o professor perguntar "o que é esse índice?", a resposta está a um clique de distância na própria tela — você não precisa decorar nada.
+
+Uma sugestão de 2 minutos: escolha a **3ª Região** na listinha e leia a frase que aparece embaixo dos números. Ela conta, sozinha, a história inteira do projeto: uma região onde quase todo mundo se interna fora, e o destino é sempre o mesmo vizinho grande. É um bom jeito de você contar o projeto em uma frase se te pedirem isso.
 
 ### O resto, quando você tiver tempo
 
@@ -77,7 +88,7 @@ O motivo é o oposto de "deixa pra lá": ele leu o texto inteiro e concluiu que 
 
 **Atenção pra não confundir:** essa dispensa vale **só** para aquele texto do índice. Os testes de leitura do **mapa** (o de 1 minuto, lá em cima) e, mais pra frente, do **texto de recomendações**, continuam valendo como condição de entrega — ficou combinado assim no dia 25/07.
 
-**Se ainda assim você quiser fazer (15 minutos, e continua valendo a pena):** abra `docs/definicao-indice-dependencia.md`, leia **só até a seção 5**, uma vez só, e chame o Augusto antes de ler o resto — o final do arquivo tem as próprias perguntas, e uma delas entrega a resposta. Qualquer trecho em que você travar é trecho pra reescrever antes de 07/08, porque quem estiver assistindo a apresentação vai estar exatamente na sua posição: vendo o número pela primeira vez.
+**Se ainda assim você quiser fazer (15 minutos, e continua valendo a pena):** o jeito mais fácil agora é **pelo painel** — abra a aba **Índice de dependência** e leia os blocos no fim da página. Ali as perguntas do teste não aparecem, então não tem risco de você topar com a resposta sem querer (no arquivo `docs/definicao-indice-dependencia.md` elas estão no final; se preferir ler por lá, pare na seção 5 e me chame). Qualquer trecho em que você travar é trecho pra reescrever antes de 07/08, porque quem estiver assistindo a apresentação vai estar exatamente na sua posição: vendo o número pela primeira vez.
 
 ### O que de fato importa pra você agora: você é quem apresenta
 

@@ -17,6 +17,7 @@ import streamlit as st
 
 DIR_PROCESSED = Path(__file__).parent / "data" / "processed"
 DIR_OUTPUTS = Path(__file__).parent / "outputs"
+DIR_DOCS = Path(__file__).parent / "docs"
 
 MESES = {
     1: "Janeiro", 2: "Fevereiro", 3: "Março", 4: "Abril",
@@ -25,6 +26,11 @@ MESES = {
 }
 
 TODOS = "Todos"
+
+# Faixas da definição (docs/definicao-indice-dependencia.md, seção 5). Cores escolhidas
+# para funcionar tanto no tema claro quanto no escuro — e a leitura não depende só delas:
+# a faixa também vem escrita por extenso na tabela e no cartão da região.
+CORES_FAIXA = {"baixa": "#2e9e6b", "média": "#d9a12b", "alta": "#c0433a"}
 
 
 # --------------------------------------------------------------------------- #
@@ -38,6 +44,34 @@ def carregar_matriz_municipal() -> pd.DataFrame:
 @st.cache_data
 def carregar_matriz_regional() -> pd.DataFrame:
     return pd.read_csv(DIR_PROCESSED / "matriz_od_regional_mensal.csv")
+
+
+@st.cache_data
+def carregar_indice() -> pd.DataFrame:
+    """Índice de dependência das 16 regiões, já calculado e ranqueado no notebook
+    `01-indice-dependencia.ipynb`. O painel só exibe — não recalcula nada aqui."""
+    return pd.read_csv(DIR_PROCESSED / "indice_dependencia_regional.csv")
+
+
+@st.cache_data
+def carregar_definicao() -> list[tuple[str, str]]:
+    """Seções numeradas da definição aprovada na US-09, lidas do próprio documento.
+
+    Ler o arquivo em vez de copiar o texto para dentro do painel é deliberado: o critério
+    de aceite pede o texto **tal-qual aprovado**, e duas cópias divergiriam no primeiro
+    ajuste de redação. É leitura de arquivo local — o painel continua rodando offline.
+    O "Roteiro de teste de leitura" fica de fora: é processo interno do projeto, não
+    informação para quem consulta o índice.
+    """
+    bruto = (DIR_DOCS / "definicao-indice-dependencia.md").read_text(encoding="utf-8")
+    secoes = []
+    for bloco in bruto.split("\n## ")[1:]:
+        titulo, _, corpo = bloco.partition("\n")
+        if not titulo[:1].isdigit():  # só as seções numeradas 1..7
+            continue
+        corpo = corpo.strip().removesuffix("---").strip()  # tira o separador final
+        secoes.append((titulo.strip(), corpo))
+    return secoes
 
 
 @st.cache_data
@@ -63,6 +97,17 @@ def filtrar(df: pd.DataFrame, col_origem: str, origem: str, mes: str) -> pd.Data
     if mes != TODOS:
         df = df[df["mes"] == int(mes)]
     return df
+
+
+def mil(n: int) -> str:
+    """10815 → '10.815'. Formata só o número: aplicar o replace na frase inteira
+    trocaria também as vírgulas gramaticais do texto por pontos."""
+    return f"{int(n):,}".replace(",", ".")
+
+
+def pct(v: float) -> str:
+    """84.5 → '84,5%'. Mesmo motivo do `mil`: o replace nunca encosta no texto."""
+    return f"{v:.1f}%".replace(".", ",")
 
 
 def formatar_mes(valor) -> str:
@@ -394,7 +439,173 @@ def aba_mapa() -> None:
 
 
 # --------------------------------------------------------------------------- #
-# Abas ainda não construídas (US-13, US-14)
+# Aba: índice de dependência por região de saúde
+# --------------------------------------------------------------------------- #
+def media_estadual(df: pd.DataFrame) -> float:
+    """Média da Paraíba: % das internações de moradores do estado que saiu da sua região.
+
+    É o corte da faixa "baixa" na definição (seção 5) — e sai da soma das colunas, não
+    de um número digitado, para nunca descolar da tabela exibida ao lado.
+    """
+    return 100 * df["internacoes_realizadas_fora"].sum() / df["internacoes_residentes"].sum()
+
+
+@st.cache_data
+def destino_principal_regiao(regiao: str) -> tuple[str, int] | None:
+    """Para onde vai a maior parte de quem sai da região: (região de destino, internações).
+
+    Derivado da matriz regional no mesmo instante da consulta — nenhum destino está
+    escrito à mão no painel. Devolve None quando a região não exporta ninguém.
+    """
+    df = carregar_matriz_regional()
+    fora = df[(df["regiao_res"] == regiao) & df["evasao_regional"]]
+    if fora.empty:
+        return None
+    por_destino = fora.groupby("regiao_int")["internacoes"].sum()
+    return por_destino.idxmax(), int(por_destino.max())
+
+
+def grafico_ranking(df: pd.DataFrame) -> go.Figure:
+    """Barras horizontais do índice, com as duas réguas da definição desenhadas por cima."""
+    # ascendente: o Plotly empilha a primeira categoria embaixo, então quem depende mais
+    # termina no topo — que é onde o olho do gestor cai primeiro.
+    ordenado = df.sort_values("indice_dependencia_pct")
+
+    fig = px.bar(
+        ordenado,
+        x="indice_dependencia_pct",
+        y="regiao",
+        orientation="h",
+        color="faixa_dependencia",
+        color_discrete_map=CORES_FAIXA,
+        text=ordenado["indice_dependencia_pct"].map(pct),
+        custom_data=["posicao", "internacoes_residentes", "internacoes_realizadas_fora"],
+        labels={
+            "indice_dependencia_pct": "% das internações que aconteceu fora da região",
+            "regiao": "",
+            "faixa_dependencia": "Dependência",
+        },
+    )
+    fig.update_traces(
+        textposition="outside",
+        hovertemplate="<b>%{y}</b><br>Índice: %{x:.1f}%<br>"
+        "Posição no ranking: %{customdata[0]}ª de 16<br>"
+        "Internações de moradores: %{customdata[1]:,}<br>"
+        "Dessas, fora da região: %{customdata[2]:,}<extra></extra>",
+    )
+
+    media = media_estadual(df)
+    for valor, texto in [
+        (media, f"média da PB: {pct(media)}"),
+        (50, "metade das internações"),
+    ]:
+        fig.add_vline(
+            x=valor,
+            line=dict(color="#888", width=1.5, dash="dot"),
+            annotation_text=texto,
+            annotation_position="top",
+        )
+
+    fig.update_layout(
+        height=560,
+        margin=dict(l=0, r=40, t=40, b=0),
+        xaxis_range=[0, 100],
+        legend=dict(title="Dependência", orientation="h", yanchor="bottom", y=1.02, x=0),
+    )
+    return fig
+
+
+def cartao_regiao(df: pd.DataFrame) -> None:
+    """Ficha de uma região: o índice com a posição, o volume e para onde a gente vai."""
+    regiao = st.selectbox("Ver uma região em detalhe", df["regiao"].tolist())
+    linha = df[df["regiao"] == regiao].iloc[0]
+
+    m1, m2, m3 = st.columns(3)
+    m1.metric(
+        "Índice de dependência",
+        pct(linha["indice_dependencia_pct"]),
+        help="% das internações de moradores desta região que aconteceu em hospital de outra região.",
+    )
+    m2.metric("Posição no ranking", f"{int(linha['posicao'])}ª de {len(df)}")
+    m3.metric("Internações de moradores (2025)", mil(linha["internacoes_residentes"]))
+
+    dentro = int(linha["internacoes_realizadas_dentro"])
+    fora = int(linha["internacoes_realizadas_fora"])
+    frase = (
+        f"Dependência **{linha['faixa_dependencia']}**: das "
+        f"{mil(linha['internacoes_residentes'])} internações de moradores da região em 2025, "
+        f"{mil(dentro)} aconteceram dentro da própria região e {mil(fora)} fora dela."
+    )
+
+    destino = destino_principal_regiao(regiao)
+    if destino:
+        nome_destino, volume = destino
+        share = 100 * volume / fora if fora else 0
+        frase += (
+            f" O destino mais procurado por quem sai é a **{nome_destino}**, "
+            f"com {mil(volume)} internações — {share:.0f}% de tudo o que saiu da região."
+        )
+    st.markdown(frase)
+
+
+def aba_indice() -> None:
+    st.subheader("Índice de dependência por região de saúde")
+
+    df = carregar_indice()
+    media = media_estadual(df)
+    # lê a faixa já classificada no notebook em vez de reaplicar o corte de 50% aqui:
+    # a regra vive num só lugar (a tabela) e painel e tabela não podem divergir.
+    n_alta = int((df["faixa_dependencia"] == "alta").sum())
+
+    st.markdown(
+        f"### {n_alta} das {len(df)} regiões de saúde da Paraíba internam a **maioria** "
+        "dos seus moradores fora da própria região"
+    )
+    media_txt = pct(media)
+    st.caption(
+        "O índice de uma região é a porcentagem das internações dos seus moradores que "
+        f"aconteceu em hospital de outra região. A média do estado é {media_txt} — quem está "
+        "acima da linha pontilhada perde mais gente do que o estado perde na média. "
+        "A definição completa, com fórmula, exemplo e limitações, está no fim desta aba."
+    )
+
+    st.plotly_chart(grafico_ranking(df), width="stretch")
+
+    cartao_regiao(df)
+
+    st.markdown("#### A tabela completa")
+    st.caption(
+        "O índice aparece sempre ao lado do volume: região pequena tem número mais instável, "
+        "então comparar índices sem olhar o tamanho da região leva a conclusão injusta."
+    )
+    st.dataframe(
+        df.rename(
+            columns={
+                "posicao": "#",
+                "regiao": "Região de saúde",
+                "internacoes_residentes": "Internações de moradores",
+                "internacoes_realizadas_dentro": "Internadas dentro da região",
+                "internacoes_realizadas_fora": "Internadas fora da região",
+                "indice_dependencia_pct": "Índice (%)",
+                "faixa_dependencia": "Dependência",
+            }
+        ),
+        width="stretch",
+        hide_index=True,
+    )
+
+    st.markdown("#### Como este número é calculado")
+    st.caption(
+        "Texto integral da definição aprovada do projeto — o mesmo documento que está no "
+        "repositório, exibido aqui para que o índice possa ser entendido sem sair do painel."
+    )
+    for titulo, corpo in carregar_definicao():
+        with st.expander(titulo):
+            st.markdown(corpo)
+
+
+# --------------------------------------------------------------------------- #
+# Aba ainda não construída (US-14)
 # --------------------------------------------------------------------------- #
 def aba_em_construcao(nome: str, story: str) -> None:
     st.subheader(nome)
@@ -418,7 +629,7 @@ def main() -> None:
     with mapa:
         aba_mapa()
     with indice:
-        aba_em_construcao("Índice de dependência por região de saúde", "US-13")
+        aba_indice()
     with achados:
         aba_em_construcao("Achados & recomendações", "US-14")
 
