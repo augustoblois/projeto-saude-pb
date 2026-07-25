@@ -56,15 +56,17 @@
   - [x] Veredito PA-2 + visualização; tabela em `data/processed/`
 
 ## EP-04 — Painel Streamlit (P0 · 30/07–04/08)
-- [ ] US-11 — Aba matriz O-D com filtros, offline e rápida (Augusto · 5 pts · dep: US-04)
-  - [ ] Esqueleto do app (abas) consumindo pré-agregações de `data/processed/`
-  - [ ] Aba matriz: filtros origem/mês; tabela legível/copiável
-  - [ ] Conferir números vs US-04; medir carga (<10s) e filtro (<3s)
+- [x] US-11 — Aba matriz O-D com filtros, offline e rápida (Augusto · 5 pts · dep: US-04)
+  - [x] Esqueleto do app (abas) consumindo pré-agregações de `data/processed/`
+  - [x] Aba matriz: filtros origem/mês; tabela legível/copiável
+  - [x] Conferir números vs US-04; medir carga (<10s) e filtro (<3s)
 - [ ] US-12 — Mapa interativo O-D offline (Augusto · 5 pts · dep: US-04)
   - [ ] Geojson dos municípios PB (malha IBGE) versionado em `outputs/`
   - [ ] Escolher técnica de fluxo mais simples que funcione offline no Streamlit
   - [ ] Aba com polos destacados; teste offline + teste de leitura com o Pedro
   - ⚠️ Guard-rail (regra de decisão, não entrega): >1 dia sem funcionar → degradar p/ coroplético (registrar decisão)
+  - ✅ Decisão do guard-rail (25/07): mapa funcionou dentro da janela; a degradação **não** foi acionada. A cor do coroplético mudou de "taxa de evasão" para "destino principal" (área de captação) por motivo empírico — mediana da taxa de evasão municipal = 100%, 173/223 municípios > 90%, a cor não discriminava. Registro em `docs/diario-do-projeto.md` (Etapa 16).
+  - ⏳ Bloqueio p/ o checkbox (build-reviewer, 25/07): critério 2 — teste de leitura com o Pedro (1 min, nomear os polos sem ajuda) segue valendo como aceite por decisão explícita da Etapa 14. Parte técnica já aprovada na revisão.
 - [ ] US-13 — Aba do índice de dependência (Augusto · 2 pts · dep: US-10, US-11)
   - [ ] Ranking/visualização do índice + texto da definição aprovada
   - [ ] Conferência dos números contra `data/processed/`

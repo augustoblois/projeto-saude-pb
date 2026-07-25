@@ -13,24 +13,47 @@
 - **Também já sabemos quantos paraibanos internaram FORA do estado em 2025: 3.682** (a maioria em Pernambuco e no Rio Grande do Norte). Baixamos os dados dos 3 estados vizinhos e filtramos só quem mora na PB. É pouco perto das 258 mil internações internas — sinal de que o problema de "viajar pra internar" acontece quase todo DENTRO do estado.
 - **As cinco análises principais do projeto estão prontas e conferidas.** Em uma linha cada: os pacientes que saem da própria cidade se concentram em **João Pessoa e Campina Grande (58,6% do movimento)**; **cidade pequena perde muito mais** (até 10 mil habitantes, 98% dos moradores internam fora; acima de 100 mil, só 9%); os **caminhos não mudam** ao longo do ano (13 dos 20 trajetos mais usados aparecem nos 12 meses); quem **sai do estado** são 3.682 pessoas (1,41%), por dois motivos que convivem — estar na divisa e buscar tratamento grave — sem que dê pra dizer quanto é de cada; e **8 das 16 regiões de saúde passam de 50%** de dependência.
 - **Toda a parte de análise do projeto está concluída.** Do dia 25/07 em diante não há mais conta a fazer: o que falta é montar o painel (o site interativo) e escrever o texto de recomendações para a apresentação.
+- **O painel saiu do papel e já roda na máquina.** Ele tem quatro abas previstas; **duas já funcionam**: a tabela de quem vai de onde pra onde, e o **mapa da Paraíba**. As outras duas (o índice de dependência e os achados/recomendações) ainda estão vazias, esperando serem construídas.
+- **O mapa mostra uma coisa que ninguém tinha desenhado ainda:** cada cidade da Paraíba está pintada com a cor da cidade para onde a maioria dos seus moradores acaba internada. O resultado é um mapa de "territórios": dá pra ver no olho o **território de Campina Grande (62 cidades), o de João Pessoa (48) e o de Patos (30)**.
 - **Prazo:** apresentação dia 07/08/2026 (13 dias).
 
-## O que aconteceu na última sessão (25/07/2026)
+## O que aconteceu na última sessão (25/07/2026 — segunda sessão do dia)
 
-Sessão curta e de acabamento: fechamos a **explicação escrita do índice de dependência** — o texto que vai aparecer dentro do painel para o visitante entender o número principal do projeto sem precisar de ninguém do lado. Com isso, **acabou toda a parte de análise**; daqui pra frente é painel e apresentação.
+**O painel começou a existir.** Até hoje o projeto era análise: tabelas, contas conferidas, textos. Nesta sessão nasceu o site interativo que a gente vai mostrar no dia 07/08.
 
-**1. O texto da explicação ficou pronto.**
-Ele tem a fórmula, um exemplo real destrinchado passo a passo (a 3ª Região, a mais dependente do estado: de cada 100 internações de moradores dela, cerca de 85 acontecem fora), a leitura em linguagem do dia a dia, as faixas do que é dependência baixa/média/alta, e as seis limitações do número — o que ele **não** consegue dizer. Está em `docs/definicao-indice-dependencia.md`.
+**1. A primeira aba: a tabela de quem vai de onde pra onde.**
+Você escolhe uma cidade (ou uma região) e um mês, e ela mostra para onde os moradores dali foram internar, do fluxo maior para o menor. Dá pra copiar qualquer número direto da tela pra citar na apresentação. Ela abre em cerca de 6 segundos e responde a cada clique quase instantaneamente — porque o painel **não faz conta nenhuma na hora**: ele só lê tabelas que já foram calculadas antes e guardadas prontas. Isso é de propósito: no dia da apresentação, nada pode travar.
 
-**2. Conferimos os 12 números que aparecem nesse texto, um por um.**
-Refizemos cada conta a partir da base de internações original, sem olhar as tabelas já prontas — de propósito, para que fossem dois caminhos independentes chegando ao mesmo lugar. Os 12 bateram exatamente. A regra do projeto é que nenhum número apareça em lugar nenhum sem ser possível refazer a conta que o gerou, e agora isso está verificado para o texto que o professor vai ler no painel.
+**2. A segunda aba: o mapa da Paraíba.**
+Cada uma das 223 cidades aparece desenhada, pintada com a cor da cidade para onde a maioria dos seus moradores vai internar. Por cima, linhas ligam as cidades que mais mandam pacientes aos hospitais que mais recebem, e a linha fica mais grossa quanto maior o movimento. O mapa é montado a partir de um arquivo com o contorno de cada cidade que **baixamos uma vez e guardamos dentro do projeto** — então ele funciona com a internet desligada, que é a regra do projeto para a apresentação.
 
-**3. Corrigimos uma informação que tinha envelhecido.**
-O texto avisava que a base só enxerga hospitais da Paraíba, e dizia que os paraibanos internados em outros estados eram "cerca de 3,7 mil, ainda não confirmado". Só que esse levantamento **já tinha sido concluído** na sessão anterior: são **3.682 internações, 1,41%** do total. Ou seja: era um número certo, mas com um aviso desatualizado grudado nele. É exatamente o tipo de detalhe que alguém da banca percebe — o texto dizendo "ainda não sabemos" ao lado da tabela que mostra o resultado. Agora está atualizado, e ganhou também a ressalva honesta de que **não dá pra cravar** quanto desses 3.682 é gente da divisa e quanto é gente buscando tratamento grave: essa divisão muda demais dependendo do critério de distância que se use, então preferimos não afirmar o que o dado não sustenta.
+**3. Uma descoberta que apareceu enquanto montávamos o mapa.**
+A ideia original era pintar cada cidade pela porcentagem de moradores que interna fora. Ao fazer, o mapa saiu de uma cor só — e o motivo é o próprio dado: **na metade das cidades da Paraíba, 100% dos moradores internam fora**, e em 173 das 223 esse número passa de 90%. Ou seja, a esmagadora maioria das cidades do estado simplesmente não interna ninguém em casa. Isso muda como a gente conta a história: os 50,5% de internações fora da cidade de origem **não são gente escolhendo um hospital melhor — é falta de leito onde a pessoa mora**. Vale usar isso na apresentação.
 
-*(O detalhe das cinco análises da sessão anterior saiu daqui para esta seção não crescer sem parar — está resumido em "Onde estamos", acima, e contado por inteiro em `docs/diario-do-projeto.md`.)*
+**4. Um erro que quase passou batido, e é bom de contar na banca.**
+O mapa passou em todas as conferências automáticas — números certos, tempos bons, nenhum erro no programa — e mesmo assim aparecia na tela como um retângulo colorido sólido, sem cidade nenhuma. O motivo: o arquivo do IBGE lista os pontos do contorno de cada cidade numa certa ordem, e a ferramenta que desenha o mapa entende essa ordem ao contrário — para ela, aquilo significava "o planeta inteiro **menos** esta cidade". Corrigimos na origem, deixamos o motivo escrito no código, e criamos uma conferência automática que reprova se o erro voltar. **A lição:** conferência automática garante que o programa roda, não que o desenho está certo — para isso, alguém precisa abrir e olhar.
+
+*(O detalhe das etapas anteriores está resumido em "Onde estamos", acima, e contado por inteiro em `docs/diario-do-projeto.md`.)*
 
 ## Pra você, Pedro
+
+### ⏳ Tem uma coisa esperando por você — e ela leva 1 minuto
+
+O mapa está pronto, mas **ele só conta como entregue depois que você olhar**. O combinado do projeto é que um mapa que precisa de explicação não serve, porque no dia 07/08 quem estiver assistindo vai vê-lo pela primeira vez, exatamente como você agora. Então o teste é você mesmo:
+
+1. Abrir o terminal na pasta do projeto e rodar:
+   ```
+   streamlit run app.py
+   ```
+   (se der erro dizendo que não encontrou, rode antes `pip install -r requirements.txt`)
+2. Vai abrir uma página no navegador. Clicar na aba **Mapa**, no alto.
+3. **Olhar por 1 minuto, sem ler nada em volta e sem me perguntar nada.** Depois me dizer, com suas palavras: **quais são as cidades que puxam pacientes de toda a Paraíba?**
+
+Se as duas cidades principais saltarem aos olhos sozinhas, o mapa passou. Se você precisar procurar, ou ficar na dúvida, **o mapa é que está errado, não você** — e aí eu conserto antes da apresentação, que é justamente pra isso que serve este teste. Me responde por WhatsApp mesmo.
+
+*(Isso é diferente daquela tarefa de leitura que eu tirei do caminho — veja mais abaixo. Aquela era um texto longo e virou opcional; esta aqui é olhar uma imagem por 1 minuto, e continua valendo.)*
+
+### O resto, quando você tiver tempo
 
 1. **Preparar o projeto (uma vez só, se ainda não fez):** abrir o terminal na pasta do projeto e rodar: `pip install -r requirements.txt` — isso instala tudo que o projeto usa.
 2. **Novidade: use o arquivo mais novo, que já vem com a região de saúde.** Rodar `jupyter notebook` no terminal e, num notebook novo:
@@ -51,6 +74,8 @@ O texto avisava que a base só enxerga hospitais da Paraíba, e dizia que os par
 Se você leu este arquivo nos últimos dias, viu aqui uma tarefa marcada como **travando o projeto**: ler a explicação do índice de dependência e responder 7 perguntas do Augusto, sem se preparar. **Ela não trava mais nada** — o Augusto decidiu no dia 25/07 tirar isso do caminho, e o projeto seguiu em frente.
 
 O motivo é o oposto de "deixa pra lá": ele leu o texto inteiro e concluiu que estava claro o bastante. O raciocínio dele foi que você é leigo na **ferramenta** (GitHub, Python, os termos técnicos), não no **conteúdo** — e o que aquele teste mediria é se o texto se explica sozinho para quem raciocina bem, coisa que ele já considera respondida. Então não é uma pendência sua, e não tem nada esperando por você aí.
+
+**Atenção pra não confundir:** essa dispensa vale **só** para aquele texto do índice. Os testes de leitura do **mapa** (o de 1 minuto, lá em cima) e, mais pra frente, do **texto de recomendações**, continuam valendo como condição de entrega — ficou combinado assim no dia 25/07.
 
 **Se ainda assim você quiser fazer (15 minutos, e continua valendo a pena):** abra `docs/definicao-indice-dependencia.md`, leia **só até a seção 5**, uma vez só, e chame o Augusto antes de ler o resto — o final do arquivo tem as próprias perguntas, e uma delas entrega a resposta. Qualquer trecho em que você travar é trecho pra reescrever antes de 07/08, porque quem estiver assistindo a apresentação vai estar exatamente na sua posição: vendo o número pela primeira vez.
 
