@@ -46,9 +46,10 @@
   - ⚠️ Guard-rail (regra de decisão, não entrega): congelamento PE/RN/CE incompleto até 29/07 → PA-5 degrada p/ nota metodológica (registrar decisão)
 
 ## EP-03 — Índice de dependência por região de saúde (P0 · 28–30/07)
-- [ ] US-09 — Definição do índice redigida e testada (Augusto · 2 pts · dep: US-02 · D-2: fórmula fechada = % das internações de residentes da região realizadas FORA dela)
-  - [ ] Redigir definição: fórmula, exemplo real, interpretação leiga, limitações
-  - [ ] Teste de leitura com o Pedro; ajustar texto
+- [x] US-09 — Definição do índice redigida e testada (Augusto · 2 pts · dep: US-02 · D-2: fórmula fechada = % das internações de residentes da região realizadas FORA dela)
+  - [x] Redigir definição: fórmula, exemplo real, interpretação leiga, limitações
+  - [x] Teste de leitura com o Pedro; ajustar texto
+  - ⚠️ Decisão do Augusto (24/07): o teste de leitura **deixa de ser bloqueio** para o checkbox. Julgamento dele sobre o leitor real (o Pedro é leigo em dados, não em raciocínio) — o texto foi lido e aprovado pelo Augusto. O que sustenta o [x] é a parte técnica: 12/12 números do doc recalculados do zero pela base linha a linha (RNF-05). O roteiro de 7 perguntas segue no doc e pode ser aplicado quando der, sem reabrir a story.
 - [x] US-10 — Índice calculado p/ 100% das regiões + PA-2 (Augusto · 3 pts · dep: US-09, US-04)
   - [x] Índice por região + validação cruzada contra a matriz regional
   - [x] Ranking + interpretação escrita por faixa
@@ -100,4 +101,4 @@
 ---
 
 ## ⚠️ Gaps abertos (decisão humana — detalhe em docs/backlog.md)
-- [ ] G-4 — Formalizar troca de projeto com o professor (ação humana; não bloqueia execução técnica)
+- [x] G-4 — Formalizar troca de projeto com o professor — e-mail enviado e **aceite confirmado pelo professor em 24/07/2026**

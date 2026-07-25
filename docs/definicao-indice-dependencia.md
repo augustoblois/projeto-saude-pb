@@ -112,12 +112,23 @@ Os arquivos do SIH são organizados pelo estado **do hospital**. Então um parai
 em Recife ou Natal **não aparece** nesta base — ele está no arquivo de Pernambuco ou do Rio
 Grande do Norte. **Como o índice trata isso:** essas internações ficam **fora da conta
 inteira** — não entram no numerador nem no denominador. Consequência: **o índice publicado é
-um piso**, ou seja, a dependência real é igual ou maior do que a mostrada, nunca menor. O
-efeito tende a ser maior nas regiões de fronteira. Um levantamento paralelo do projeto
-(US-08, em andamento no momento em que este texto foi escrito) indica algo em torno de
-**3,7 mil** internações de paraibanos em PE/RN/CE em 2025 — cerca de **1,4%** do volume
-estadual, o que sugere efeito pequeno no agregado, mas ainda não validado por aquela story.
-Quando a US-08 fechar, este parágrafo deve ser atualizado com o número final.
+um piso**, ou seja, a dependência real é igual ou maior do que a mostrada, nunca menor.
+
+**Qual é o tamanho desse efeito — o projeto mediu.** Baixamos também os registros de
+Pernambuco, Rio Grande do Norte e Ceará de 2025 e separamos quem mora na Paraíba:
+**3.682 internações**. Isso é **1,41%** de todas as internações de paraibanos no ano
+(3.682 de 260.305, somando as de dentro e as de fora do estado). Ou seja: **a evasão da
+Paraíba é quase toda dentro da própria Paraíba** — o buraco desta base é pequeno, e o
+"piso" descrito acima está perto do número real.
+
+Uma ressalva sobre *onde* esse 1,41% cai: parte dele é gente da divisa pegando o hospital
+mais perto, que por acaso fica do outro lado da fronteira, e parte é gente que atravessou
+o estado atrás de tratamento de alta complexidade. Os dois motivos existem — o principal
+destino é Recife, mas o segundo é um hospital regional em Alexandria/RN, que atende o
+sertão da divisa. **O projeto não crava a divisão entre esses dois grupos**, porque ela se
+mostrou instável: dependendo da distância que se use para definir "fronteira", a proporção
+muda muito. O que é estável, e sustenta a leitura, é que o grupo que viajou longe interna
+por casos bem mais complexos e caros do que o grupo da divisa.
 
 **(b) O índice mede deslocamento, não qualidade nem adequação clínica.**
 Ele conta *quantas* internações saíram da região, não se elas *deveriam* ter saído. Um
@@ -159,11 +170,16 @@ fora da tabela do índice.
 
 ---
 
-## Para conferir com o Pedro (teste de leitura — ação humana do Augusto)
+## Roteiro de teste de leitura (opcional — não bloqueia mais)
 
-> Este teste **ainda não foi feito**. O critério de aceite da US-09 exige que um leitor leigo
-> explique o índice **com as próprias palavras**. O roteiro abaixo é para o Augusto aplicar;
-> as respostas devem ser anotadas aqui embaixo e o texto ajustado onde travar.
+> **Status:** a definição foi lida e aprovada pelo Augusto, e é com base nisso que a US-09
+> está fechada. O teste formal com o Pedro **deixou de ser condição** para o fechamento
+> (decisão de 24/07/2026, registrada em `docs/backlog.md`): ele é leigo em dados e em
+> ferramenta, não em raciocínio, e o texto foi julgado legível como está.
+>
+> O roteiro abaixo continua aqui porque **continua útil** — se em algum momento o Pedro ler
+> isto antes da apresentação, as respostas dele apontam exatamente onde o texto trava. Não é
+> pendência; é ferramenta disponível.
 
 Peça ao Pedro para ler as seções 1 a 5 **uma vez só** e então responder, sem consultar:
 
@@ -179,4 +195,4 @@ Peça ao Pedro para ler as seções 1 a 5 **uma vez só** e então responder, se
 reescrever — o alvo é entendimento em **uma leitura**, então "entendi depois de reler" conta
 como falha do texto, não do leitor. Registrar aqui a data do teste e os ajustes feitos.
 
-**Resultado do teste:** _(a preencher após a conversa com o Pedro)_
+**Resultado do teste:** _não aplicado — ver status no topo desta seção._

@@ -35,5 +35,5 @@ Quase metade das internações da PB acontece fora do município de residência 
 - P1 e P2 já foram apresentados (com o projeto antigo) — a única entrega restante é o P3.
 
 ## A definir
-- Conversa com o professor formalizando a troca de projeto (ele já sinalizou que aceita troca no meio do semestre).
+- ~~Conversa com o professor formalizando a troca de projeto~~ — **feito em 24/07/2026**: formalizada por e-mail e **aceita pelo professor**.
 - Volume/completude dos meses finais de 2025 no DATASUS (nov/dez podem estar incompletos) — verificar no placar do congelamento.

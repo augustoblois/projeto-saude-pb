@@ -24,7 +24,7 @@ Uma story só é semeada quando tem: aceite Given/When/Then · dependências ide
 - **D-3 (ex-G-3) — Porte do município = estimativa populacional IBGE** mais recente por município, salva como CSV versionado no repo (offline). → US-06.
 
 ## ⚠️ Gaps para o PM
-- **G-4 — Troca de projeto ainda não formalizada com o professor.** Ação humana; não bloqueia execução técnica, mas antecede o investimento pesado de horas.
+- ~~**G-4 — Troca de projeto ainda não formalizada com o professor.**~~ **RESOLVIDO (24/07/2026):** troca formalizada por e-mail e **aceita pelo professor**. Gap encerrado.
 
 ---
 
@@ -148,6 +148,7 @@ Uma story só é semeada quando tem: aceite Given/When/Then · dependências ide
 **Critérios de aceite**
 - **Dado** a fórmula aprovada (D-2), **quando** redijo a definição, **então** existe um texto com: fórmula, exemplo numérico com uma região real, interpretação em linguagem leiga e limitações declaradas (AIH ≠ paciente único, reinternações) — pronto para ser exibido tal-qual no painel (RF-02).
 - **Dado** a definição, **quando** um leitor leigo (Pedro) a lê, **então** ele consegue explicar com as próprias palavras o que o número significa (teste real com o Pedro).
+  - ⚠️ **Aceite flexibilizado por decisão do Augusto (24/07/2026):** este critério **deixa de ser bloqueio** para o fechamento da US-09. Razão dada: o Pedro é leigo em dados e em ferramenta (git, termos técnicos), **não** em raciocínio — e o Augusto, que leu o texto inteiro, julga a legibilidade suficiente. A story fecha com base no critério 1 + na validação numérica (RNF-05). O roteiro de leitura permanece no doc como material aplicável depois, sem reabrir a story. **Escopo da decisão: só a US-09** — os testes de leitura da US-12 (mapa) e US-16 (narrativa) seguem valendo como aceite.
 
 **Tasks**
 - [ ] Redigir a definição: fórmula, exemplo numérico com uma região real, interpretação leiga, limitações

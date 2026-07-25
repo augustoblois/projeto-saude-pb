@@ -4,7 +4,7 @@
 > Projeto de ANÁLISE DE DADOS (UFPB, disciplina Análise de Dados) — não é web-app fullstack. Stack: Python/pandas/Jupyter + Streamlit.
 
 ## ⚠️ Gaps para o gate
-- **Troca de projeto ainda não formalizada com o professor.** Ele sinalizou aceite, mas a conversa não aconteceu. Todo o escopo abaixo assume aprovação — é o único evento capaz de invalidar o PRD inteiro.
+- ~~**Troca de projeto ainda não formalizada com o professor.**~~ **RESOLVIDO (24/07/2026):** troca formalizada por e-mail e **aceita pelo professor**. O escopo abaixo deixa de depender de suposição.
 
 ## Problema & visão
 Quase metade das internações da Paraíba (49,8% em jan/2025; 20.029 internações no mês) acontece fora do município de residência do paciente, e **nenhum painel público mostra esse fluxo origem→destino**. O gestor da SES-PB decide pactuação (PPI) e regionalização sem enxergar a evasão assistencial. Este projeto entrega a peça que falta: uma matriz origem→destino das internações de 2025 (SIH/DATASUS) + um índice de dependência por região de saúde, num painel Streamlit que um gestor real poderia abrir amanhã. No contexto acadêmico, é a entrega P3 (40% da nota, demo ao vivo em 07/08/2026), cujo critério nº 1 é exatamente **viabilidade real**.

@@ -70,11 +70,22 @@ Conferimos tudo contra as fontes oficiais do DATASUS (informe técnico em PDF + 
 
 ## Etapa 13 — US-10: índice de dependência calculado (US-09 em aberto) ✅⚠️
 **O QUE:** Índice para as 16 regiões = % das internações de residentes da região realizadas fora dela (decisão D-2). **8 das 16 acima de 50%** → hipótese PA-2 (previa ≥ 1/3, registrada no PRD antes do cálculo) **confirmada**. Extremos: 3ª Região 84,5%; 1ª (JP) 1,8%; 16ª (CG) 4,1%. Validação por **3 caminhos independentes** (matriz regional, matriz municipal remapeada do zero, base linha a linha por AIH) + o CSV pré-existente: delta 0,0 nos três pares, com asserts.
-**POR QUÊ:** É o diferencial do projeto — não existe em painel público. A tripla validação existe porque um número que ninguém mais publica não tem com o que ser comparado externamente; a única defesa é a consistência interna. **US-09 segue aberta**: falta o teste de leitura com o Pedro (ação humana), critério de aceite que nenhuma automação pode cumprir.
+**POR QUÊ:** É o diferencial do projeto — não existe em painel público. A tripla validação existe porque um número que ninguém mais publica não tem com o que ser comparado externamente; a única defesa é a consistência interna. **US-09 seguia aberta** neste momento: faltava o teste de leitura com o Pedro (ação humana) — resolvido na Etapa 14.
 **ONDE:** `docs/definicao-indice-dependencia.md`, `notebooks/01-indice-dependencia.ipynb`, `data/processed/indice_dependencia_regional.csv`, `outputs/figures/indice_ranking_dependencia.png`
+
+## Marco (24/07) — troca de projeto formalizada com o professor ✅
+**O QUE:** E-mail enviado ao professor formalizando a substituição do projeto do ENEM pelo Mapa de Evasão Assistencial da PB — **e respondido com aceite no mesmo dia**. Encerra o gap G-4, aberto desde o início do planejamento.
+**POR QUÊ:** Era o único evento capaz de invalidar todo o escopo — o aceite havia sido apenas verbal, e o investimento pesado de horas já estava em curso. Com o aceite por escrito, a cadeia de planejamento (briefing → PRD → backlog) deixa de rodar sobre suposição.
+**ONDE:** `TASKS.md` (G-4), `docs/briefing.md`, `docs/prd.md`, `docs/backlog.md`
+
+## Etapa 14 — US-09: definição do índice fechada e auditada ✅
+**O QUE:** Fechamos a definição escrita do índice (fórmula, exemplo passo a passo da 3ª Região, leitura leiga, faixas com corte justificado, 6 limitações). Auditamos **os 12 números do texto recalculando cada um do zero pela base linha a linha** — bateram todos. Atualizamos a limitação (a): o buraco "hospitais fora da PB" deixou de ser estimativa e virou número medido — **3.682 internações = 1,41%** do total de paraibanos (3.682 de 260.305).
+**POR QUÊ:** Este texto é o que aparece no painel — é o que faz um gestor confiar no número-assinatura do projeto. A auditoria numérica existe porque o risco real aqui não é errar a conta, é o texto envelhecer em cima de uma conta certa: a limitação (a) ainda dizia "levantamento em andamento, ~1,4% não validado" **depois** da US-08 ter fechado com 1,41%. Foi exatamente o padrão que derrubou 4 das 5 análises na revisão (ver nota de método abaixo). Sobre o fluxo interestadual, o texto deliberadamente **não crava** a divisão fronteira × interior: ela varia de 11,5% a 58,5% conforme o corte de distância e chega a inverter — o que é estável é a razão de complexidade (interior 36,2% de alta complexidade vs. 13,1% na fronteira).
+**ONDE:** `docs/definicao-indice-dependencia.md` (§6a reescrita), `TASKS.md`, `docs/backlog.md`
+**DECISÃO:** o teste de leitura com o Pedro deixou de bloquear o fechamento (chamada do Augusto, que leu o texto e julga a legibilidade suficiente — o Pedro é leigo em dados e ferramenta, não em raciocínio). O roteiro de 7 perguntas fica no doc como ferramenta opcional. Vale **só para a US-09**: os testes de leitura da US-12 (mapa) e US-16 (narrativa) seguem valendo como aceite.
 
 ---
 
 *Nota de método (vale pra apresentação):* as cinco análises foram construídas em paralelo e cada uma passou por revisão independente que refez as contas do zero. Quatro voltaram reprovadas na primeira rodada — e **nenhuma reprovação foi erro de cálculo**: em todos os casos o número estava certo e o texto ao redor dele estava desatualizado ou afirmava mais do que o dado sustentava (título dizendo "sete" com oito barras no gráfico; conclusão contradita pela tabela logo acima; número de validação não derivável). O padrão: texto escrito antes da execução final e nunca reconferido.
 
-*Próximas etapas previstas (ordem do backlog): US-09 (teste de leitura) → painel Streamlit (US-11..14) → narrativa executiva e recomendações (US-16).*
+*Próximas etapas previstas (ordem do backlog): painel Streamlit (US-11..14) → narrativa executiva e recomendações (US-16). Com o EP-03 fechado, todo o trabalho analítico do projeto está concluído — o que resta é vitrine (painel) e comunicação.*
