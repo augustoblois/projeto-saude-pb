@@ -1054,6 +1054,127 @@ def aba_achados() -> None:
 
 
 # --------------------------------------------------------------------------- #
+# Aba: sobre os dados
+# --------------------------------------------------------------------------- #
+# O comando que congela um mês novo. Constante para aparecer uma vez só na tela e
+# não ser reescrito no meio de um parágrafo — o passo a passo completo (incluindo
+# a ordem de reprocessamento) vive em docs/atualizacao-mensal.md, não aqui.
+COMANDO_CONGELAR = "python src/congelar_sih.py"
+
+
+def cobertura_da_base() -> dict[str, int | str]:
+    """Quantos meses e quantas internações o painel está mostrando, contados da própria
+    base — pelo mesmo motivo de `numeros_de_capa`: um número digitado à mão envelhece
+    no dia em que um mês novo entrar, e este é justamente o texto que fala disso."""
+    matriz = carregar_matriz_municipal()
+    meses = sorted(int(m) for m in matriz["mes"].unique())
+    return {
+        "n_meses": len(meses),
+        "primeiro": MESES[meses[0]],
+        "ultimo": MESES[meses[-1]],
+        "internacoes": int(matriz["internacoes"].sum()),
+    }
+
+
+def aba_sobre() -> None:
+    st.subheader("Sobre os dados")
+
+    cob = cobertura_da_base()
+    a, b, c = st.columns(3)
+    a.metric("Fonte", "SIH/SUS — DATASUS")
+    b.metric("Período", f"{cob['primeiro']} a {cob['ultimo']} de 2025")
+    c.metric("Internações na base", mil(cob["internacoes"]))
+
+    st.markdown(
+        f"""
+Tudo o que aparece neste painel vem de **uma única fonte pública**: o SIH/SUS, o sistema
+em que o Ministério da Saúde registra toda internação paga pelo SUS no país. O arquivo que
+usamos se chama **RD** ("AIH reduzida") e traz uma linha por internação, com duas
+informações que são o coração do projeto: **em que município o paciente mora** e **em que
+município ele foi internado**. É a diferença entre esses dois campos que chamamos de
+*evasão*.
+
+Baixamos os arquivos da Paraíba de **{cob["primeiro"].lower()} a {cob["ultimo"].lower()} de
+2025** — {cob["n_meses"]} meses, {mil(cob["internacoes"])} internações — direto do
+servidor do DATASUS.
+"""
+    )
+
+    with st.expander("Por que o painel funciona sem internet", expanded=True):
+        st.markdown(
+            """
+Os dados foram **congelados**: baixados uma vez e guardados como arquivos dentro do
+próprio repositório do projeto. O painel lê esses arquivos do disco e nunca consulta o
+DATASUS enquanto está rodando.
+
+Isso é uma decisão, não uma limitação. Um painel que consulta um servidor ao vivo depende
+de o servidor estar no ar e de a rede da sala funcionar — e depende também de o número não
+ter mudado desde a última vez que alguém olhou. Congelado, o painel mostra **exatamente**
+os mesmos números hoje, na apresentação e daqui a um ano, e qualquer pessoa que baixe o
+repositório reproduz a mesma tela.
+
+Como efeito colateral bem-vindo: dá para apresentar com a internet desligada.
+"""
+        )
+
+    with st.expander("O número pode mudar depois — e por quê"):
+        st.markdown(
+            """
+O DATASUS **corrige o passado**. Quando um hospital envia uma internação com atraso, ou
+corrige um registro errado, essa internação entra no sistema *depois* que o mês dela já
+tinha sido publicado. Na prática, um mês recém-publicado chega **incompleto e vai subindo**
+ao longo dos meses seguintes, até parar de mudar.
+
+Consequência: baixar o mesmo mês em duas datas diferentes pode devolver dois números
+diferentes. Não é erro de cálculo — é assim que o dado funciona.
+
+**Dezembro é o caso mais sensível**, porque foi o último mês a ser congelado: teve menos
+tempo para receber essas correções. Aqui dezembro aparece como o mês de menor volume do
+ano — e, com esta base, **não dá para saber** quanto disso é "houve mesmo menos
+internação" e quanto é "o registro ainda não chegou".
+
+**A política do projeto é declarar, não maquiar.** Nenhum mês foi excluído (um ano de onze
+meses seria uma invenção), nenhuma correção futura foi estimada (seria inventar dado que
+não existe), e a ressalva está escrita em todo lugar em que dezembro é citado. É a leitura
+honesta do que a base sustenta.
+"""
+        )
+
+    with st.expander("Como este painel ganharia um mês novo"):
+        st.markdown(
+            """
+O DATASUS publica cada mês com **cerca de dois meses de atraso**. Para trazer um mês novo,
+roda-se um comando na pasta do projeto:
+"""
+        )
+        st.code(COMANDO_CONGELAR, language="powershell")
+        st.markdown(
+            """
+Esse programa se conecta ao servidor do DATASUS, baixa o arquivo do mês, confere se os
+campos de origem e destino vieram completos e guarda o resultado no projeto. Ele é
+**seguro de repetir**: mês que já foi baixado é pulado, sem baixar de novo e sem sobrescrever
+nada — se a conexão cair no meio, é só rodar outra vez.
+
+Baixar, porém, não é o suficiente: os quadros deste painel são **contas prontas**, feitas
+antes, para que a tela abra rápido e sem recalcular nada a cada clique. Então é preciso
+refazer essas contas, na ordem certa — primeiro a base unificada, depois as regiões de
+saúde, depois a matriz de origem e destino, e só então as análises e o índice de
+dependência.
+
+O passo a passo completo — a ordem exata, o que cada etapa refaz e o que conferir nos
+números — está em **`docs/atualizacao-mensal.md`**, no repositório. Nada aqui no código do
+painel precisa mudar: ele passa a exibir o mês novo sozinho.
+"""
+        )
+
+    st.caption(
+        "Unidade de contagem: a AIH (Autorização de Internação Hospitalar). É uma internação "
+        "paga pelo SUS, não uma pessoa — quem internou três vezes no ano conta três. "
+        "Os arquivos originais e os documentos citados estão no repositório do projeto."
+    )
+
+
+# --------------------------------------------------------------------------- #
 def main() -> None:
     st.set_page_config(page_title="Evasão Assistencial — PB", layout="wide")
     st.title("Mapa de Evasão Assistencial da Paraíba")
@@ -1062,8 +1183,8 @@ def main() -> None:
         "ano de 2025, dados congelados localmente (o painel funciona sem internet)."
     )
 
-    matriz, mapa, indice, achados = st.tabs(
-        ["Matriz O-D", "Mapa", "Índice de dependência", "Achados & recomendações"]
+    matriz, mapa, indice, achados, sobre = st.tabs(
+        ["Matriz O-D", "Mapa", "Índice de dependência", "Achados & recomendações", "Sobre os dados"]
     )
     with matriz:
         aba_matriz()
@@ -1073,6 +1194,8 @@ def main() -> None:
         aba_indice()
     with achados:
         aba_achados()
+    with sobre:
+        aba_sobre()
 
 
 if __name__ == "__main__":

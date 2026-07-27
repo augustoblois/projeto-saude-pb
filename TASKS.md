@@ -75,10 +75,10 @@
   - [x] Vincular recomendação→evidência; conferir números contra notebooks
 
 ## EP-05 — Comunicação executiva & recomendações (P0 · 26/07–03/08 + 05–06/08)
-- [ ] US-15 — EDA guiada sobre a base tratada (Augusto · 3 pts · dep: US-02 · Pedro usa como material de estudo)
-  - [ ] Notebook-roteiro autocontido em `notebooks/90-*`, instruções leigas
-  - [ ] Executar roteiro; ≥ 3 visualizações título-afirmação em `outputs/`
-  - [ ] Revisão de consistência dos números
+- [x] US-15 — EDA guiada sobre a base tratada (Augusto · 3 pts · dep: US-02 · Pedro usa como material de estudo)
+  - [x] Notebook-roteiro autocontido em `notebooks/90-*`, instruções leigas
+  - [x] Executar roteiro; ≥ 3 visualizações título-afirmação em `outputs/`
+  - [x] Revisão de consistência dos números
 - [x] US-16 — Narrativa executiva + ≥ 3 recomendações ancoradas (Augusto · 5 pts · dep: US-05, US-06, US-07, US-10 · Pedro revisa e apresenta)
   - [x] Sumário de evidências com os números finais das PAs
   - [x] Rascunho da narrativa + recomendações em `reports/`, linguagem leiga
@@ -88,12 +88,12 @@
   - [ ] Ensaio cronometrado offline; ajustes; segunda passada limpa
 
 ## EP-06 — Reprodutibilidade & narrativa de atualização (P1 · 04–05/08)
-- [ ] US-18 — Reprodução em máquina limpa (Augusto · 3 pts · dep: US-11)
-  - [ ] Pinar dependências (requirements) com versões reais
-  - [ ] Seção de execução no README p/ avaliador que nunca viu o repo
-  - [ ] Teste real em ambiente limpo; corrigir o que faltar
-- [ ] US-19 — Narrativa de atualização mensal documentada (Augusto · 1 pt)
-  - [ ] Seção (README e/ou aba "sobre") com comando exato + nota metodológica (retificações dez)
+- [x] US-18 — Reprodução em máquina limpa (Augusto · 3 pts · dep: US-11)
+  - [x] Pinar dependências (requirements) com versões reais
+  - [x] Seção de execução no README p/ avaliador que nunca viu o repo
+  - [x] Teste real em ambiente limpo; corrigir o que faltar
+- [x] US-19 — Narrativa de atualização mensal documentada (Augusto · 1 pt)
+  - [x] Seção (README e/ou aba "sobre") com comando exato + nota metodológica (retificações dez)
 
 ## EP-07 — Aprofundamentos analíticos (P2 · só se sobrar hora, nunca depois de 04/08)
 - [x] US-20 — Caracterização dos maiores pares O-D (Augusto · 5 pts · dep: US-03, US-04)
