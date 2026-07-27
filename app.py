@@ -18,6 +18,7 @@ import streamlit as st
 DIR_PROCESSED = Path(__file__).parent / "data" / "processed"
 DIR_OUTPUTS = Path(__file__).parent / "outputs"
 DIR_DOCS = Path(__file__).parent / "docs"
+DIR_REPORTS = Path(__file__).parent / "reports"
 
 MESES = {
     1: "Janeiro", 2: "Fevereiro", 3: "Março", 4: "Abril",
@@ -71,6 +72,30 @@ def carregar_definicao() -> list[tuple[str, str]]:
             continue
         corpo = corpo.strip().removesuffix("---").strip()  # tira o separador final
         secoes.append((titulo.strip(), corpo))
+    return secoes
+
+
+@st.cache_data
+def carregar_narrativa() -> list[tuple[str, str]]:
+    """Seções numeradas da narrativa executiva (US-16), lidas do próprio documento.
+
+    Mesmo motivo de `carregar_definicao`: o critério de aceite da US-14 exige fonte
+    única — a aba exibe o texto de `reports/`, não uma cópia. Corrigir uma frase no
+    documento corrige o painel junto, e nunca existem duas versões divergentes.
+    O cabeçalho de contexto (antes da seção 1) fica de fora: é orientação para quem lê
+    o arquivo no repositório, não para quem consulta o painel.
+    """
+    bruto = (DIR_REPORTS / "narrativa-executiva.md").read_text(encoding="utf-8")
+    secoes = []
+    for bloco in bruto.split("\n## ")[1:]:
+        titulo, _, corpo = bloco.partition("\n")
+        if not titulo[:1].isdigit():  # só as seções numeradas
+            continue
+        # "2. Achado 1 — ..." → "Achado 1 — ...": a numeração serve para ordenar o
+        # arquivo, não para ser lida na tela.
+        titulo = titulo.split(". ", 1)[-1].strip()
+        corpo = corpo.strip().removesuffix("---").strip()
+        secoes.append((titulo, corpo))
     return secoes
 
 
@@ -605,11 +630,95 @@ def aba_indice() -> None:
 
 
 # --------------------------------------------------------------------------- #
-# Aba ainda não construída (US-14)
+# Aba: achados & recomendações
 # --------------------------------------------------------------------------- #
-def aba_em_construcao(nome: str, story: str) -> None:
-    st.subheader(nome)
-    st.info(f"Aba em construção — entrega da story {story}.")
+def numeros_de_capa() -> dict[str, float | int]:
+    """Os quatro números do topo da aba, calculados das pré-agregações.
+
+    Poderiam ser digitados — estão todos escritos na narrativa. Não são, de propósito:
+    a regra RNF-05 vale também dentro do painel, e um número calculado nunca fica para
+    trás quando a base é atualizada.
+    """
+    matriz = carregar_matriz_municipal()
+    total = int(matriz["internacoes"].sum())
+    fora = int(matriz.loc[matriz["evasao_municipal"], "internacoes"].sum())
+
+    # Fatia dos dois maiores destinos sobre tudo que se deslocou.
+    por_destino = (
+        matriz[matriz["evasao_municipal"]]
+        .groupby("nome_mun_int")["internacoes"]
+        .sum()
+        .sort_values(ascending=False)
+    )
+    polos = por_destino.head(2)
+
+    indice = carregar_indice()
+
+    return {
+        "internacoes": total,
+        "fora_pct": fora / total * 100,
+        "polos_nomes": " e ".join(polos.index),
+        "polos_pct": polos.sum() / fora * 100,
+        "regioes_alta": int((indice["faixa_dependencia"] == "alta").sum()),
+        "regioes_total": len(indice),
+    }
+
+
+def aba_achados() -> None:
+    st.subheader("Achados & recomendações")
+
+    capa = numeros_de_capa()
+    a, b, c, d = st.columns(4)
+    a.metric("Internações em 2025", mil(capa["internacoes"]))
+    b.metric("Fora da cidade onde mora", pct(capa["fora_pct"]))
+    c.metric(f"Concentrado em {capa['polos_nomes']}", pct(capa["polos_pct"]))
+    d.metric(
+        "Regiões de dependência alta",
+        f"{capa['regioes_alta']} de {capa['regioes_total']}",
+    )
+
+    secoes = carregar_narrativa()
+    achados = [s for s in secoes if s[0].startswith("Achado")]
+    recomendacoes = [s for s in secoes if s[0].startswith("Recomendação")]
+    # O que não é achado nem recomendação: o achado central (primeira seção), o
+    # enquadramento e as limitações. Renderizados na ordem do documento.
+    restantes = [s for s in secoes if s not in achados and s not in recomendacoes]
+    central, fechamento = restantes[0], restantes[1:]
+
+    st.markdown("---")
+    st.markdown(f"### {central[0]}")
+    st.markdown(central[1])
+
+    st.markdown("---")
+    st.markdown("### Os cinco achados")
+    st.caption(
+        "Cada um traz o número que o sustenta e o que ele implica para a gestão. "
+        "Clique para abrir."
+    )
+    for titulo, corpo in achados:
+        with st.expander(titulo):
+            st.markdown(corpo)
+
+    st.markdown("---")
+    st.markdown("### O que fazer a respeito")
+    st.caption(
+        "Nenhuma recomendação aparece sem a evidência que a sustenta: cada uma termina "
+        "com os códigos dos números que a ancoram, rastreáveis em "
+        "`reports/sumario-evidencias.md`."
+    )
+    for titulo, corpo in recomendacoes:
+        with st.expander(titulo):
+            st.markdown(corpo)
+
+    st.markdown("---")
+    for titulo, corpo in fechamento:
+        with st.expander(titulo):
+            st.markdown(corpo)
+
+    st.caption(
+        "Texto integral de `reports/narrativa-executiva.md` — o painel lê o documento do "
+        "repositório em vez de guardar uma cópia, para que nunca existam duas versões."
+    )
 
 
 # --------------------------------------------------------------------------- #
@@ -631,7 +740,7 @@ def main() -> None:
     with indice:
         aba_indice()
     with achados:
-        aba_em_construcao("Achados & recomendações", "US-14")
+        aba_achados()
 
 
 if __name__ == "__main__":

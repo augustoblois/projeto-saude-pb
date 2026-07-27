@@ -70,19 +70,19 @@
 - [x] US-13 — Aba do índice de dependência (Augusto · 2 pts · dep: US-10, US-11)
   - [x] Ranking/visualização do índice + texto da definição aprovada
   - [x] Conferência dos números contra `data/processed/`
-- [ ] US-14 — Aba achados & recomendações (Augusto · 2 pts · dep: US-11, US-16)
-  - [ ] Estruturar aba com textos fechados na US-16 (fonte única: `reports/`)
-  - [ ] Vincular recomendação→evidência; conferir números contra notebooks
+- [x] US-14 — Aba achados & recomendações (Augusto · 2 pts · dep: US-11, US-16)
+  - [x] Estruturar aba com textos fechados na US-16 (fonte única: `reports/`)
+  - [x] Vincular recomendação→evidência; conferir números contra notebooks
 
 ## EP-05 — Comunicação executiva & recomendações (P0 · 26/07–03/08 + 05–06/08)
 - [ ] US-15 — EDA guiada sobre a base tratada (Augusto · 3 pts · dep: US-02 · Pedro usa como material de estudo)
   - [ ] Notebook-roteiro autocontido em `notebooks/90-*`, instruções leigas
   - [ ] Executar roteiro; ≥ 3 visualizações título-afirmação em `outputs/`
   - [ ] Revisão de consistência dos números
-- [ ] US-16 — Narrativa executiva + ≥ 3 recomendações ancoradas (Augusto · 5 pts · dep: US-05, US-06, US-07, US-10 · Pedro revisa e apresenta)
-  - [ ] Sumário de evidências com os números finais das PAs
-  - [ ] Rascunho da narrativa + recomendações em `reports/`, linguagem leiga
-  - [ ] Revisão cruzada com Pedro: cada recomendação ancorada em número derivável; fechar texto
+- [x] US-16 — Narrativa executiva + ≥ 3 recomendações ancoradas (Augusto · 5 pts · dep: US-05, US-06, US-07, US-10 · Pedro revisa e apresenta)
+  - [x] Sumário de evidências com os números finais das PAs
+  - [x] Rascunho da narrativa + recomendações em `reports/`, linguagem leiga
+  - [x] Revisão cruzada com Pedro: cada recomendação ancorada em número derivável; fechar texto
 - [ ] US-17 — Ensaio completo da demo offline (Dupla · 2 pts · dep: US-11..14, US-18)
   - [ ] Roteiro escrito da demo (fala, aba, filtro)
   - [ ] Ensaio cronometrado offline; ajustes; segunda passada limpa

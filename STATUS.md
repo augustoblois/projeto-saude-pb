@@ -2,7 +2,7 @@
 
 > **Pedro: este arquivo é pra você.** Sempre que abrir o projeto: GitHub Desktop → botão **Pull** (puxa as novidades) → ler este arquivo. Ele diz onde o projeto está, o que mudou e o que você pode fazer agora. O Augusto atualiza toda vez que trabalha no projeto.
 
-## Onde estamos (25/07/2026)
+## Onde estamos (27/07/2026)
 
 - **Tema fechado:** vamos mapear de onde saem e pra onde vão os pacientes que internam na Paraíba — quem precisa viajar pra outra cidade pra conseguir internação, e quais regiões dependem de quais. O resultado final vai ser um painel interativo (um site simples feito em Python).
 - **Todos os dados de 2025 já estão no projeto:** os 12 meses de internações da PB, direto do sistema do Ministério da Saúde (DATASUS). São **cerca de 258 mil internações no ano** (entre 19 mil e 23 mil por mês), conferidas uma a uma: nenhuma linha com informação faltando nas colunas que importam. O achado que motiva tudo segue de pé: **quase metade dos pacientes interna fora da cidade onde mora**.
@@ -17,27 +17,58 @@
 - **O mapa mostra uma coisa que ninguém tinha desenhado ainda:** cada cidade da Paraíba está pintada com a cor da cidade para onde a maioria dos seus moradores acaba internada. O resultado é um mapa de "territórios": dá pra ver no olho o **território de Campina Grande (62 cidades), o de João Pessoa (48) e o de Patos (30)**.
 - **Prazo:** apresentação dia 07/08/2026 (13 dias).
 
-## O que aconteceu na última sessão (25/07/2026 — terceira sessão do dia)
+## O que aconteceu na última sessão (27/07/2026)
 
-**Ficou pronta a terceira aba do painel: o ranking do índice de dependência.** É a aba que mostra o número principal do projeto — quanto cada uma das 16 regiões de saúde depende de hospital de fora para cuidar da própria gente.
+**Foram entregues as duas últimas abas do painel — o projeto está completo.** E junto com elas, toda a estrutura de números, rastreamento e texto que sustenta a apresentação do dia 07/08.
 
-**1. O ranking, em barras.**
-As 16 regiões aparecem em ordem, da que mais depende de fora (3ª Região, 84,5%) para a que menos depende (a região de João Pessoa, 1,8%). A barra é verde, amarela ou vermelha conforme a dependência ser baixa, média ou alta. Tem duas linhas pontilhadas atravessando o gráfico: uma na **média da Paraíba (26,4%)** e outra na **metade (50%)** — quem passa da segunda é uma região onde a maioria das internações dos moradores acontece fora de casa. São 8 das 16.
+### US-14 — A aba "Achados & recomendações"
 
-**2. A ficha de cada região.**
-Escolhendo uma região numa listinha, aparece o índice dela, a posição no ranking, quantas internações os moradores tiveram no ano, quantas ficaram em casa, quantas saíram — e **para onde foi a maior parte de quem saiu**. Exemplo real: da 3ª Região saíram 9.143 internações, e 7.639 delas foram para a região de Campina Grande. Na prática a 3ª Região funciona como quintal de Campina Grande, e a ficha mostra isso em uma linha.
+**A quarta aba do painel agora existe e está funcional.** Ela é a vitrine do projeto para quem vai assistir à apresentação — mostra os pontos principais com números e recomendações amarrados um ao outro.
 
-**3. A explicação do número mora dentro do painel.**
-Aquele texto que explica o índice (fórmula, exemplo, o que o número não consegue dizer) agora aparece na própria aba, em blocos que abrem e fecham. Foi feito de um jeito específico: o painel **lê o texto do arquivo original na hora de mostrar**, em vez de ter uma cópia dele por dentro. Assim, se a gente corrigir uma frase no arquivo, o painel corrige junto — nunca vão existir duas versões diferentes da mesma explicação, uma delas errada. O motivo de isso importar: no dia 07/08, se alguém perguntar "de onde vem esse número?", a resposta está na tela, e é a mesma que está escrita no projeto.
+**1. O painel começa com 4 números em destaque no topo:**
+- 258.125 internações de paraibanos em 2025
+- 50,5% delas fora do município onde cada paciente mora
+- 58,6% dos fluxos concentrados em João Pessoa e Campina Grande
+- 8 das 16 regiões de saúde com dependência acima de 50%
 
-**4. Uma decisão de cuidado com o número.**
-Em toda tela dessa aba, o índice aparece **junto com o volume** (quantas internações a região tem). Isso é de propósito: a maior região tem 81 mil internações no ano e a menor tem 4 mil, então nas pequenas poucas dezenas de internações mexem no índice. Mostrar índice sem o tamanho ao lado convida a comparação injusta — e é o tipo de coisa que um professor pergunta.
+Nenhum desses números foi digitado à mão — todos vêm de cálculos feitos diretamente da base de dados. Se um dia os dados forem atualizados, esses números acompanham sozinhos.
 
-**5. Dois erros pegos porque alguém leu as frases da tela, não só os números.**
-As contas estavam certas desde o começo, mas uma regrinha de formatação de número (a que troca ponto por vírgula, como em "84,5%") estava trocando também os **pontos finais das frases** por vírgulas — o texto ficava com pontuação errada no meio. E, num segundo caso, a aba simplesmente quebrava ao trocar de região, por um conflito de nomes dentro do programa que não aparecia na primeira abertura. Os dois foram corrigidos. **A lição é irmã da do mapa:** conferir que os números batem não é a mesma coisa que conferir que as frases estão certas.
+**2. A estrutura é 5 achados + 4 recomendações, cada um com um número amarrado.**
+Exemplo: Achado 2 diz que a concentração é tanta (58,6% em dois polos) e foi por tanto tempo (13 dos 20 maiores fluxos aparecem todos os 12 meses) — aí vem o número a sustentar, a recomendação ("essas regiões precisam de acordo"), e depois a próxima descoberta.
 
-**6. Um detalhe chato que atrapalharia você, Pedro.**
-Desde a sessão passada faltava anotar na lista de instalação do projeto uma das ferramentas que o painel usa para desenhar gráficos. Quem instalasse o projeto do zero — você, ou o professor — receberia uma mensagem de erro ao tentar abrir o painel. Já está corrigido: rodar `pip install -r requirements.txt` de novo resolve.
+**3. Um achado forte apareceu só na conferência final:**
+Em 7 das 8 regiões que mais dependem de fora, a maioria das saídas não é espalhada entre vizinhos — vai tudo para um destino só. A 14ª Região: 92,3% para João Pessoa. A 15ª: 89,6% para Campina Grande. A 3ª: 83,6% também para Campina Grande. Isso muda a recomendação: não é "essas regiões precisam de acordo (genérico)", é **"essas regiões precisam de acordo com este parceiro, nominalmente"** — porque o parceiro é só um.
+
+**4. O texto lê o arquivo `.md` em tempo real.**
+Assim como acontece na aba do índice (etapa anterior), a aba não tem uma cópia interna do texto — ela **lê o arquivo de texto original** toda vez que abre. Se uma frase errar na revisão final, a gente corrige no arquivo e o painel corrige junto. Nunca vão existir duas versões divergentes da mesma frase.
+
+### US-16 — Narrativa executiva + rastreamento de números
+
+**Ficaram prontos os três documentos que sustentam a aba e a apresentação inteira:**
+
+**1. Narrativa executiva (`reports/narrativa-executiva.md`):**
+É o texto que vai em slides ou relatório. Tem o achado central em uma frase, depois os 5 achados, depois as 4 recomendações, um fecho que explica por que isso importa, e as 4 limitações do estudo (coisas que o número não consegue dizer). Nada foi digitado de cabeça — tudo vem conferido da base. **É o arquivo que Pedro deve ler quando tiver tempo** — é o material de estudo mais direto que existe do projeto.
+
+**2. Sumário de evidências (`reports/sumario-evidencias.md`):**
+Uma tabela que diz, para **cada número** que aparece no projeto, de onde ele saiu. Tem um código (E-01, P1-03, P3-02...) e o arquivo ou notebook que o calcula. Serve para responder a "de onde saiu esse número?" — a resposta é uma linha apontando para um lugar específico. Pensada pro momento que alguém na apresentação perguntar.
+
+**3. Script de conferência (`src/conferir_narrativa.py`):**
+Roda `python src/conferir_narrativa.py` no terminal e recalcula da base os 3 blocos de números que não tinham notebook próprio (quantas internações foram de residentes da PB contados só quem mora lá mesmo, a taxa estadual de evasão, e a tabela de destinos das 8 regiões mais dependentes). Serve como "teste de integridade" — se o script rodar e os números baterem, o projeto está coeso.
+
+### Duas armadilhas que foram registradas
+
+**1. O 50,5% e o 50,2% são ambos certos, mas medem coisas diferentes.**
+- **50,5%:** todas as 258.125 internações que aconteceram na PB — inclui quem vinha de fora pra cá
+- **50,2%:** só as internações de residentes da PB — exclui os não-paraibanos
+
+O texto do projeto diz qual está usando em cada contexto. Se confundir, a conclusão pode estar certa e o denominador errado — é o tipo de pegadilha que professor tira.
+
+**2. O 26,4% é a taxa estadual, não a média das regiões.**
+Se você somar os 26,4% de cada região e dividir por 16, sai outro número (porque região grande e pequena pesam igual na média simples, enquanto a taxa estadual pesa pelo volume). O texto agora diz "taxa estadual" pra deixar claro qual das duas está sendo usada.
+
+### O que falta conferir
+
+**A aba "Achados & recomendações" foi pronta, mas ninguém olhou a tela ainda** — o Augusto vai testar se está quebrado visualmente. Se aparecer algo fora de lugar, será corrigido. Mas a estrutura e os números já estão validados.
 
 *(O detalhe das etapas anteriores está resumido em "Onde estamos", acima, e contado por inteiro em `docs/diario-do-projeto.md`.)*
 
@@ -47,22 +78,31 @@ Desde a sessão passada faltava anotar na lista de instalação do projeto uma d
 
 O mapa está pronto, mas **ele só conta como entregue depois que você olhar**. O combinado do projeto é que um mapa que precisa de explicação não serve, porque no dia 07/08 quem estiver assistindo vai vê-lo pela primeira vez, exatamente como você agora. Então o teste é você mesmo:
 
-1. Abrir o terminal na pasta do projeto e rodar **primeiro** `pip install -r requirements.txt` (nesta sessão faltava uma ferramenta nessa lista — sem isso o painel dá erro), e depois:
+1. Abrir o terminal na pasta do projeto e rodar:
    ```
    streamlit run app.py
    ```
 2. Vai abrir uma página no navegador. Clicar na aba **Mapa**, no alto.
 3. **Olhar por 1 minuto, sem ler nada em volta e sem me perguntar nada.** Depois me dizer, com suas palavras: **quais são as cidades que puxam pacientes de toda a Paraíba?**
 
-Se as duas cidades principais saltarem aos olhos sozinhas, o mapa passou. Se você precisar procurar, ou ficar na dúvida, **o mapa é que está errado, não você** — e aí eu conserto antes da apresentação, que é justamente pra isso que serve este teste. Me responde por WhatsApp mesmo.
+Se as duas cidades principais saltarem aos olhos sozinhas, o mapa passou. Se você precisar procurar, ou ficar na dúvida, **o mapa é que está errado, não você** — e aí eu conserto antes da apresentação. Me responde por WhatsApp mesmo.
 
-*(Isso é diferente daquela tarefa de leitura que eu tirei do caminho — veja mais abaixo. Aquela era um texto longo e virou opcional; esta aqui é olhar uma imagem por 1 minuto, e continua valendo.)*
+### Leitura importante: a narrativa do projeto está pronta
 
-### Já que você vai abrir o painel: dá uma olhada na aba nova também
+Quando tiver tempo — pode ser hoje ou amanhã — abra este arquivo e leia:
+```
+reports/narrativa-executiva.md
+```
 
-Não é tarefa, é atalho pra você. Depois do mapa, clique na aba **Índice de dependência**. Ela é a que mais rende pra apresentação, porque tem o número principal do projeto em forma de ranking, e **a explicação dele está ali do lado**, em blocos que abrem e fecham. Se um dia o professor perguntar "o que é esse índice?", a resposta está a um clique de distância na própria tela — você não precisa decorar nada.
+É o texto da aba "Achados & recomendações" do painel (a aba nova). Tem o achado central, os 5 achados principais com números, as 4 recomendações, e as limitações. **É a coisa mais importante que você pode estudar agora** — é exatamente o que você vai contar no dia 07/08, com números ao lado. Abre direto no GitHub ou em qualquer editor de texto. São umas 2–3 páginas.
 
-Uma sugestão de 2 minutos: escolha a **3ª Região** na listinha e leia a frase que aparece embaixo dos números. Ela conta, sozinha, a história inteira do projeto: uma região onde quase todo mundo se interna fora, e o destino é sempre o mesmo vizinho grande. É um bom jeito de você contar o projeto em uma frase se te pedirem isso.
+Se em algum parágrafo você ficar confuso ("não entendo o que esse número quer dizer"), **fala pro Augusto** — se um texto que você lê confuso, quem estiver assistindo também vai ficar. Com 11 dias ainda dá tempo de reescrever.
+
+### Já enquanto estiver no painel: dá uma olhada nas abas de Índice e Achados
+
+Depois do teste do mapa, clique na aba **Índice de dependência** — ela mostra o número principal do projeto em forma de ranking das 16 regiões. Se o professor perguntar "o que é esse índice?", a resposta está ali em blocos que abrem e fecham.
+
+E clique também na aba **Achados & recomendações** — é a mais nova e é a que você vai usar pra apresentar. **Ninguém olhou a tela ainda pra checar se está quebrada**, então se algo estiver visualmente errado, avisa pro Augusto. Mas os números já estão conferidos.
 
 ### O resto, quando você tiver tempo
 
