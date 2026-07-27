@@ -33,6 +33,64 @@ TODOS = "Todos"
 # a faixa também vem escrita por extenso na tabela e no cartão da região.
 CORES_FAIXA = {"baixa": "#2e9e6b", "média": "#d9a12b", "alta": "#c0433a"}
 
+# Tradução dos códigos ESPEC (especialidade do leito) do SIH — nenhum código aparece
+# na tela, só o nome. Mesma tabela usada no notebook 01-pa6-perfil-demanda.ipynb.
+ESPEC_NOMES = {
+    "01": "Cirúrgico", "02": "Obstétrico", "03": "Clínico", "04": "Crônicos",
+    "05": "Psiquiatria", "06": "Pneumologia sanitária", "07": "Pediátrico",
+    "08": "Reabilitação", "09": "Leito dia — cirúrgico", "10": "Leito dia — Aids",
+    "87": "Saúde mental",
+}
+
+# Ordem e cor de cada uma das seis caixas da régua de classificação da evasão
+# (notebooks/01-pa6-perfil-demanda.ipynb, seção 3) — mesma paleta usada lá, para que
+# quem olha o notebook e o painel reconheça a mesma cor com o mesmo significado.
+TIPOS_EVASAO_ORDEM = [
+    "Referência legítima", "Alta complexidade eletiva", "Urgência cirúrgica sem retaguarda",
+    "Demanda represada", "Evasão evitável", "Não classificado",
+]
+CORES_TIPO_EVASAO = {
+    "Referência legítima": "#1E8449",
+    "Alta complexidade eletiva": "#2E86C1",
+    "Urgência cirúrgica sem retaguarda": "#6C3483",
+    "Demanda represada": "#B9770E",
+    "Evasão evitável": "#B03A2E",
+    "Não classificado": "#BFC9CA",
+}
+# O que cada caixa significa e a ação que ela implica para a gestão — mesmo par
+# significado/ação decidido no notebook (dicionário `acao_por_tipo`), só reescrito em
+# linguagem de gestor para o `help=` dos cartões do painel.
+CATEGORIA_EVASAO_INFO = {
+    "Referência legítima": (
+        "Internação de alta complexidade com uso de UTI — o encaminhamento para outra "
+        "região é o funcionamento correto do sistema.",
+        "Não instalar estrutura nova: pactuar fluxo, regulação e transporte sanitário.",
+    ),
+    "Alta complexidade eletiva": (
+        "Cirurgia de alta complexidade agendada (perfil oncológico/cardiovascular), sem "
+        "UTI — é uma referência legítima, mas com fila.",
+        "Pactuar o fluxo e garantir agenda/regulação — não duplicar a estrutura.",
+    ),
+    "Urgência cirúrgica sem retaguarda": (
+        "Cirurgia de urgência que precisou atravessar região por falta de retaguarda "
+        "cirúrgica 24h na origem.",
+        "Retaguarda cirúrgica de urgência / sobreaviso 24h — não resolve com mutirão.",
+    ),
+    "Demanda represada": (
+        "Fila de cirurgia eletiva comum (não é urgência) que não coube na agenda local.",
+        "Mutirão ou ampliação da agenda cirúrgica local.",
+    ),
+    "Evasão evitável": (
+        "Internação clínica, obstétrica ou pediátrica comum que faltou estrutura para "
+        "resolver na própria região.",
+        "Reforçar capacidade local: equipe, plantão, leitos.",
+    ),
+    "Não classificado": (
+        "Não se encaixa em nenhuma das cinco regras da régua de classificação.",
+        "Sem ação padrão — precisa investigação caso a caso.",
+    ),
+}
+
 
 # --------------------------------------------------------------------------- #
 # Carga (cacheada: lê do disco uma vez por sessão, não a cada clique)
@@ -110,6 +168,36 @@ def carregar_malha() -> dict:
 def carregar_centroides() -> pd.DataFrame:
     """Ponto central de cada município — origem e destino das linhas de fluxo."""
     return pd.read_csv(DIR_OUTPUTS / "centroides_municipios_pb.csv", dtype={"cod_mun": str})
+
+
+@st.cache_data
+def carregar_recomendacao_regiao() -> pd.DataFrame:
+    """Recomendação nominal por região (PA6): destino principal, especialidade de maior
+    excesso e composição das seis caixas de evasão. Já ordenada por índice de dependência
+    decrescente — as regiões prioritárias primeiro, mesmo critério do resto do painel."""
+    df = pd.read_csv(DIR_OUTPUTS / "tables" / "pa6_recomendacao_regiao.csv")
+    return df.sort_values("indice_dependencia_pct", ascending=False).reset_index(drop=True)
+
+
+@st.cache_data
+def carregar_assinatura_regiao() -> pd.DataFrame:
+    """Assinatura de evasão por região × eixo × categoria (PA6): taxa de evasão da
+    categoria menos a taxa geral da região (`excesso_pp`), com o piso de volume `n_min_ok`
+    já calculado no notebook — o painel só filtra, não recalcula o piso."""
+    return pd.read_csv(DIR_OUTPUTS / "tables" / "pa6_assinatura_regiao.csv")
+
+
+@st.cache_data
+def centroide_regioes() -> pd.DataFrame:
+    """Ponto aproximado de cada região de saúde: média dos centroides dos municípios que
+    a compõem. Não é um centroide geométrico da malha (o painel não usa geopandas) — é
+    aproximado o bastante só para posicionar um marcador por região no mapa."""
+    mapa = pd.read_csv(DIR_PROCESSED / "regioes_saude_pb.csv", dtype={"codigo_municipio": str})
+    cent = carregar_centroides()
+    juntos = mapa.merge(cent, left_on="codigo_municipio", right_on="cod_mun", how="inner")
+    return juntos.groupby("nome_regiao_saude", as_index=False)[["lon", "lat"]].mean().rename(
+        columns={"nome_regiao_saude": "regiao"}
+    )
 
 
 # --------------------------------------------------------------------------- #
@@ -432,13 +520,95 @@ def montar_mapa(mes: str, quantos_fluxos: int) -> go.Figure:
     return fig
 
 
+CAMADA_CAPTACAO = "Área de captação (padrão)"
+CAMADA_TIPO_EVASAO = "Tipo de evasão dominante, por região"
+
+
+def montar_mapa_tipo_evasao() -> go.Figure:
+    """Camada opcional: um marcador por região de saúde, colorido pelo tipo de evasão que
+    domina o volume evadido dela (PA6). A malha municipal continua de fundo, em cinza
+    neutro, só para dar contexto geográfico — a informação nova está nos marcadores.
+
+    Marcadores em vez de choropleth por região: a malha disponível é municipal, e o
+    projeto não usa geopandas para dissolver polígonos por região (nenhuma dependência
+    nova). Um marcador por região é estável e não arrisca um choropleth quebrado.
+    """
+    matriz = carregar_matriz_municipal()
+    base = matriz.loc[matriz["uf_res"] == "PB", ["cod_mun_res"]].drop_duplicates()
+    base["cor"] = "PB"
+    fig = px.choropleth(
+        base,
+        geojson=carregar_malha(),
+        locations="cod_mun_res",
+        featureidkey="properties.cod_mun",
+        color="cor",
+        color_discrete_map={"PB": "#e9e9ec"},
+    )
+    fig.update_traces(marker_line_color="white", marker_line_width=0.4, showlegend=False)
+
+    dados = carregar_recomendacao_regiao().merge(centroide_regioes(), on="regiao", how="left")
+    sem_centro = dados[dados["lon"].isna()]
+    if len(sem_centro):
+        st.error(
+            "Região sem centróide calculado: "
+            f"{', '.join(sem_centro['regiao'])}. Verifique data/processed/regioes_saude_pb.csv."
+        )
+        st.stop()
+
+    maior_volume = dados["volume_evadido_total"].max()
+    for tipo in TIPOS_EVASAO_ORDEM:
+        sub = dados[dados["tipo_evasao_dominante"] == tipo]
+        if sub.empty:
+            continue
+        fig.add_trace(
+            go.Scattergeo(
+                lon=sub["lon"],
+                lat=sub["lat"],
+                mode="markers+text",
+                marker=dict(
+                    size=14 + 26 * sub["volume_evadido_total"] / maior_volume,
+                    color=CORES_TIPO_EVASAO[tipo],
+                    line=dict(width=1.5, color="white"),
+                ),
+                text=sub["regiao"].str.replace(" - PB", "", regex=False),
+                textposition="top center",
+                textfont=dict(size=10, color="#222"),
+                name=tipo,
+                hoverinfo="text",
+                hovertext=[
+                    f"<b>{r}</b><br>Tipo dominante: {tipo} ({p:.0f}% do volume evadido)<br>"
+                    f"Volume evadido: {mil(v)} internações<br>Ação recomendada: {acao}"
+                    for r, p, v, acao in zip(
+                        sub["regiao"],
+                        sub["pct_tipo_dominante_do_evadido_regiao"],
+                        sub["volume_evadido_total"],
+                        sub["acao_recomendada"],
+                    )
+                ],
+            )
+        )
+
+    fig.update_geos(fitbounds="locations", visible=False)
+    fig.update_layout(
+        margin=dict(l=0, r=0, t=0, b=0),
+        height=620,
+        legend=dict(
+            title="Tipo de evasão dominante", yanchor="top", y=0.98, xanchor="left", x=0.01
+        ),
+        dragmode="pan",
+    )
+    return fig
+
+
 def aba_mapa() -> None:
     st.subheader("Para onde os paraibanos se deslocam para internar")
-    st.caption(
-        "Cada município está pintado com a **cor da cidade onde a maioria dos seus moradores "
-        "acaba internada** — municípios da mesma cor formam a área de captação de um mesmo polo. "
-        "As **linhas** são os maiores fluxos, com espessura proporcional ao volume, e os "
-        "**pontos escuros** marcam os municípios que mais recebem gente de fora."
+
+    camada = st.radio(
+        "Camada do mapa",
+        [CAMADA_CAPTACAO, CAMADA_TIPO_EVASAO],
+        horizontal=True,
+        help="A área de captação mostra PARA ONDE o paciente vai; o tipo de evasão mostra "
+        "POR QUE ele foi — se é falta de estrutura local, fila de cirurgia ou encaminhamento correto.",
     )
 
     col_a, col_b = st.columns(2)
@@ -450,17 +620,41 @@ def aba_mapa() -> None:
             key="mapa_mes",
         )
     with col_b:
-        quantos = st.slider("Quantos fluxos mostrar", 5, 60, 25, step=5)
+        quantos = st.slider(
+            "Quantos fluxos mostrar",
+            5,
+            60,
+            25,
+            step=5,
+            disabled=camada != CAMADA_CAPTACAO,
+            help="Só se aplica à camada de área de captação.",
+        )
 
-    st.plotly_chart(montar_mapa(str(mes), quantos), width="stretch")
+    if camada == CAMADA_CAPTACAO:
+        st.caption(
+            "Cada município está pintado com a **cor da cidade onde a maioria dos seus moradores "
+            "acaba internada** — municípios da mesma cor formam a área de captação de um mesmo polo. "
+            "As **linhas** são os maiores fluxos, com espessura proporcional ao volume, e os "
+            "**pontos escuros** marcam os municípios que mais recebem gente de fora."
+        )
 
-    polos = polos_receptores(str(mes), quantos=2)
-    total_polos = int(polos["internacoes"].sum())
-    st.caption(
-        f"Só {polos.iloc[0]['nome_mun_int']} e {polos.iloc[1]['nome_mun_int']} receberam "
-        f"{total_polos:,}".replace(",", ".")
-        + " internações de moradores de outros municípios no recorte selecionado."
-    )
+        st.plotly_chart(montar_mapa(str(mes), quantos), width="stretch")
+
+        polos = polos_receptores(str(mes), quantos=2)
+        total_polos = int(polos["internacoes"].sum())
+        st.caption(
+            f"Só {polos.iloc[0]['nome_mun_int']} e {polos.iloc[1]['nome_mun_int']} receberam "
+            f"{total_polos:,}".replace(",", ".")
+            + " internações de moradores de outros municípios no recorte selecionado."
+        )
+    else:
+        st.caption(
+            "Cada **marcador** é uma das 16 regiões de saúde, colorida pelo tipo de evasão que "
+            "domina o volume que saiu dela em 2025 (a régua de classificação da PA6) — e o "
+            "tamanho do marcador acompanha o volume evadido da região. Passe o mouse para ver "
+            "a ação recomendada. Esta camada é anual: não tem filtro por mês."
+        )
+        st.plotly_chart(montar_mapa_tipo_evasao(), width="stretch")
 
 
 # --------------------------------------------------------------------------- #
@@ -664,6 +858,141 @@ def numeros_de_capa() -> dict[str, float | int]:
     }
 
 
+def grafico_assinatura_regiao(sub: pd.DataFrame) -> go.Figure:
+    """Barras horizontais do excesso de evasão por especialidade, para UMA região.
+
+    `excesso_pp` já vem calculado no notebook: taxa de evasão da especialidade menos a
+    taxa de evasão geral da PRÓPRIA região — zero é a média dela mesma, não a do estado.
+    """
+    ordenado = sub.sort_values("excesso_pp")
+    sinal = ordenado["excesso_pp"].map(
+        lambda v: "Acima da média da própria região" if v >= 0 else "Abaixo da média da própria região"
+    )
+    fig = px.bar(
+        ordenado,
+        x="excesso_pp",
+        y="especialidade",
+        orientation="h",
+        color=sinal,
+        color_discrete_map={
+            "Acima da média da própria região": CORES_FAIXA["alta"],
+            "Abaixo da média da própria região": CORES_FAIXA["baixa"],
+        },
+        text=ordenado["excesso_pp"].map(lambda v: f"{v:+.1f} p.p.".replace(".", ",")),
+        custom_data=["n", "taxa_evasao_pct"],
+        labels={"excesso_pp": "Excesso de evasão (pontos percentuais)", "especialidade": "", "color": ""},
+    )
+    fig.update_traces(
+        textposition="outside",
+        hovertemplate="<b>%{y}</b><br>Excesso: %{x:+.1f} p.p.<br>"
+        "Taxa de evasão da especialidade: %{customdata[1]:.1f}%<br>"
+        "Internações de moradores nesta especialidade: %{customdata[0]:,}<extra></extra>",
+    )
+    fig.add_vline(x=0, line=dict(color="#888", width=1.5, dash="dot"))
+    fig.update_layout(
+        height=max(220, 70 + 55 * len(ordenado)),
+        margin=dict(l=0, r=40, t=10, b=0),
+        legend=dict(title="", orientation="h", yanchor="bottom", y=1.02, x=0),
+    )
+    return fig
+
+
+def bloco_o_que_falta_por_regiao(df_reco: pd.DataFrame, df_assinatura: pd.DataFrame) -> None:
+    """US do notebook PA6 plugada no painel: destino, especialidade que mais falta e
+    composição das seis caixas da régua de classificação, região por região."""
+    st.markdown("### O que falta em cada região")
+    st.caption(
+        "Índice de dependência conta **quanto** cada região evade; aqui está **de quê** — "
+        "que tipo de internação está saindo e o que isso implica para a Secretaria."
+    )
+
+    regiao = st.selectbox("Ver uma região em detalhe", df_reco["regiao"].tolist(), key="achados_regiao")
+    linha = df_reco[df_reco["regiao"] == regiao].iloc[0]
+
+    m1, m2, m3 = st.columns(3)
+    m1.metric(
+        "Índice de dependência",
+        pct(linha["indice_dependencia_pct"]),
+        help="% das internações de moradores desta região que aconteceu em hospital de outra região.",
+    )
+    m2.metric(
+        f"Destino principal: {linha['destino_principal']}",
+        pct(linha["pct_para_destino_principal"]),
+        help="% de tudo que evadiu da região que foi parar nesse destino.",
+    )
+    m3.metric("Volume evadido no ano", mil(linha["volume_evadido_total"]))
+
+    sub = df_assinatura[
+        (df_assinatura["regiao"] == regiao)
+        & (df_assinatura["eixo"] == "ESPEC")
+        & (df_assinatura["n_min_ok"])
+    ].copy()
+    sub["categoria"] = sub["categoria"].astype(str).str.zfill(2)
+    sub["especialidade"] = sub["categoria"].map(ESPEC_NOMES)
+
+    if sub.empty:
+        st.info("Nenhuma especialidade desta região passou do piso mínimo de casos para comparação.")
+    else:
+        st.plotly_chart(grafico_assinatura_regiao(sub), width="stretch")
+        st.caption(
+            "Zero é a **média de evasão da própria região**, não a do estado — uma barra acima "
+            "de zero é uma especialidade que essa região evade mais do que evade em geral."
+        )
+
+        frase = (
+            f"O maior gargalo da região é **{linha['especialidade_maior_excesso_nome']}**: "
+            f"{pct(linha['especialidade_maior_excesso_taxa_evasao_pct'])} dos casos dessa "
+            f"especialidade ({mil(linha['especialidade_maior_excesso_n'])} internações) foram "
+            f"resolvidos em outra região, {linha['especialidade_maior_excesso_pp']:+.1f} pontos "
+            "percentuais acima da evasão geral da região. Ou seja: a região resolve a maior parte "
+            f"dos seus casos em casa, mas manda {pct(linha['especialidade_maior_excesso_taxa_evasao_pct'])} "
+            f"dos casos de {linha['especialidade_maior_excesso_nome'].lower()} para fora."
+        )
+        st.markdown(frase)
+
+    st.markdown("##### Composição do que evadiu, por tipo")
+    st.caption(
+        "As seis caixas somam 100% do volume evadido da região — nenhuma internação evadida fica "
+        "de fora da classificação."
+    )
+    composicao = pd.DataFrame(
+        {
+            "regiao": [regiao] * len(TIPOS_EVASAO_ORDEM),
+            "tipo": TIPOS_EVASAO_ORDEM,
+            "pct": [linha[f"pct_{tipo}"] for tipo in TIPOS_EVASAO_ORDEM],
+        }
+    )
+    fig_comp = px.bar(
+        composicao,
+        x="pct",
+        y="regiao",
+        color="tipo",
+        orientation="h",
+        category_orders={"tipo": TIPOS_EVASAO_ORDEM},
+        color_discrete_map=CORES_TIPO_EVASAO,
+        text=composicao["pct"].map(pct),
+        labels={"pct": "% do volume evadido", "regiao": "", "tipo": ""},
+    )
+    fig_comp.update_traces(textposition="inside", hovertemplate="%{fullData.name}: %{x:.1f}%<extra></extra>")
+    fig_comp.update_layout(
+        height=140,
+        margin=dict(l=0, r=0, t=10, b=0),
+        showlegend=False,
+        yaxis=dict(showticklabels=False),
+        xaxis_range=[0, 100],
+    )
+    st.plotly_chart(fig_comp, width="stretch")
+
+    cols = st.columns(3)
+    for i, tipo in enumerate(TIPOS_EVASAO_ORDEM):
+        significado, acao = CATEGORIA_EVASAO_INFO[tipo]
+        cols[i % 3].metric(
+            tipo,
+            pct(linha[f"pct_{tipo}"]),
+            help=f"{significado} Ação recomendada: {acao}",
+        )
+
+
 def aba_achados() -> None:
     st.subheader("Achados & recomendações")
 
@@ -709,6 +1038,9 @@ def aba_achados() -> None:
     for titulo, corpo in recomendacoes:
         with st.expander(titulo):
             st.markdown(corpo)
+
+    st.markdown("---")
+    bloco_o_que_falta_por_regiao(carregar_recomendacao_regiao(), carregar_assinatura_regiao())
 
     st.markdown("---")
     for titulo, corpo in fechamento:

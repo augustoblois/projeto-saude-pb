@@ -1,6 +1,9 @@
 pandas
+numpy
 pyarrow
 jupyter
+matplotlib
 streamlit
 plotly
 pysus==2.7.0
+pyreaddbc

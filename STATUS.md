@@ -19,60 +19,59 @@
 
 ## O que aconteceu na última sessão (27/07/2026)
 
-**Foram entregues as duas últimas abas do painel — o projeto está completo.** E junto com elas, toda a estrutura de números, rastreamento e texto que sustenta a apresentação do dia 07/08.
+**Todas as 20 etapas do projeto foram concluídas.** Não há mais análise nem construção pendente — o painel está pronto, os textos estão prontos, e os números foram validados. A sessão entregou os dois últimos achados do projeto (PA-6: o perfil de demanda de cada região) e a recomendação final que os acompanha.
 
-### US-14 — A aba "Achados & recomendações"
+### PA-6 — O que falta em cada região (US-20)
 
-**A quarta aba do painel agora existe e está funcional.** Ela é a vitrine do projeto para quem vai assistir à apresentação — mostra os pontos principais com números e recomendações amarrados um ao outro.
+**Até agora o projeto respondia duas perguntas sobre evasão:** quanto cada região depende de fora (o índice de dependência) e para quem ela manda seus pacientes (matriz origem→destino). **Esta análise adiciona uma terceira:** de quais **especialidades** cada região está ficando mais carente, em que magnitude.
 
-**1. O painel começa com 4 números em destaque no topo:**
-- 258.125 internações de paraibanos em 2025
-- 50,5% delas fora do município onde cada paciente mora
-- 58,6% dos fluxos concentrados em João Pessoa e Campina Grande
-- 8 das 16 regiões de saúde com dependência acima de 50%
+**O método é assim:**
+- Para cada região, a gente compara a taxa de evasão de cada tipo de serviço (cirúrgico, obstétrico, pediátrico, etc.) com a taxa geral daquela mesma região.
+- Quando um serviço evade muito mais que a média da região, significa que falta aquele serviço especificamente ali.
+- Resultado: em vez de 8 regiões recebendo a mesma recomendação genérica ("façam acordo"), cada uma recebe o diagnóstico do buraco específico dela.
 
-Nenhum desses números foi digitado à mão — todos vêm de cálculos feitos diretamente da base de dados. Se um dia os dados forem atualizados, esses números acompanham sozinhos.
+**Exemplos que valem saber:**
+- **11ª Região:** 92,5% das gestantes precisam internar fora — enquanto a clínica médica (clínica geral) resolve bem localmente. É uma região que consegue tratar, mas não consegue fazer parto.
+- **12ª, 2ª e 4ª Regiões:** em todas as três, o maior buraco é pediatria.
+- **3ª e 15ª Regiões:** 95% das cirurgias precisam sair da região.
+- **8.768 internações por ano:** são cirurgias de urgência (não eletivas) que precisaram atravessar região por falta de retaguarda.
 
-**2. A estrutura é 5 achados + 4 recomendações, cada um com um número amarrado.**
-Exemplo: Achado 2 diz que a concentração é tanta (58,6% em dois polos) e foi por tanto tempo (13 dos 20 maiores fluxos aparecem todos os 12 meses) — aí vem o número a sustentar, a recomendação ("essas regiões precisam de acordo"), e depois a próxima descoberta.
+**A segunda novidade desta análise:**
+A gente também classificou cada uma das 67.633 internações que saem da região de residência em seis categorias (o que realmente pode ser resolvido perto de casa, o que é fila de cirurgia que pode desemparedar com agenda, o que é realmente urgência grave, etc.). Os números:
+- 38,8% é evasão evitável (faltou estrutura local para algo que é comum)
+- 20,2% é fila de cirurgia eletiva
+- 13,0% é cirurgia de urgência sem retaguarda (o número mais duro: 8.768 casos/ano)
+- 9,8% é alta complexidade eletiva (com fila)
+- 3,7% é o sistema funcionando como deve (alta complexidade com UTI)
+- 14,7% não se encaixa em nenhuma regra e está marcado como "não classificado"
 
-**3. Um achado forte apareceu só na conferência final:**
-Em 7 das 8 regiões que mais dependem de fora, a maioria das saídas não é espalhada entre vizinhos — vai tudo para um destino só. A 14ª Região: 92,3% para João Pessoa. A 15ª: 89,6% para Campina Grande. A 3ª: 83,6% também para Campina Grande. Isso muda a recomendação: não é "essas regiões precisam de acordo (genérico)", é **"essas regiões precisam de acordo com este parceiro, nominalmente"** — porque o parceiro é só um.
+O achado que defende a rede: apenas 3,7% do deslocamento é a concentração que realmente justifica (alta complexidade em UTI). A maior parte não é.
 
-**4. O texto lê o arquivo `.md` em tempo real.**
-Assim como acontece na aba do índice (etapa anterior), a aba não tem uma cópia interna do texto — ela **lê o arquivo de texto original** toda vez que abre. Se uma frase errar na revisão final, a gente corrige no arquivo e o painel corrige junto. Nunca vão existir duas versões divergentes da mesma frase.
+### Entrega física de PA-6
 
-### US-16 — Narrativa executiva + rastreamento de números
+**Análise:** `notebooks/01-pa6-perfil-demanda.ipynb` — notebook novo com passo a passo e testes de robustez (inclusive a conferência de que viajar não piora o desfecho dos pacientes, para os casos mais graves).
 
-**Ficaram prontos os três documentos que sustentam a aba e a apresentação inteira:**
+**Tabelas prontas (abrem no Excel):** `outputs/tables/pa6_assinatura_regiao.csv` (qual especialidade falta em cada uma das 8 regiões críticas), `pa6_classificacao_evasao.csv` (as 67.633 internações classificadas nas 6 categorias), `pa6_recomendacao_regiao.csv` (a ação específica recomendada para cada região), `pa6_teste_robustez_desfecho.csv` (a conferência de mortalidade).
 
-**1. Narrativa executiva (`reports/narrativa-executiva.md`):**
-É o texto que vai em slides ou relatório. Tem o achado central em uma frase, depois os 5 achados, depois as 4 recomendações, um fecho que explica por que isso importa, e as 4 limitações do estudo (coisas que o número não consegue dizer). Nada foi digitado de cabeça — tudo vem conferido da base. **É o arquivo que Pedro deve ler quando tiver tempo** — é o material de estudo mais direto que existe do projeto.
+**Figuras:** `outputs/figures/pa6_heatmap_excesso_especialidade.png` (mapa de calor mostrando qual especialidade excede a média em cada região) e `pa6_tipo_dominante_regioes_prioritarias.png` (composição das 6 situações de deslocamento nas 8 regiões mais dependentes).
 
-**2. Sumário de evidências (`reports/sumario-evidencias.md`):**
-Uma tabela que diz, para **cada número** que aparece no projeto, de onde ele saiu. Tem um código (E-01, P1-03, P3-02...) e o arquivo ou notebook que o calcula. Serve para responder a "de onde saiu esse número?" — a resposta é uma linha apontando para um lugar específico. Pensada pro momento que alguém na apresentação perguntar.
+**Painel:** uma tela nova chamada "O que falta em cada região", dentro da aba "Achados & recomendações". Você clica em uma das 8 regiões críticas → aparece qual especialidade mais falta, o número de internações, e a ação específica recomendada. E no Mapa, uma camada opcional que colore as regiões pelo tipo de evasão dominante. A visão antiga do Mapa continua sendo a padrão.
 
-**3. Script de conferência (`src/conferir_narrativa.py`):**
-Roda `python src/conferir_narrativa.py` no terminal e recalcula da base os 3 blocos de números que não tinham notebook próprio (quantas internações foram de residentes da PB contados só quem mora lá mesmo, a taxa estadual de evasão, e a tabela de destinos das 8 regiões mais dependentes). Serve como "teste de integridade" — se o script rodar e os números baterem, o projeto está coeso.
+**Textos:** Achado 6 (especialidades que faltam), Achado 7 (composição de situações) e Recomendação 5 (o instrumento específico para cada caso) foram adicionados à `reports/narrativa-executiva.md`. Os 8 novos números desta análise foram rastreados no `reports/sumario-evidencias.md` com códigos P6-01 a P6-08.
 
-### Duas armadilhas que foram registradas
+**Correção de bug:** ficava faltando `matplotlib`, `numpy` e `pyreaddbc` no `requirements.txt`. Sem eles, quem clonasse o projeto e instalasse as dependências veria os notebooks quebrarem em todo gráfico.
 
-**1. O 50,5% e o 50,2% são ambos certos, mas medem coisas diferentes.**
-- **50,5%:** todas as 258.125 internações que aconteceram na PB — inclui quem vinha de fora pra cá
-- **50,2%:** só as internações de residentes da PB — exclui os não-paraibanos
+### Revisão e aceite
 
-O texto do projeto diz qual está usando em cada contexto. Se confundir, a conclusão pode estar certa e o denominador errado — é o tipo de pegadilha que professor tira.
+**Toda a análise de PA-6 foi revisada de forma independente** — quem revisou refez as contas do zero, conferiu os números dos testes, e aprovou os métodos. A story foi marcada como completa em `TASKS.md`.
 
-**2. O 26,4% é a taxa estadual, não a média das regiões.**
-Se você somar os 26,4% de cada região e dividir por 16, sai outro número (porque região grande e pequena pesam igual na média simples, enquanto a taxa estadual pesa pelo volume). O texto agora diz "taxa estadual" pra deixar claro qual das duas está sendo usada.
-
-### O que falta conferir
-
-**A aba "Achados & recomendações" foi pronta, mas ninguém olhou a tela ainda** — o Augusto vai testar se está quebrado visualmente. Se aparecer algo fora de lugar, será corrigido. Mas a estrutura e os números já estão validados.
-
-*(O detalhe das etapas anteriores está resumido em "Onde estamos", acima, e contado por inteiro em `docs/diario-do-projeto.md`.)*
+*(O detalhe das 19 etapas anteriores está resumido em "Onde estamos", acima, e contado por inteiro em `docs/diario-do-projeto.md`.)*
 
 ## Pra você, Pedro
+
+### 🎉 O projeto está 100% completo — nada falta
+
+**Toda a análise acabou.** Não há mais números a calcular, não há mais tabelas a montar. O painel está pronto, os textos estão prontos, os gráficos estão prontos. Você tem tudo que precisa pra estudar e apresentar no dia 07/08.
 
 ### ⏳ Tem uma coisa esperando por você — e ela leva 1 minuto
 
@@ -89,20 +88,33 @@ Se as duas cidades principais saltarem aos olhos sozinhas, o mapa passou. Se voc
 
 ### Leitura importante: a narrativa do projeto está pronta
 
-Quando tiver tempo — pode ser hoje ou amanhã — abra este arquivo e leia:
+Quando tiver tempo — recomendo ainda hoje ou amanhã — abra este arquivo e leia:
 ```
 reports/narrativa-executiva.md
 ```
 
-É o texto da aba "Achados & recomendações" do painel (a aba nova). Tem o achado central, os 5 achados principais com números, as 4 recomendações, e as limitações. **É a coisa mais importante que você pode estudar agora** — é exatamente o que você vai contar no dia 07/08, com números ao lado. Abre direto no GitHub ou em qualquer editor de texto. São umas 2–3 páginas.
+É o texto completo da aba "Achados & recomendações" do painel. Tem:
+- Um achado central em uma frase (resumo de tudo)
+- Sete achados estruturados, cada um com números
+- Cinco recomendações, cada uma amarrada a um ou mais achados
+- Um fecho explicando por que isso importa
+- Nove limitações do estudo (tudo que o número não consegue dizer, "antes que alguém pergunte")
+
+**É a coisa mais importante que você pode estudar agora** — é exatamente o que você vai contar no dia 07/08, com números ao lado. Abre direto no GitHub ou em qualquer editor de texto. São umas 4–5 páginas.
 
 Se em algum parágrafo você ficar confuso ("não entendo o que esse número quer dizer"), **fala pro Augusto** — se um texto que você lê confuso, quem estiver assistindo também vai ficar. Com 11 dias ainda dá tempo de reescrever.
 
+### Tela nova do painel — ainda não foi vista por ninguém
+
+Na aba **Achados & recomendações**, dentro da seção de achados, tem uma tela nova chamada **"O que falta em cada região"**. Você escolhe uma das 8 regiões críticas → aparece qual especialidade (tipo de serviço médico) falta mais ali, quanto falta, e a ação recomendada.
+
+**A funcionalidade está correta** — foi testada por programa, os números batem, o cálculo está validado. Mas ninguém olhou a tela em um navegador pra checar se está visualmente certa — se algo estiver fora de lugar, torto, ou confuso de ler, avisa pro Augusto. É aquele tipo de coisa que ninguém descobre até colocar no navegador e olhar.
+
 ### Já enquanto estiver no painel: dá uma olhada nas abas de Índice e Achados
 
-Depois do teste do mapa, clique na aba **Índice de dependência** — ela mostra o número principal do projeto em forma de ranking das 16 regiões. Se o professor perguntar "o que é esse índice?", a resposta está ali em blocos que abrem e fecham.
+Depois do teste do mapa, clique na aba **Índice de dependência** — ela mostra o número principal do projeto em forma de ranking das 16 regiões, do mais dependente para o mais autossuficiente. Se o professor perguntar "o que é esse índice?", a resposta está ali em blocos que abrem e fecham — você nem precisa decorar, é só ler pra ele do painel.
 
-E clique também na aba **Achados & recomendações** — é a mais nova e é a que você vai usar pra apresentar. **Ninguém olhou a tela ainda pra checar se está quebrada**, então se algo estiver visualmente errado, avisa pro Augusto. Mas os números já estão conferidos.
+E clique também na aba **Achados & recomendações** (a aba com os 7 achados e as 5 recomendações). Essa é a que você vai usar pra apresentar — toda a conclusão da pesquisa está ali resumida.
 
 ### O resto, quando você tiver tempo
 

@@ -96,9 +96,9 @@
   - [ ] Seção (README e/ou aba "sobre") com comando exato + nota metodológica (retificações dez)
 
 ## EP-07 — Aprofundamentos analíticos (P2 · só se sobrar hora, nunca depois de 04/08)
-- [ ] US-20 — Caracterização dos maiores pares O-D (Augusto · 5 pts · dep: US-03, US-04)
-  - [ ] Perfil dos top 10 pares com colunas usáveis da US-03
-  - [ ] Visualização + achado escrito; propor incorporação à narrativa
+- [x] US-20 — Caracterização dos maiores pares O-D (Augusto · 5 pts · dep: US-03, US-04)
+  - [x] Perfil dos top 10 pares com colunas usáveis da US-03 (executado como PA6: perfil por região de saúde, escopo ampliado aprovado)
+  - [x] Visualização + achado escrito; propor incorporação à narrativa
 
 ---
 

@@ -132,9 +132,77 @@ não existe perto de casa.
 com acordo de rotina entre estados. O segundo, não — só se resolve com serviço novo
 dentro da Paraíba.
 
+## 7. Achado 6 — cada região depende de fora por um motivo diferente
+
+Os cinco achados acima medem o **tamanho** do funil. Este mede o **formato** dele — e é o
+que transforma um diagnóstico em uma lista de compras.
+
+Para cada região de saúde, comparamos a taxa de evasão de cada especialidade com a taxa
+geral daquela mesma região. O que interessa não é a taxa absoluta, e sim o **excesso**: a
+especialidade que evade muito acima da própria média da região é aquela que falta ali. Uma
+região que evade 54% no geral mas 92% em obstetrícia não tem um problema genérico de
+capacidade — tem um problema de maternidade.
+
+Nas 8 regiões de dependência alta, o buraco maior é este:
+
+| Região | Dependência | Especialidade que mais evade | Internações no ano | Evade | Acima da média da região |
+|---|---|---|---|---|---|
+| 3ª | 84,5% | Cirúrgico | 3.785 | 95,3% | +10,8 p.p. |
+| 12ª | 71,8% | **Pediátrico** | 1.029 | 87,8% | +16,0 p.p. |
+| 15ª | 71,6% | Cirúrgico | 3.324 | 95,5% | +23,9 p.p. |
+| 7ª | 56,4% | Cirúrgico | 2.879 | 90,5% | +34,1 p.p. |
+| 11ª | 54,4% | **Obstétrico** | 547 | 92,5% | +38,1 p.p. |
+| 2ª | 54,4% | **Pediátrico** | 1.353 | 78,0% | +23,7 p.p. |
+| 4ª | 54,2% | **Pediátrico** | 705 | 67,1% | +12,9 p.p. |
+| 14ª | 52,0% | Cirúrgico | 3.629 | 74,3% | +22,3 p.p. |
+
+Dois casos merecem ser ditos em voz alta. Na **11ª Região**, 92,5% das internações
+obstétricas das moradoras acontecem fora da região — 38 pontos acima da média dela — ao
+mesmo tempo em que a clínica médica local resolve a maior parte dos casos. É uma região que
+consegue tratar, mas não consegue parir. E parto é a internação mais previsível que existe:
+dá para planejar com nove meses de antecedência.
+
+Em **três das oito** regiões críticas — a 12ª, a 2ª e a 4ª — o maior buraco é **pediatria**.
+
+**Por que isso importa:** até aqui, a recomendação para as 8 regiões críticas era a mesma
+para todas — pactuar. Uma região que não tem maternidade, uma que não tem pediatria e uma
+que não tem centro cirúrgico têm o mesmo índice e problemas diferentes. Sem esta camada, as
+oito recebem o mesmo ofício. Com ela, cada uma recebe o seu.
+
+## 8. Achado 7 — 13% do deslocamento é urgência cirúrgica
+
+Classificamos **cada uma** das 67.633 internações que saíram da região de residência, pelo
+perfil da própria internação — complexidade, caráter (eletiva ou urgência), uso de UTI e
+tipo de leito. O resultado divide o deslocamento em seis situações com significados
+distintos:
+
+| Situação | Fatia | O que significa |
+|---|---|---|
+| Evasão evitável | 38,8% | Caso clínico, obstétrico ou pediátrico comum que faltou estrutura local para resolver |
+| Demanda represada | 20,2% | Fila de cirurgia eletiva que não coube na agenda local |
+| Não classificado | 14,7% | Não se encaixa em nenhuma regra — declarado, não forçado |
+| **Urgência cirúrgica sem retaguarda** | **13,0%** | Cirurgia de urgência que precisou atravessar região |
+| Alta complexidade eletiva | 9,8% | Referência legítima, mas com fila (perfil oncológico/cardiovascular) |
+| Referência legítima | 3,7% | Alta complexidade com UTI — o sistema funcionando como projetado |
+
+A leitura mais dura está na quarta linha: **8.768 internações por ano** são cirurgias de
+urgência que não encontraram retaguarda na própria região. Numa fila eletiva, a espera
+custa qualidade de vida; numa urgência cirúrgica, custa tempo que não volta. As três
+regiões onde isso mais pesa são a **5ª (18,7% do seu deslocamento), a 4ª (16,1%) e a 2ª
+(15,7%)**.
+
+Do outro lado da tabela, o número que **defende** a rede: apenas **3,7%** do deslocamento é
+alta complexidade com UTI — a referência que deve mesmo ser concentrada. Ou seja, a maior
+parte do que se desloca na Paraíba **não** é o sistema funcionando como projetado.
+
+**Por que isso importa:** as quatro primeiras linhas pedem instrumentos diferentes.
+Capacidade instalada, mutirão de agenda, sobreaviso cirúrgico 24h e pactuação com
+transporte não são a mesma política, não custam o mesmo e não são executadas pelo mesmo
+setor. Tratar tudo como "evasão" leva a comprar o instrumento errado.
+
 ---
 
-## 7. Recomendação 1 — reconhecer e financiar formalmente os polos
+## 9. Recomendação 1 — reconhecer e financiar formalmente os polos
 
 **O que fazer:** formalizar na PPI o papel de referência de João Pessoa, Campina Grande,
 Patos e Cajazeiras, com financiamento proporcional ao que de fato absorvem — não ao que
@@ -147,7 +215,7 @@ para isso.
 
 **Evidência:** P1-03, P3-02, P3-03 (`sumario-evidencias.md`).
 
-## 8. Recomendação 2 — priorizar as 8 regiões de dependência alta, uma a uma
+## 10. Recomendação 2 — priorizar as 8 regiões de dependência alta, uma a uma
 
 **O que fazer:** tratar as 8 regiões com índice acima de 50% como fila de prioridade,
 começando pela 3ª Região (84,5%). Para cada uma, um acordo específico com o destino que
@@ -160,7 +228,7 @@ concreto, não uma negociação de muitas pontas.
 
 **Evidência:** P2-01, P2-02, tabela 3.1 (`sumario-evidencias.md`).
 
-## 9. Recomendação 3 — usar a matriz origem→destino como base de cálculo da PPI
+## 11. Recomendação 3 — usar a matriz origem→destino como base de cálculo da PPI
 
 **O que fazer:** adotar a matriz origem→destino — a tabela que mostra quantos pacientes
 vão de cada cidade para cada outra — como base de dimensionamento da pactuação, revisada
@@ -173,7 +241,7 @@ painel deste projeto já entrega essa matriz consultável e atualizável.
 
 **Evidência:** P4-01, P4-02, P4-04 (`sumario-evidencias.md`).
 
-## 10. Recomendação 4 — separar os dois problemas do fluxo interestadual
+## 12. Recomendação 4 — separar os dois problemas do fluxo interestadual
 
 **O que fazer:** duas ações distintas, não uma. (a) Pactuação interestadual de rotina com
 os municípios vizinhos de PE, RN e CE, formalizando um fluxo de fronteira que já acontece
@@ -188,9 +256,34 @@ mesmo instrumento falha nos dois.
 
 **Evidência:** P5-01, P5-03, P5-04, P5-05 (`sumario-evidencias.md`).
 
+## 13. Recomendação 5 — dar a cada região o instrumento que o caso dela pede
+
+**O que fazer:** substituir a recomendação única ("pactuar") por quatro instrumentos
+distintos, atribuídos região a região conforme o perfil do que ela manda para fora:
+
+| Situação dominante | Instrumento | Quem executa |
+|---|---|---|
+| Evasão evitável | Capacidade instalada local: equipe, plantão, leitos clínicos/obstétricos/pediátricos | Investimento + contratação |
+| Urgência cirúrgica sem retaguarda | Retaguarda cirúrgica de urgência / sobreaviso 24h | Escala e contratualização hospitalar |
+| Demanda represada | Mutirão ou ampliação da agenda cirúrgica eletiva | Regulação ambulatorial |
+| Referência legítima e alta complexidade eletiva | Pactuação formal + transporte sanitário + agenda regulada | PPI e regulação |
+
+Quatro prioridades imediatas saem direto da análise: **maternidade na 11ª Região** (92,5%
+dos partos das moradoras acontecem fora), **pediatria na 12ª, 2ª e 4ª Regiões**,
+**capacidade cirúrgica na 3ª e na 15ª** (95% de evasão cirúrgica em ambas), e **retaguarda
+de urgência cirúrgica na 5ª, 4ª e 2ª Regiões**.
+
+**Por que:** 38,8% do deslocamento é caso comum que faltou estrutura local, e outros 13,0%
+são urgência cirúrgica sem retaguarda. Somados, mais da metade do que se desloca na
+Paraíba responde a investimento na origem — não a acordo com o destino. Apenas 3,7% é alta
+complexidade com UTI, a parcela que a concentração de fato justifica. Recomendar pactuação
+para tudo é aplicar a solução de 3,7% ao problema de 52%.
+
+**Evidência:** P6-01 a P6-08 (`sumario-evidencias.md`).
+
 ---
 
-## 11. O enquadramento que sustenta tudo acima
+## 14. O enquadramento que sustenta tudo acima
 
 Se este trabalho tiver de deixar uma única ideia, é esta: **a unidade de planejamento
 hospitalar na Paraíba precisa ser a região de saúde, não o município.**
@@ -207,7 +300,7 @@ contratada como tal — ela vira um problema com solução conhecida: pactuaçã
 reais, entre quem manda e quem recebe. É exatamente isso que este projeto coloca na mesa
 pela primeira vez.
 
-## 12. O que estes números não dizem
+## 15. O que estes números não dizem
 
 Dito antes que alguém pergunte:
 
@@ -221,8 +314,27 @@ Dito antes que alguém pergunte:
    porque são coladas em João Pessoa: o morador atravessa uma avenida, não o sertão.
 5. **Um ano só.** "Estável em 2025" não é o mesmo que "estável ao longo dos anos".
 6. **Concentração não é, sozinha, um defeito.** Alta complexidade *deve* ser concentrada.
-   Esta análise mede o tamanho do funil; separar o deslocamento justificado do evitável
-   exigiria olhar o tipo de cada internação — trabalho previsto, mas fora deste escopo.
+   Esta limitação constava do projeto como "trabalho previsto, mas fora deste escopo" —
+   e foi resolvida: os Achados 6 e 7 separam o deslocamento justificado do evitável,
+   classificando cada internação pelo seu próprio perfil clínico. O resultado é que
+   **3,7% do deslocamento é a concentração legítima** e a maior parte não é. O que segue
+   valendo como limitação é o item 7, abaixo.
+7. **A régua classifica necessidade assistencial, não desfecho clínico.** Dizer que uma
+   internação é "evasão evitável" significa que o perfil dela é compatível com resolução
+   local, não que o paciente foi mal atendido ou que houve dano. Nenhuma taxa de óbito
+   deste documento sustenta leitura causal.
+8. **Viajar não piora o desfecho — e o dado também não prova o contrário.** Testamos:
+   no estrato mais grave (urgência com UTI), quem ficou na própria região teve 29,4% de
+   óbito (10.821 casos) e quem foi transferido, 24,7% (5.885 casos). Há duas explicações
+   concorrentes e o dado não decide entre elas: o transferido chega a hospital com mais
+   recurso, **e** só é transferido quem está estável o bastante para o transporte — quem
+   morre antes da remoção conta como "não evadiu". A comparação é observacional e
+   confundida por gravidade; o SIH não permite ajuste de risco.
+9. **A régua tem uma zona cinzenta declarada.** 14,7% do deslocamento não se encaixou em
+   nenhuma das cinco regras e está rotulado como "não classificado" — reportado, não
+   forçado dentro de uma caixa para melhorar o resultado.
 
 As limitações detalhadas de cada análise estão no veredito de cada notebook, e as do
-índice de dependência em `docs/definicao-indice-dependencia.md`.
+índice de dependência em `docs/definicao-indice-dependencia.md`. A memória de cálculo
+dos Achados 6 e 7, incluindo as duas correções de método que a análise sofreu, está em
+`notebooks/01-pa6-perfil-demanda.ipynb`.

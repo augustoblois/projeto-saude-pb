@@ -1,0 +1,9 @@
+recorte,grupo,n,taxa_obito_pct,permanencia_media
+Estado (CAR_INT=02 + UTI),nao_evadiu,10821,29.4,12.2
+Estado (CAR_INT=02 + UTI),evadiu,5885,24.7,11.4
+ESPEC=01 Cirúrgico (CAR_INT=02 + UTI),nao_evadiu,1506,27.8,11.4
+ESPEC=01 Cirúrgico (CAR_INT=02 + UTI),evadiu,1046,27.2,11.1
+ESPEC=03 Clínico (CAR_INT=02 + UTI),nao_evadiu,6060,41.7,12.9
+ESPEC=03 Clínico (CAR_INT=02 + UTI),evadiu,2495,39.3,11.3
+"5ª Região, ESPEC=03 Clínico (CAR_INT=02 + UTI)",nao_evadiu,150,42.7,13.9
+"5ª Região, ESPEC=03 Clínico (CAR_INT=02 + UTI)",evadiu,139,37.4,12.0

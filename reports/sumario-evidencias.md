@@ -164,9 +164,68 @@ Fonte: `outputs/tables/pa5_ranking_destinos.csv` e
 > clínico (P5-04): quem sai do interior sempre tem complexidade maior que quem sai da
 > fronteira.
 
+## 7. PA-6 — o que falta em cada região (perfil da demanda evadida)
+
+Fonte: `outputs/tables/pa6_assinatura_regiao.csv`, `pa6_classificacao_evasao.csv`,
+`pa6_recomendacao_regiao.csv` e `pa6_teste_robustez_desfecho.csv` (calculadas em
+`01-pa6-perfil-demanda.ipynb`). Recorte: **256.623 internações de residentes da PB**
+(exclui as 1.502 de `Fora da PB`), das quais 67.633 saíram da região de residência.
+
+### 7.1 A assinatura: qual especialidade falta em cada região
+
+O número relevante é o **excesso** — a taxa de evasão de uma especialidade menos a taxa
+geral da própria região. Piso de volume: só entram células com n ≥ 30.
+
+| # | Número | Valor | Onde conferir |
+|---|---|---|---|
+| P6-01 | 11ª Região: evasão obstétrica (547 internações) | 92,5% (+38,1 p.p.) | `pa6_assinatura_regiao.csv` |
+| P6-02 | Regiões críticas cujo maior excesso é **pediatria** | 3 de 8 (12ª, 2ª, 4ª) | `pa6_recomendacao_regiao.csv` |
+| P6-03 | 3ª e 15ª Regiões: evasão cirúrgica | 95,3% e 95,5% | `pa6_assinatura_regiao.csv` |
+
+### 7.2 A classificação: em que consiste o deslocamento
+
+Cada uma das 67.633 internações evadidas foi classificada **individualmente** (não por
+média do grupo), em ordem de precedência declarada. As seis caixas somam 100% e nenhuma
+internação cai em duas.
+
+| # | Número | Valor | Onde conferir |
+|---|---|---|---|
+| P6-04 | Evasão evitável (caso comum sem estrutura local) | 38,8% | `pa6_classificacao_evasao.csv` |
+| P6-05 | Demanda represada (fila cirúrgica eletiva) | 20,2% | `pa6_classificacao_evasao.csv` |
+| P6-06 | **Urgência cirúrgica sem retaguarda** | 13,0% (8.768 internações) | `pa6_classificacao_evasao.csv` |
+| P6-07 | Referência legítima (alta complexidade + UTI) | 3,7% | `pa6_classificacao_evasao.csv` |
+| P6-08 | Não classificado (declarado, não forçado) | 14,7% | `pa6_classificacao_evasao.csv` |
+
+### 7.3 Teste de robustez: a evasão piora o desfecho?
+
+| Recorte (urgência + UTI) | Não evadiu | Evadiu | Onde conferir |
+|---|---|---|---|
+| Estado | 29,4% (n=10.821) | 24,7% (n=5.885) | `pa6_teste_robustez_desfecho.csv` |
+| Cirúrgico | 27,8% (n=1.506) | 27,2% (n=1.046) | `pa6_teste_robustez_desfecho.csv` |
+| Clínico | 41,7% (n=6.060) | 39,3% (n=2.495) | `pa6_teste_robustez_desfecho.csv` |
+| 5ª Região, clínico | 42,7% (n=150) | 37,4% (n=139) | `pa6_teste_robustez_desfecho.csv` |
+
+**Veredito PA-6: CONFIRMADA.** As regiões críticas dependem de fora por motivos
+diferentes, e o motivo muda o instrumento de gestão. Números recalculados de forma
+independente por um segundo caminho, com coincidência exata.
+
+> **O que NÃO pode ser citado sozinho.** Os **42,0% de óbito** em cirúrgico com UTI
+> evadido da 5ª Região só podem aparecer **ao lado** do contraste da 7.3 (quem não evadiu,
+> no mesmo recorte, morre tanto ou mais). Isolado, o número sugere que o deslocamento mata
+> — que é o oposto do que o dado sustenta.
+
+> **Duas correções de método que esta análise sofreu, e que devem ser ditas se
+> perguntarem.** (1) A primeira versão da régua classificava blocos pelas suas **médias
+> marginais** — falácia de composição: saber que 79% de um grupo é média complexidade e
+> que 66% é eletiva não diz quantos são as duas coisas ao mesmo tempo. Além disso, uma das
+> caixas exigia dominância de UTI num grupo inteiro, e como UTI aparece em ~9% da base, ela
+> era **matematicamente impossível de preencher**. Corrigido para classificação linha a
+> linha. (2) A leitura causal das taxas de óbito foi testada e descartada (7.3). Ambas
+> estão registradas na seção de Limitações do notebook.
+
 ---
 
-## 7. Rastreamento: cada recomendação e sua âncora
+## 8. Rastreamento: cada recomendação e sua âncora
 
 | Recomendação (ver `narrativa-executiva.md`) | Evidências que a sustentam |
 |---|---|
@@ -174,11 +233,12 @@ Fonte: `outputs/tables/pa5_ranking_destinos.csv` e
 | R2 — Priorizar as 8 regiões de dependência alta | P2-01, P2-02, tabela 3.1 |
 | R3 — Usar a matriz origem→destino como base de cálculo | P4-01, P4-02, P4-04 |
 | R4 — Pactuação interestadual + oncologia no interior | P5-01, P5-03, P5-04, P5-05 |
+| R5 — Instrumento por tipo de necessidade, região a região | P6-01 a P6-08 |
 | Fecho — A unidade de planejamento é a região | P3-01, faixas da PA-3, E-06 |
 
-## 8. Limitações que valem para tudo acima
+## 9. Limitações que valem para tudo acima
 
-Estas cinco atravessam todas as análises e devem ser ditas em voz alta na apresentação,
+Estas atravessam todas as análises e devem ser ditas em voz alta na apresentação,
 antes que alguém pergunte:
 
 1. **Cada linha é uma internação, não uma pessoa.** Quem internou três vezes conta três
@@ -191,6 +251,12 @@ antes que alguém pergunte:
 4. **Trocar de município não é o mesmo que percorrer distância.** Bayeux e Santa Rita
    "evadem" muito porque são coladas em João Pessoa: o morador atravessa uma avenida.
 5. **Um ano só (2025).** "Estável ao longo de 2025" não é "estável ao longo dos anos".
+6. **A régua da PA-6 classifica necessidade assistencial, não desfecho clínico.** "Evasão
+   evitável" quer dizer que o perfil da internação é compatível com resolução local — não
+   que houve dano ao paciente. Nenhuma taxa de óbito deste projeto sustenta leitura causal
+   (ver 7.3).
+7. **14,7% do deslocamento ficou sem classificação.** Declarado como tal, não forçado
+   dentro de uma caixa para melhorar o resultado.
 
 As limitações específicas de cada análise estão escritas por extenso no veredito do
 notebook correspondente, e as do índice em `docs/definicao-indice-dependencia.md` §6.
