@@ -14,6 +14,8 @@ Analisamos as internações hospitalares do SUS na Paraíba (SIH/DATASUS, ano de
 
 Requer Python 3.11+ (testado em 3.13.3, Windows). Os comandos abaixo são PowerShell.
 
+> Nunca rodou um projeto Python antes? Use o [`COMECE-AQUI.md`](COMECE-AQUI.md) — mesmo caminho, explicado passo a passo, com o que fazer em cada erro.
+
 **1. Clonar o repositório e entrar na pasta**
 
 ```powershell

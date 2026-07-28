@@ -1,6 +1,8 @@
 # STATUS — Projeto Saúde (Mapa de Evasão Assistencial da PB)
 
 > **Pedro: este arquivo é pra você.** Sempre que abrir o projeto: GitHub Desktop → botão **Pull** (puxa as novidades) → ler este arquivo. Ele diz onde o projeto está, o que mudou e o que você pode fazer agora. O Augusto atualiza toda vez que trabalha no projeto.
+>
+> **Primeira vez rodando o painel na sua máquina?** Comece por **[`COMECE-AQUI.md`](COMECE-AQUI.md)** — o passo a passo do zero (instalar o Python, preparar o ambiente, abrir o painel), com o que fazer em cada erro possível. ~15 minutos na primeira vez, 10 segundos nas seguintes. Todo comando deste arquivo aqui pressupõe que você já passou por lá uma vez.
 
 ## Onde estamos (27/07/2026 — atualização final)
 
@@ -57,7 +59,7 @@ Cronograma de 10 dias, 2 horas por dia — autocontido, não depende de ler mais
 
 ### Teste do mapa — agendado para amanhã (28/07)
 
-1. Terminal na pasta: `streamlit run app.py`
+1. Abra o painel (`COMECE-AQUI.md`, se for a primeira vez; se já rodou antes: terminal na pasta → `.venv\Scripts\Activate.ps1` → `streamlit run app.py`).
 2. Navegador abre. Clique em **Mapa**.
 3. Olhe por 1 minuto, sem ajuda. Depois diga: **quais são as cidades que puxam pacientes de toda a Paraíba?**
 
@@ -98,8 +100,8 @@ Se algo ficar confuso, fala pro Augusto — com 10 dias ainda dá tempo de reesc
 
 Se quiser mergulhar nos dados:
 
-1. **Setup (uma vez só):** terminal na pasta, rodar: `pip install -r requirements.txt`
-2. **Jupyter:** `jupyter notebook`, novo notebook:
+1. **Setup (uma vez só):** siga o [`COMECE-AQUI.md`](COMECE-AQUI.md) até o passo 4.
+2. **Jupyter:** com o ambiente ativado, `jupyter notebook`, novo notebook:
    ```python
    import pandas as pd
    df = pd.read_parquet("data/processed/sih_pb_2025_regioes.parquet")
