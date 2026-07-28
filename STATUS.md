@@ -43,7 +43,7 @@
 
 ### Novo: plano de estudos feito para você (28/07–06/08)
 
-**Está pronto:** `docs/plano-estudos-pedro.md`
+**Está pronto:** `docs/plano-estudos-pedro.md` — **no outro repositório**, o `projeto-saude-pb-workspace` (privado, só nós dois; você é colaborador). Se ainda não clonou: GitHub Desktop → File → Clone repository → aba GitHub.com → `projeto-saude-pb-workspace`. O `COMECE-AQUI.md` explica a divisão entre os dois repositórios na seção "Os dois repositórios".
 
 Cronograma de 10 dias, 2 horas por dia — autocontido, não depende de ler mais nada. Começa do que o número quer dizer (os 7 achados principais do projeto, as 5 recomendações, as 9 limitações), passa pelo sumário de evidências (saber de cor que número saiu de onde), explica o painel como você vai apresentar, e termina no ensaio da demo.
 
@@ -53,9 +53,9 @@ Cronograma de 10 dias, 2 horas por dia — autocontido, não depende de ler mais
 - **04/08:** vocês dois se ensinam — você faz uma aula de 30 minutos contando os achados e recomendações do projeto pro Augusto, sem consultar arquivo. Depois ele faz o dele com você (a metade técnica).
 - **05–06/08:** ensaio da demo com os dois — **você apresenta** do começo ao fim, o Augusto assiste sem interromper e anota; só depois vocês conversam sobre o que ficou confuso.
 
-**Também neste arquivo:** as confusões de número que você precisa saber desfazer (tipo: "50,5% é fora do **município**; 26,4% é fora da **região de saúde** — são contas diferentes, as duas certas"). A lista completa das 8, e as 15 perguntas prováveis da banca com o dono de cada resposta, estão no plano mestre (`docs/plano-estudos.md`) — vale olhar antes do dia 04/08.
+**Também neste arquivo:** as confusões de número que você precisa saber desfazer (tipo: "50,5% é fora do **município**; 26,4% é fora da **região de saúde** — são contas diferentes, as duas certas"). A lista completa das 8, e as 15 perguntas prováveis da banca com o dono de cada resposta, estão no plano mestre (`docs/plano-estudos.md`, no mesmo repositório de coordenação) — vale olhar antes do dia 04/08.
 
-**Igualmente importante:** existe um plano mestre em `docs/plano-estudos.md` que explica por que essa divisão funciona — se quiser entender a lógica do que estão fazendo, começa por lá. Mas pra estudar em si, `plano-estudos-pedro.md` é autocontida.
+**Igualmente importante:** existe um plano mestre em `docs/plano-estudos.md` (também no repositório de coordenação) que explica por que essa divisão funciona — se quiser entender a lógica do que estão fazendo, começa por lá. Mas pra estudar em si, `plano-estudos-pedro.md` é autocontida.
 
 ### Teste do mapa — agendado para amanhã (28/07)
 

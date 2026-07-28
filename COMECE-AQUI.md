@@ -50,7 +50,9 @@ No **GitHub Desktop**, com o repositório `projeto-saude` selecionado:
 
 Isso garante que você tem a versão mais recente — inclusive os dados, que vêm junto no projeto.
 
-**Anote onde a pasta ficou.** O GitHub Desktop mostra o caminho em **Repository → Show in Explorer**. Normalmente é algo como `C:\Users\SEU-NOME\Documents\GitHub\projeto-saude`.
+**Anote onde a pasta ficou.** O GitHub Desktop mostra o caminho em **Repository → Show in Explorer**. Normalmente é algo como `C:\Users\SEU-NOME\Documents\GitHub\projeto-saude-pb`.
+
+> **Existe um segundo repositório**, o `projeto-saude-pb-workspace`, com o cronograma de estudo e a lista de tarefas. Ele não é necessário para rodar o painel — mas você vai precisar dele para estudar. Veja [Os dois repositórios](#os-dois-repositórios) mais abaixo.
 
 ---
 
@@ -179,6 +181,31 @@ Qualquer erro fora dessa tabela: tira print da tela inteira (terminal incluído)
 
 ---
 
+## Os dois repositórios
+
+O trabalho está dividido em dois repositórios no GitHub. Eles são independentes: cada um vira uma pasta separada na sua máquina, e cada um tem o seu próprio Pull.
+
+| | `projeto-saude-pb` | `projeto-saude-pb-workspace` |
+|---|---|---|
+| **O que é** | O projeto em si | A coordenação entre nós dois |
+| **O que tem dentro** | Código, dados, painel, relatórios, `STATUS.md` | Cronograma de estudo, lista de tarefas |
+| **Quem vê** | Público — é o que o professor abre | Privado — só nós dois |
+| **Você precisa dele para** | Rodar o painel, explorar os dados | Estudar até 07/08 |
+
+Por isso os planos de estudo não estão junto do projeto: o repositório do projeto é público, e o material de coordenação interna não precisa estar à vista de quem vai avaliar o trabalho.
+
+**Para clonar o segundo (uma vez só):** GitHub Desktop → **File → Clone repository** → aba **GitHub.com** → escolha `projeto-saude-pb-workspace` → Clone. Se ele não aparecer na lista, clique em **Fetch** / recarregue — você foi adicionado como colaborador, então ele tem que estar lá. Se mesmo assim não aparecer, me avisa.
+
+Dentro dele, o que interessa a você:
+
+- **`docs/plano-estudos-pedro.md`** — seu cronograma de 10 dias até a apresentação. É por aqui que você começa.
+- `docs/plano-estudos.md` — o plano mestre, que explica a lógica da divisão entre nós dois.
+- `TASKS.md` — a lista de tarefas técnicas. Pode ignorar.
+
+**Atenção ao trocar de pasta:** os comandos deste guia (`streamlit`, `jupyter`) só funcionam dentro da pasta do `projeto-saude-pb`. O outro repositório tem só textos — nada para rodar.
+
+---
+
 ## Cartão de bolso
 
 ```powershell
@@ -199,4 +226,4 @@ streamlit run app.py
 - [`STATUS.md`](STATUS.md) — o que mudou no projeto e o que fazer agora. Seu arquivo de referência, leia sempre depois do Pull.
 - [`README.md`](README.md) — descrição técnica do projeto (para a apresentação e para o professor).
 - [`reports/narrativa-executiva.md`](reports/narrativa-executiva.md) — o texto da apresentação em uma página.
-- [`docs/plano-estudos-pedro.md`](docs/plano-estudos-pedro.md) — cronograma de estudo até 07/08.
+- `docs/plano-estudos-pedro.md` — cronograma de estudo até 07/08. **Fica no outro repositório** (`projeto-saude-pb-workspace`) — veja [Os dois repositórios](#os-dois-repositórios).
