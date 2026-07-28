@@ -335,6 +335,6 @@ Dito antes que alguém pergunte:
    forçado dentro de uma caixa para melhorar o resultado.
 
 As limitações detalhadas de cada análise estão no veredito de cada notebook, e as do
-índice de dependência em `docs/definicao-indice-dependencia.md`. A memória de cálculo
+índice de dependência em `docs/dados/definicao-indice-dependencia.md`. A memória de cálculo
 dos Achados 6 e 7, incluindo as duas correções de método que a análise sofreu, está em
 `notebooks/01-pa6-perfil-demanda.ipynb`.

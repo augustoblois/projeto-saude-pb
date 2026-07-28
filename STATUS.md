@@ -31,13 +31,13 @@
 
 **ONDE:** `.gitignore`
 
-### 2. `docs/atualizacao-mensal.md` — checklist operacional de recongelamento
+### 2. `docs/dados/atualizacao-mensal.md` — checklist operacional de recongelamento
 
 **O QUÊ:** Adicionada uma linha obrigatória ao checklist do procedimento de atualização: quando recongelar um mês antigo ou um mês novo, apagar o parquet anterior e rodar a cadeia inteira (matriz → índice → análise PA-6). Nunca deixar um derivado desatualizado.
 
 **POR QUÊ:** A política já estava documentada na seção 5 do arquivo. O que faltava era deixar essa ação explícita na checklist operacional — quando alguém precisar atualizar dados, segue o passo a passo e não pula a etapa crítica por distração.
 
-**ONDE:** `docs/atualizacao-mensal.md`
+**ONDE:** `docs/dados/atualizacao-mensal.md`
 
 ## Pra você, Pedro
 
@@ -112,7 +112,7 @@ Se quiser mergulhar nos dados:
    - `notebooks/01-tratamento-base.ipynb` — como os dados foram feitos.
    - `notebooks/01-regiao-saude.ipynb` — como a região foi colocada.
    - `notebooks/01-matriz-od.ipynb` — como a matriz foi montada.
-   - `docs/dicionario-dados.md` — o que cada coluna significa.
+   - `docs/dados/dicionario-dados.md` — o que cada coluna significa.
 
 4. **Salvar:** novo notebook em `notebooks/` com nome começando em `90-`, ex: `90-eda-pedro.ipynb`. Perguntas boas: quais cidades mais mandam pacientes pra fora? Pra onde? Quais regiões mais perdem?
 

@@ -174,7 +174,7 @@ fora da tabela do índice.
 
 > **Status:** a definição foi lida e aprovada pelo Augusto, e é com base nisso que a US-09
 > está fechada. O teste formal com o Pedro **deixou de ser condição** para o fechamento
-> (decisão de 24/07/2026, registrada em `docs/backlog.md`): o texto foi julgado legível
+> (decisão de 24/07/2026, registrada em `docs/governanca/backlog.md`): o texto foi julgado legível
 > como está, e segurar a story numa etapa humana assíncrona custava mais do que rendia.
 >
 > O roteiro abaixo continua aqui porque **continua útil** — se em algum momento o Pedro ler

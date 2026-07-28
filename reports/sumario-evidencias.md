@@ -259,4 +259,4 @@ antes que alguém pergunte:
    dentro de uma caixa para melhorar o resultado.
 
 As limitações específicas de cada análise estão escritas por extenso no veredito do
-notebook correspondente, e as do índice em `docs/definicao-indice-dependencia.md` §6.
+notebook correspondente, e as do índice em `docs/dados/definicao-indice-dependencia.md` §6.

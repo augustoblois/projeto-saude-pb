@@ -210,9 +210,9 @@ consolidou".
 Esta política **já estava registrada** antes deste documento — aqui ela só é reunida num lugar
 só. Fontes no repositório:
 
-- `docs/prd.md` (premissas): *"dezembro pode ainda receber retificações do DATASUS (AIH
+- `docs/governanca/prd.md` (premissas): *"dezembro pode ainda receber retificações do DATASUS (AIH
   atrasada) — declarado como nota metodológica, sem exclusão de meses"*.
-- `docs/definicao-indice-dependencia.md`, §6(f): retificações de dezembro podem mexer
+- `docs/dados/definicao-indice-dependencia.md`, §6(f): retificações de dezembro podem mexer
   marginalmente nos números; **nenhum mês foi excluído**.
 - `notebooks/01-pa4-estabilidade.ipynb` (limitação 3) e `reports/sumario-evidencias.md`
   ("Ressalva sobre dezembro"): a queda de fim de ano pode ser dado ainda incompleto; fica

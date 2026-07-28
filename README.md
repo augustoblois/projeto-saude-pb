@@ -63,7 +63,7 @@ python src/congelar_sih.py
 
 O script é idempotente: meses que já têm parquet são pulados.
 
-Para incorporar um mês novo publicado pelo DATASUS, veja [`docs/atualizacao-mensal.md`](docs/atualizacao-mensal.md).
+Para incorporar um mês novo publicado pelo DATASUS, veja [`docs/dados/atualizacao-mensal.md`](docs/dados/atualizacao-mensal.md).
 
 ## Estrutura do repositório
 

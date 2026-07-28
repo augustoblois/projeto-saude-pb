@@ -28,7 +28,7 @@ MESES = {
 
 TODOS = "Todos"
 
-# Faixas da definição (docs/definicao-indice-dependencia.md, seção 5). Cores escolhidas
+# Faixas da definição (docs/dados/definicao-indice-dependencia.md, seção 5). Cores escolhidas
 # para funcionar tanto no tema claro quanto no escuro — e a leitura não depende só delas:
 # a faixa também vem escrita por extenso na tabela e no cartão da região.
 CORES_FAIXA = {"baixa": "#2e9e6b", "média": "#d9a12b", "alta": "#c0433a"}
@@ -122,7 +122,7 @@ def carregar_definicao() -> list[tuple[str, str]]:
     O "Roteiro de teste de leitura" fica de fora: é processo interno do projeto, não
     informação para quem consulta o índice.
     """
-    bruto = (DIR_DOCS / "definicao-indice-dependencia.md").read_text(encoding="utf-8")
+    bruto = (DIR_DOCS / "dados" / "definicao-indice-dependencia.md").read_text(encoding="utf-8")
     secoes = []
     for bloco in bruto.split("\n## ")[1:]:
         titulo, _, corpo = bloco.partition("\n")
@@ -1058,7 +1058,7 @@ def aba_achados() -> None:
 # --------------------------------------------------------------------------- #
 # O comando que congela um mês novo. Constante para aparecer uma vez só na tela e
 # não ser reescrito no meio de um parágrafo — o passo a passo completo (incluindo
-# a ordem de reprocessamento) vive em docs/atualizacao-mensal.md, não aqui.
+# a ordem de reprocessamento) vive em docs/dados/atualizacao-mensal.md, não aqui.
 COMANDO_CONGELAR = "python src/congelar_sih.py"
 
 
@@ -1162,7 +1162,7 @@ saúde, depois a matriz de origem e destino, e só então as análises e o índi
 dependência.
 
 O passo a passo completo — a ordem exata, o que cada etapa refaz e o que conferir nos
-números — está em **`docs/atualizacao-mensal.md`**, no repositório. Nada aqui no código do
+números — está em **`docs/dados/atualizacao-mensal.md`**, no repositório. Nada aqui no código do
 painel precisa mudar: ele passa a exibir o mês novo sozinho.
 """
         )

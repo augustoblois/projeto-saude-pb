@@ -1,6 +1,6 @@
 # PRD — Mapa de Evasão Assistencial da PB
 
-> Fonte: docs/briefing.md (aprovado). Gerado pelo pm-agent.
+> Fonte: docs/governanca/briefing.md (aprovado). Gerado pelo pm-agent.
 > Projeto de ANÁLISE DE DADOS (UFPB, disciplina Análise de Dados) — não é web-app fullstack. Stack: Python/pandas/Jupyter + Streamlit.
 
 ## ⚠️ Gaps para o gate
