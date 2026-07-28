@@ -33,7 +33,7 @@ O projeto já tinha todas as análises prontas, o painel rodando, a narrativa es
 
 3. **`plano-estudos-pedro.md`** — trilha sua, dia a dia: "o que o número quer dizer" (os 7 achados, as 5 recomendações, as 9 limitações, o sumário de evidências, o painel como gestor vê). Autocontida. Primeiro dia tem o teste do mapa que estava pendurado.
 
-**POR QUÊ:** O projeto foi dividido em duas metades simétricas (mesma dificuldade, mesmos dias de estudo). No dia 04/08 você dois se ensinam: cada um dá uma aula de 30 minutos da própria metade pro outro, sem consultar arquivo. Depois (06/08, critério de aprovação) cada um responde 3 perguntas sobre a metade do outro. Esse mecanismo faz vocês dois terminarem sabendo o projeto inteiro sem que os dois estudem tudo do zero — ganha tempo, e a aula mútua fixa o conhecimento melhor que qualquer revisão sozinho.
+**POR QUÊ:** O projeto foi dividido em duas metades simétricas (mesma dificuldade, mesmos dias de estudo). No dia 04/08 vocês dois se ensinam: cada um dá uma aula de 30 minutos da própria metade pro outro, sem consultar arquivo. Depois (06/08, critério de aprovação) cada um responde 3 perguntas sobre a metade do outro. Esse mecanismo faz vocês dois terminarem sabendo o projeto inteiro sem que os dois estudem tudo do zero — ganha tempo, e a aula mútua fixa o conhecimento melhor que qualquer revisão sozinho.
 
 **DESOBSTRÓI:** O teste de leitura do mapa (US-12, que ficou pendurado desde a Etapa 16) agora está agendado para 28/07 — seu primeiro dia. E o ensaio da demo (US-17, que também estava pendurado) é nos dias 05 e 06/08, quando vocês dois já dominam cada metade.
 
@@ -58,9 +58,9 @@ Cronograma de 10 dias, 2 horas por dia — autocontido, não depende de ler mais
 - **28/07 (dia 1):** leitura dos achados + teste do mapa (1 minuto, esse combinado antigo que ficava pendurado — agora agendado).
 - **29–31/07 e 01–03/08:** um tópico por dia (narrativa, painel, limitações, etc.).
 - **04/08:** vocês dois se ensinam — você faz uma aula de 30 minutos contando os achados e recomendações do projeto pro Augusto, sem consultar arquivo. Depois ele faz o dele com você (a metade técnica).
-- **05–06/08:** ensaio da demo com os dois — ele apresenta, você observa; depois trocam. Corrigem o que ficar confuso.
+- **05–06/08:** ensaio da demo com os dois — **você apresenta** do começo ao fim, o Augusto assiste sem interromper e anota; só depois vocês conversam sobre o que ficou confuso.
 
-**Também neste arquivo:** as 8 armadilhas de número pra decorar (tipo: "50,5% é fora do município; 26,4% é dependência regional — são contas diferentes"), e as 15 perguntas prováveis da banca com o dono de cada resposta (quem do projeto responde melhor: você ou Augusto).
+**Também neste arquivo:** as confusões de número que você precisa saber desfazer (tipo: "50,5% é fora do **município**; 26,4% é fora da **região de saúde** — são contas diferentes, as duas certas"). A lista completa das 8, e as 15 perguntas prováveis da banca com o dono de cada resposta, estão no plano mestre (`docs/plano-estudos.md`) — vale olhar antes do dia 04/08.
 
 **Igualmente importante:** existe um plano mestre em `docs/plano-estudos.md` que explica por que essa divisão funciona — se quiser entender a lógica do que estão fazendo, começa por lá. Mas pra estudar em si, `plano-estudos-pedro.md` é autocontida.
 
