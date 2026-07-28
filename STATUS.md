@@ -2,7 +2,7 @@
 
 > **Pedro: este arquivo é pra você.** Sempre que abrir o projeto: GitHub Desktop → botão **Pull** (puxa as novidades) → ler este arquivo. Ele diz onde o projeto está, o que mudou e o que você pode fazer agora. O Augusto atualiza toda vez que trabalha no projeto.
 
-## Onde estamos (27/07/2026)
+## Onde estamos (27/07/2026 — atualização final)
 
 - **Tema fechado:** vamos mapear de onde saem e pra onde vão os pacientes que internam na Paraíba — quem precisa viajar pra outra cidade pra conseguir internação, e quais regiões dependem de quais. O resultado final vai ser um painel interativo (um site simples feito em Python).
 - **Todos os dados de 2025 já estão no projeto:** os 12 meses de internações da PB, direto do sistema do Ministério da Saúde (DATASUS). São **cerca de 258 mil internações no ano** (entre 19 mil e 23 mil por mês), conferidas uma a uma: nenhuma linha com informação faltando nas colunas que importam. O achado que motiva tudo segue de pé: **quase metade dos pacientes interna fora da cidade onde mora**.
@@ -17,34 +17,25 @@
 - **O mapa mostra uma coisa que ninguém tinha desenhado ainda:** cada cidade da Paraíba está pintada com a cor da cidade para onde a maioria dos seus moradores acaba internada. O resultado é um mapa de "territórios": dá pra ver no olho o **território de Campina Grande (62 cidades), o de João Pessoa (48) e o de Patos (30)**.
 - **Prazo:** apresentação dia 07/08/2026 (13 dias).
 
-## O que aconteceu na última sessão (27/07/2026)
+## O que aconteceu na última sessão (27/07/2026 — correções finais)
 
-**A parte técnica do projeto está 100% encerrada. Esta sessão criou a camada de preparação para a apresentação: um plano de estudos pra você dominar o projeto inteiro até o dia 07/08.**
+**Duas correções menores identificadas em revisão da documentação de procedimentos.**
 
-O projeto já tinha todas as análises prontas, o painel rodando, a narrativa escrita — e isso estava registrado como "completo". Mas faltava uma coisa: como você e o Augusto dominam tudo o que foi feito, E2E, até dia 07/08? Que forma de estudar não deixa ninguém pra trás? Essa sessão resolveu isso com três documentos novos.
+### 1. `.gitignore` — resilência a futuras versões da malha territorial
 
-### Planos de estudo — divisão estratégica
+**O QUÊ:** O arquivo de exceção que guardava `base_territorial_out25.zip` (a tabela do IBGE que liga município a região de saúde) foi generalizado para `base_territorial_*.zip`.
 
-**O QUÊ:** Três arquivos novos em `docs/`:
+**POR QUÊ:** Quando o IBGE lançar a próxima versão (out26, out27…), o padrão atual quebraria porque o `.gitignore` esperaria exatamente o nome `out25`. A regra agora absorve qualquer versão — se alguém precisar recongelar com dados de 2027, o repositório já está preparado.
 
-1. **`plano-estudos.md`** — plano mestre: explica o princípio da divisão e o cronograma conjunto dos 10 dias (28/07 a 06/08, 2 horas por pessoa por dia). Inclui a tabela das 8 armadilhas de número que os dois precisam decorar, e um banco de 15 perguntas prováveis da banca com o dono de cada resposta.
+**ONDE:** `.gitignore`
 
-2. **`plano-estudos-augusto.md`** — trilha do Augusto, dia a dia: "como o número nasce" (origem dos dados, tratamento, região de saúde, matriz origem→destino, índice de dependência, o painel, como rodar novamente). Autocontida, sem depender de ler outra coisa. Inclui glossário de 15 termos técnicos.
+### 2. `docs/atualizacao-mensal.md` — checklist operacional de recongelamento
 
-3. **`plano-estudos-pedro.md`** — trilha sua, dia a dia: "o que o número quer dizer" (os 7 achados, as 5 recomendações, as 9 limitações, o sumário de evidências, o painel como gestor vê). Autocontida. Primeiro dia tem o teste do mapa que estava pendurado.
+**O QUÊ:** Adicionada uma linha obrigatória ao checklist do procedimento de atualização: quando recongelar um mês antigo ou um mês novo, apagar o parquet anterior e rodar a cadeia inteira (matriz → índice → análise PA-6). Nunca deixar um derivado desatualizado.
 
-**POR QUÊ:** O projeto foi dividido em duas metades simétricas (mesma dificuldade, mesmos dias de estudo). No dia 04/08 vocês dois se ensinam: cada um dá uma aula de 30 minutos da própria metade pro outro, sem consultar arquivo. Depois (06/08, critério de aprovação) cada um responde 3 perguntas sobre a metade do outro. Esse mecanismo faz vocês dois terminarem sabendo o projeto inteiro sem que os dois estudem tudo do zero — ganha tempo, e a aula mútua fixa o conhecimento melhor que qualquer revisão sozinho.
+**POR QUÊ:** A política já estava documentada na seção 5 do arquivo. O que faltava era deixar essa ação explícita na checklist operacional — quando alguém precisar atualizar dados, segue o passo a passo e não pula a etapa crítica por distração.
 
-**DESOBSTRÓI:** O teste de leitura do mapa (US-12, que ficou pendurado desde a Etapa 16) agora está agendado para 28/07 — seu primeiro dia. E o ensaio da demo (US-17, que também estava pendurado) é nos dias 05 e 06/08, quando vocês dois já dominam cada metade.
-
-**ONDE:** `docs/plano-estudos.md`, `docs/plano-estudos-augusto.md`, `docs/plano-estudos-pedro.md`
-
-### Atualizações menores
-
-- **`CLAUDE.md`** — a regra de linguagem do STATUS.md foi revisada. Antes dizia "linguagem leiga — Pedro não é técnico"; agora diz "sem jargão — todo termo que nasce aqui dentro chega nele sem contexto e vai explicado em uma frase". É regra sobre o texto, não sobre o leitor. (O Augusto corrigiu o enquadramento — vocês dois são competentes, só não participam um da conversa do outro.)
-- **`docs/definicao-indice-dependencia.md`** — remoção de frases sobre o leitor que entraram em decisão anterior; justificativa agora foca no custo real (história assíncrona é lenta).
-
-*(O detalhe de como cada uma das 23 etapas anteriores funcionou está em `docs/diario-do-projeto.md`.)*
+**ONDE:** `docs/atualizacao-mensal.md`
 
 ## Pra você, Pedro
 

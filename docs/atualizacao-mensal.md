@@ -244,7 +244,8 @@ com o que a base sustenta.
 - [ ] (se a PA-5 importar) `python src/congelar_sih_vizinhos.py` → 100% das fatias presentes
 - [ ] Notebooks 1 → 2 → 3 da cadeia obrigatória, topo a baixo
 - [ ] PA1, PA3, PA4, PA5 (ordem livre) → índice → **PA6 por último**
-- [ ] `assert`s que falharam: variação conferida contra a faixa mensal e constantes atualizadas
+- [ ] `assert`s que falharam: variação conferida contra a faixa mensal e constantes atualizados
+- [ ] Se recongelando mês antigo: apagar o parquet à mão e rodar cadeia inteira (matriz, índice, PA6) — nunca deixar derivado desatualizado
 - [ ] `python src/conferir_narrativa.py` → números do texto reconferidos
 - [ ] Textos de `reports/` revisados se algum número mudou
 - [ ] `streamlit run app.py` → painel abre completo, **com a internet desligada**

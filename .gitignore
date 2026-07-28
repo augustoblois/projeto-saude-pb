@@ -13,7 +13,7 @@ data/raw/*.zip
 # Exceção: a base territorial (~1,6 MB) É versionada. Sem ela, o notebook
 # 01-regiao-saude.ipynb baixa a base do DATASUS ao vivo, e a Regra Fixa #1 do
 # projeto exige que tudo rode offline num clone novo (RNF-01).
-!data/raw/base_territorial_out25.zip
+!data/raw/base_territorial_*.zip
 data/raw/_staging_vizinhos/
 
 # Referência de IA / uso interno — não vai pro repo
