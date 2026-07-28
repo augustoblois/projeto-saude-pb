@@ -137,8 +137,13 @@ Conferimos tudo contra as fontes oficiais do DATASUS (informe técnico em PDF + 
 **POR QUÊ:** Projeto de dados que ninguém sabe manter é projeto que morre pós-apresentação. Documentação garante que a Secretaria de Saúde consegue rodar novamente com dados novos, sem chamar de volta. Aba "Sobre os dados" cuida da confiança — mostrar proveniência no mesmo lugar onde o número aparece é simples, mas surpreendentemente raro.
 **ONDE:** `docs/atualizacao-mensal.md`, `app.py` (aba Sobre os dados)
 
+## Etapa 24 — Planos de estudo e desbloqueio dos testes finais (27/07)
+**O QUÊ:** Três novos documentos de estudo em `docs/`: `plano-estudos.md` (cronograma mestre dos 10 dias 28/07–06/08, explica a divisão de trabalho), `plano-estudos-augusto.md` (trilha técnica — origem dos dados, tratamento, região, matriz O-D, índice, painel, como rodar novamente), `plano-estudos-pedro.md` (trilha de gestão — achados, recomendações, limitações, painel como gestor vê, ensaio). Cada trilha é 2h/dia, autocontida. Cronograma: 28/07–03/08 aprendem, 04/08 ensinam um pro outro (30 min cada, sem consultar arquivo), 05–06/08 ensaio da demo, 06/08 teste de aprovação (responder 3 perguntas sobre a metade do outro).
+**POR QUÊ:** Projeto tem 100% do conteúdo pronto mas precisa que duas pessoas carreguem metades diferentes — uma técnica, outra de gestão. Estudar cada um sua metade e depois ensinar a do outro ganha tempo e fixa conhecimento melhor que revisar tudo sozinho. Também desobstrói dois testes pendurados: mapa (US-12, agora 28/07) e ensaio (US-17, agora 05–06/08).
+**ONDE:** `docs/plano-estudos.md`, `docs/plano-estudos-augusto.md`, `docs/plano-estudos-pedro.md`, STATUS.md (seção "Pra você, Pedro" atualizada), CLAUDE.md (regra de linguagem revista — não é sobre o leitor, é sobre o texto).
+
 ---
 
 *Nota de método (vale pra apresentação):* as sete análises foram construídas em paralelo e cada uma passou por revisão independente que refez as contas do zero. Quatro voltaram reprovadas na primeira rodada — e **nenhuma reprovação foi erro de cálculo**: em todos os casos o número estava certo e o texto ao redor dele estava desatualizado ou afirmava mais do que o dado sustentava (título dizendo "sete" com oito barras no gráfico; conclusão contradita pela tabela logo acima; número de validação não derivável). O padrão: texto escrito antes da execução final e nunca reconferido.
 
-*Próximas etapas (ordem do backlog): US-12 (teste de leitura do mapa com Pedro) → US-17 (ensaio da demo com os dois, 2 dias antes de 07/08). Painel, narrativa, notebook de estudo e documentação de reprodução prontos; faltam os 2 passos finais de apresentação.*
+*Status atual (27/07):* Painel, narrativa, notebook de estudo, documentação de reprodução e planos de estudo prontos. Os testes de leitura (US-12 e US-17) agora têm data e lugar certo no cronograma.*

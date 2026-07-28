@@ -19,128 +19,111 @@
 
 ## O que aconteceu na última sessão (27/07/2026)
 
-**Três stories de entrega foram completadas — análise encerrada, agora é reprodutibilidade e material de estudo.**
+**A parte técnica do projeto está 100% encerrada. Esta sessão criou a camada de preparação para a apresentação: um plano de estudos pra você dominar o projeto inteiro até o dia 07/08.**
 
-Até ontem, o projeto afirmava estar "100% completo" — e estava, em análise. Mas faltava a camada de entrega: como alguém clona o projeto daqui a 3 meses e rodas tudo novamente sem quebranto? Como o Pedro se estuda sem precisar de aulas? Como atualizar com dados de agosto? Essa sessão fechou os 3 vazios.
+O projeto já tinha todas as análises prontas, o painel rodando, a narrativa escrita — e isso estava registrado como "completo". Mas faltava uma coisa: como você e o Augusto dominam tudo o que foi feito, E2E, até dia 07/08? Que forma de estudar não deixa ninguém pra trás? Essa sessão resolveu isso com três documentos novos.
 
-### US-15: Notebook de estudo para o Pedro
+### Planos de estudo — divisão estratégica
 
-**O QUÊ:** Novo arquivo `notebooks/90-eda-guiada.ipynb` — um roteiro em 9 seções que sai do básico ("o que é uma linha desses dados?") até as 16 regiões. Cada pedaço de código vem com explicação em português antes. Tem 3 momentos onde o Pedro coloca informação dele e roda: a cidade dele, comparar duas cidades, a região dele.
+**O QUÊ:** Três arquivos novos em `docs/`:
 
-**POR QUÊ:** É o material de estudo dele antes de apresentar no dia 07/08. Parece óbvio ("lê o notebook"), mas a experiência de clonar um projeto de dados e rodar o primeiro notebook sem entender nada é sufocante. Este notebook é feito sob medida pra ele: começa do zero, explica cada passo em português, e os resultados mostram números que interessam (_quanto de evasão tem na sua cidade?_). Se ele digitar um nome que não existe, não aparece um erro feio — aparece uma mensagem orientando a conferir a grafia.
+1. **`plano-estudos.md`** — plano mestre: explica o princípio da divisão e o cronograma conjunto dos 10 dias (28/07 a 06/08, 2 horas por pessoa por dia). Inclui a tabela das 8 armadilhas de número que os dois precisam decorar, e um banco de 15 perguntas prováveis da banca com o dono de cada resposta.
 
-**Qualidade:** Todos os 34 números do notebook foram conferidos contra os relatórios e tabelas já prontas — **bateram todos**. Dois números que parecem erro e não são ficaram explicados dentro do notebook — o mais interessante: **161 cidades da PB aparecem com 100% de evasão, e 161 é exatamente 223 menos 62**. Das 223 cidades do estado, só 62 têm alguma internação registrada; as outras 161 não têm leito de SUS. Um "ranking de evasão" nessas cidades não mede acesso à saúde, mede se a cidade tem hospital.
+2. **`plano-estudos-augusto.md`** — trilha do Augusto, dia a dia: "como o número nasce" (origem dos dados, tratamento, região de saúde, matriz origem→destino, índice de dependência, o painel, como rodar novamente). Autocontida, sem depender de ler outra coisa. Inclui glossário de 15 termos técnicos.
 
-**Figuras:** Quatro novas em `outputs/figures/` (nomes começando com `eda_`), cada uma com o achado escrito no próprio título.
+3. **`plano-estudos-pedro.md`** — trilha sua, dia a dia: "o que o número quer dizer" (os 7 achados, as 5 recomendações, as 9 limitações, o sumário de evidências, o painel como gestor vê). Autocontida. Primeiro dia tem o teste do mapa que estava pendurado.
 
-**ONDE:** `notebooks/90-eda-guiada.ipynb`, `outputs/figures/eda_*.png`
+**POR QUÊ:** O projeto foi dividido em duas metades simétricas (mesma dificuldade, mesmos dias de estudo). No dia 04/08 você dois se ensinam: cada um dá uma aula de 30 minutos da própria metade pro outro, sem consultar arquivo. Depois (06/08, critério de aprovação) cada um responde 3 perguntas sobre a metade do outro. Esse mecanismo faz vocês dois terminarem sabendo o projeto inteiro sem que os dois estudem tudo do zero — ganha tempo, e a aula mútua fixa o conhecimento melhor que qualquer revisão sozinho.
 
-### US-18: Reprodução em máquina limpa
+**DESOBSTRÓI:** O teste de leitura do mapa (US-12, que ficou pendurado desde a Etapa 16) agora está agendado para 28/07 — seu primeiro dia. E o ensaio da demo (US-17, que também estava pendurado) é nos dias 05 e 06/08, quando vocês dois já dominam cada metade.
 
-**O QUÊ:** O `README.md` foi reescrito para levar alguém que nunca viu o projeto do zero até o painel aberto — antes ele nem mencionava o comando que abre o painel. Versões de todos os programas que o projeto usa foram fixadas no `requirements.txt`, para que quem instalar daqui a meses receba exatamente as mesmas versões testadas.
+**ONDE:** `docs/plano-estudos.md`, `docs/plano-estudos-augusto.md`, `docs/plano-estudos-pedro.md`
 
-**A questão crítica:** nesta story, a gente descobriu um problema sério. Um dos notebooks buscava um arquivo no site do Ministério da Saúde em vez de usar uma cópia local — o arquivo é só 1,6 MB (base territorial = a tabela que mapeia cada município pra sua região de saúde), mas viola a regra número 1 do projeto: **nada na apresentação depende de fonte viva**. Se no dia 07/08 a internet falhar ou o site mudar, o notebook quebrava.
+### Atualizações menores
 
-**Correção:** O arquivo (`data/raw/base_territorial_out25.zip`) agora é guardado junto com o projeto. Todos os 9 notebooks foram reexecutados **com a internet bloqueada de propósito** — todos rodaram até o fim sem tentar acessar nada. Pronto: o projeto é completamente offline.
+- **`CLAUDE.md`** — a regra de linguagem do STATUS.md foi revisada. Antes dizia "linguagem leiga — Pedro não é técnico"; agora diz "sem jargão — todo termo que nasce aqui dentro chega nele sem contexto e vai explicado em uma frase". É regra sobre o texto, não sobre o leitor. (O Augusto corrigiu o enquadramento — vocês dois são competentes, só não participam um da conversa do outro.)
+- **`docs/definicao-indice-dependencia.md`** — remoção de frases sobre o leitor que entraram em decisão anterior; justificativa agora foca no custo real (história assíncrona é lenta).
 
-**A volta da story:** Esta história foi **reprovada na primeira revisão** — quem revisou rodou na máquina dele, caiu em cima do problema do arquivo remoto, e rejeitou. Não foi erro de execução, foi exatamente o ponto: se passou dessa vez, falharia na apresentação. A correção entrou, foi refeita e passou na segunda.
-
-**ONDE:** `README.md`, `requirements.txt`, `data/raw/base_territorial_out25.zip`, todos os `notebooks/01-*` reexecutados
-
-### US-19: Documentação de atualização mensal + aba do painel
-
-**O QUÊ — Parte 1:** Novo arquivo `docs/atualizacao-mensal.md` — como o projeto ganha dados de um mês novo sem quebrar. Traz:
-- O comando exato para rodá-lo.
-- A ordem em que os 9 notebooks precisam ser reexecutados (o `01-pa6-perfil-demanda` usa o resultado de `01-indice-dependencia`; rodar fora da ordem, o resultado sai silenciosamente errado — tipo de bug que ninguém vê).
-- Uma nota sobre as retificações de dezembro: o DATASUS corrige dados de meses passados retroativamente, então números podem mudar um pouco.
-
-**O QUÊ — Parte 2:** Quinta aba no painel, chamada **"Sobre os dados"** — de onde vêm os números, por que funcionam sem internet, a ressalva de dezembro, quanto tempo leva pra atualizar. Responde a pergunta que o professor vai fazer no dia 07/08 sem o Pedro precisar decorar nada — é só ler do painel.
-
-**POR QUÊ:** Um projeto de dados que ninguém sabe manter é um projecto que morre após a apresentação. A documentação garante que a Secretaria de Saúde consegue rodar novamente com dados novos, sem chamar de volta o Pedro. E a aba "Sobre os dados" cuida da confiança — mostrar a proveniência do número no mesmo lugar onde ele aparece é simples, mas surpreendentemente raro.
-
-**ONDE:** `docs/atualizacao-mensal.md`, `app.py` (aba Sobre os dados)
-
-*(O detalhe das 19 etapas anteriores está resumido em "Onde estamos", acima, e contado por inteiro em `docs/diario-do-projeto.md`.)*
+*(O detalhe de como cada uma das 23 etapas anteriores funcionou está em `docs/diario-do-projeto.md`.)*
 
 ## Pra você, Pedro
 
-### Novo: notebook de estudo feito sob medida pra você
+### Novo: plano de estudos feito para você (28/07–06/08)
+
+**Está pronto:** `docs/plano-estudos-pedro.md`
+
+Cronograma de 10 dias, 2 horas por dia — autocontido, não depende de ler mais nada. Começa do que o número quer dizer (os 7 achados principais do projeto, as 5 recomendações, as 9 limitações), passa pelo sumário de evidências (saber de cor que número saiu de onde), explica o painel como você vai apresentar, e termina no ensaio da demo.
+
+**Estrutura:**
+- **28/07 (dia 1):** leitura dos achados + teste do mapa (1 minuto, esse combinado antigo que ficava pendurado — agora agendado).
+- **29–31/07 e 01–03/08:** um tópico por dia (narrativa, painel, limitações, etc.).
+- **04/08:** vocês dois se ensinam — você faz uma aula de 30 minutos contando os achados e recomendações do projeto pro Augusto, sem consultar arquivo. Depois ele faz o dele com você (a metade técnica).
+- **05–06/08:** ensaio da demo com os dois — ele apresenta, você observa; depois trocam. Corrigem o que ficar confuso.
+
+**Também neste arquivo:** as 8 armadilhas de número pra decorar (tipo: "50,5% é fora do município; 26,4% é dependência regional — são contas diferentes"), e as 15 perguntas prováveis da banca com o dono de cada resposta (quem do projeto responde melhor: você ou Augusto).
+
+**Igualmente importante:** existe um plano mestre em `docs/plano-estudos.md` que explica por que essa divisão funciona — se quiser entender a lógica do que estão fazendo, começa por lá. Mas pra estudar em si, `plano-estudos-pedro.md` é autocontida.
+
+### Teste do mapa — agendado para amanhã (28/07)
+
+1. Terminal na pasta: `streamlit run app.py`
+2. Navegador abre. Clique em **Mapa**.
+3. Olhe por 1 minuto, sem ajuda. Depois diga: **quais são as cidades que puxam pacientes de toda a Paraíba?**
+
+Se as duas principais saltarem aos olhos, passou. Se precisar procurar, o mapa está errado — corrijo antes de 07/08. Me responde por WhatsApp.
+
+### Novo notebook de estudo: exploração da base (opcional)
 
 **Está pronto:** `notebooks/90-eda-guiada.ipynb`
 
-Este é o material de estudo antes de apresentar — começando do básico e chegando até as 16 regiões. Cada pedaço de código tem explicação em português antes. Tem 3 momentos onde você coloca informação sua (cidade, comparação, região) e roda — responde à pergunta "quanto de evasão tem AQUI?" de verdade, não genérica.
+Se quiser entender de verdade os dados (não obrigatório pro plano de estudos acima, mas valioso): começa do básico e vai até as 16 regiões. Cada trecho tem explicação em português. Tem 3 momentos onde você coloca informação (sua cidade, comparação, sua região) e roda.
 
-Se digitar um nome que não existe, não quebra com erro feio — aparece mensagem orientando. Todos os 34 números foram conferidos contra as tabelas prontas: bateram todos. Vale também pela descoberta registrada ali: das 223 cidades da PB, só 62 têm internação SUS no ano; as outras 161 aparecem com 100% de evasão não porque perdem pacientes, mas porque não têm hospital. Um "ranking de evasão" não diz acesso à saúde nesses casos.
+Todos os 34 números foram conferidos contra as tabelas prontas — bateram todos. Achado importante registrado lá: das 223 cidades da PB, só 62 têm internação SUS; as outras 161 aparecem com 100% de evasão porque não têm hospital, não porque perdem pacientes.
 
-### Pendências que ficam pra você e pra dupla
+### Já enquanto estiver no painel: explore as abas
 
-Faltam **dois testes de leitura** — são coisas que você (ou vocês juntos) precisam fazer antes de apresentar, e agora estão desobstruídas porque o código ficou pronto:
+**Índice de dependência:** ranking das 16 regiões. Se perguntarem "o que é esse índice?", clique em um bloco e leia a definição direto do painel — está tudo ali.
 
-**1. Teste de leitura do mapa (1 minuto)** — combinado antigo que continua valendo.
-1. Abrir terminal na pasta e rodar: `streamlit run app.py`
-2. Vai abrir navegador. Clicar em **Mapa** no alto.
-3. Olhar por 1 minuto, sem ajuda. Depois me dizer: **quais são as cidades que puxam pacientes de toda a Paraíba?**
+**Achados & recomendações:** os 7 achados com números, as 5 recomendações. É o lugar onde tudo converge — vai dar segurança pra você ver tudo de uma vez.
 
-Se as duas principais saltarem aos olhos, passou. Se precisar procurar, o mapa é que está errado — corrijo antes de 07/08. Me responde por WhatsApp.
-
-**2. Ensaio da demo em dupla** — novo este combinado.
-Vocês dois precisam sentar e rodar o painel do zero até o fim, como se fosse no dia 07/08. Simula a apresentação: quem apresenta (você) fala, quem assiste (Augusto) observa sem interromper. Depois a gente corrige o que tiver saído confuso. Isso leva ~30 min e combina com 2 dias antes de 07/08. Dica pra combinar com o Augusto agora.
-
-### O painel tem uma aba nova que responde as perguntas sobre origem dos dados
-
-Abra e explore. Na aba **Sobre os dados**, está escrito: de onde vêm os números, por que funcionam sem internet, como atualizar com dados novos. Responde a pergunta que o professor vai fazer ("de onde saiu esse dado?") sem você precisar decorar nada — é só ler do painel.
-
-### Já enquanto estiver no painel: estude também as abas de Índice e Achados
-
-Abra a aba **Índice de dependência** — ela mostra o número principal do projeto em ranking das 16 regiões. Se o professor perguntar "o que é esse índice?", clica em um bloco e lê pra ele.
-
-E a aba **Achados & recomendações** é a que você vai usar pra apresentar — os 7 achados com números, as 5 recomendações. Toda a conclusão da pesquisa lá resumida.
+**Sobre os dados:** de onde vêm os números, por que funcionam sem internet, como atualizar com dados novos. Resguarda a pergunta que o professor provavelmente fará.
 
 ### Leitura importante: narrativa do projeto
 
-Quando tiver tempo — recomendo hoje ou amanhã — abra:
-```
-reports/narrativa-executiva.md
-```
+Abra `reports/narrativa-executiva.md`.
 
-É o texto da apresentação completo: achado central, 7 achados, 5 recomendações, fecho, limitações. **É exatamente o que você vai contar no dia 07/08, com números ao lado.** São ~4–5 páginas.
+É o texto da apresentação em uma página: achado central, 7 achados, 5 recomendações, fecho, limitações. **É exatamente o que você vai contar no dia 07/08, com números ao lado.**
 
-Se algum parágrafo ficar confuso pra você, fala pro Augusto — se você lê confuso, quem assiste também fica. Com 11 dias ainda dá tempo de reescrever.
+Se algo ficar confuso, fala pro Augusto — com 10 dias ainda dá tempo de reescrever.
 
-### Quando você tiver tempo: familiarize-se com os números
+### Familiarização rápida com os números (opcional)
 
-**Caminho mais curto, em ordem:**
-1. **`docs/diario-do-projeto.md`** — história do projeto inteira, etapa por etapa, poucas páginas. Rende mais por minuto gasto.
-2. **Tabelas em Excel:** `data/processed/indice_dependencia_regional.csv` (índice das 16 regiões) e `outputs/tables/pa3_saldo_municipios.csv` (saldo por cidade). Olhar os números com seus olhos gruda muito mais.
-3. **Gráficos em `outputs/figures/`** — são as imagens que vão pro slide. Vale saber de cor o que cada um mostra.
+**Caminho mais curto:**
+1. **`docs/diario-do-projeto.md`** — história do projeto inteira, etapa por etapa. Rende mais por minuto.
+2. **Tabelas:** `data/processed/indice_dependencia_regional.csv` (índice das 16 regiões) e `outputs/tables/pa3_saldo_municipios.csv` (saldo por cidade). Olhar os números com os olhos gruda.
+3. **Gráficos em `outputs/figures/`** — as imagens que vão pro slide.
 
-Se pensar "não sei explicar esse número se perguntarem", fala pro Augusto — faltam 11 dias, dá tempo. Com 1 dia de apresentação não dá mais.
+### Explorar a base de dados em profundidade (opcional)
 
-### Explorar a base de dados (opcional, mas valioso)
+Se quiser mergulhar nos dados:
 
-Se quiser entender de verdade os dados, existe um material pronto pra isso:
-
-1. **Preparar o projeto (uma vez só):** terminal na pasta, rodar: `pip install -r requirements.txt`
-2. **Rodar Jupyter:** `jupyter notebook`, e num notebook novo:
+1. **Setup (uma vez só):** terminal na pasta, rodar: `pip install -r requirements.txt`
+2. **Jupyter:** `jupyter notebook`, novo notebook:
    ```python
    import pandas as pd
    df = pd.read_parquet("data/processed/sih_pb_2025_regioes.parquet")
    ```
-   Cada linha é uma internação. Colunas úteis: `nome_mun_res` (onde mora), `nome_mun_mov` (onde internou), `regiao_res` (região onde mora), `regiao_int` (região do hospital). Quando são diferentes = viajou.
+   Cada linha = uma internação. Úteis: `nome_mun_res` (onde mora), `nome_mun_mov` (onde internou), `regiao_res` / `regiao_int`. Quando residência ≠ internação = viajou.
 
-3. **Roteiros prontos pra ler:**
-   - `notebooks/01-tratamento-base.ipynb` — como o arquivo foi feito, em português.
+3. **Roteiros prontos:**
+   - `notebooks/01-tratamento-base.ipynb` — como os dados foram feitos.
    - `notebooks/01-regiao-saude.ipynb` — como a região foi colocada.
-   - `notebooks/01-matriz-od.ipynb` — como a matriz O-D foi montada.
+   - `notebooks/01-matriz-od.ipynb` — como a matriz foi montada.
    - `docs/dicionario-dados.md` — o que cada coluna significa.
 
-4. **Salvar seu notebook na pasta `notebooks/`** com nome começando em `90-`, ex: `90-eda-pedro.ipynb`. Perguntas boas: quais cidades mais mandam pacientes pra fora? Pra onde? Quais regiões mais perdem?
+4. **Salvar:** novo notebook em `notebooks/` com nome começando em `90-`, ex: `90-eda-pedro.ipynb`. Perguntas boas: quais cidades mais mandam pacientes pra fora? Pra onde? Quais regiões mais perdem?
 
-5. **Quando terminar:** GitHub Desktop → Commit → Push.
-
-### Mudança anterior (mantida pra referência): dispensa do teste de leitura do índice
-
-Se leu este arquivo dias atrás, tinha aqui um teste do índice de dependência marcado como bloqueador. **Não trava mais nada.** O Augusto leu o texto, achou claro pra quem raciocina bem, e desbloqueou — não é pendência sua. (Essa dispensa vale **só** pro índice; os testes do mapa e texto continuam valendo.)
+5. **Terminar:** GitHub Desktop → Commit → Push.
 
 ## Combinados pra trabalharmos sem conflito
 
