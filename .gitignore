@@ -31,5 +31,7 @@ docs/plano-estudos-pedro.md
 .DS_Store
 Thumbs.db
 
-# Documentação compilada
+# PDFs compilados a partir do markdown — a fonte é que é versionada.
+# Exceção: o relatório final É um entregável da disciplina e vai no repositório.
 *.pdf
+!reports/relatorio-final.pdf
