@@ -1,7 +1,7 @@
 # Briefing — Mapa de Evasão Assistencial da PB
 
-> Fonte de intenção (entrevista de discovery). Gerado por briefing-intake.
-> Insumo do pm-agent (write-prd). Não contém metas medíveis nem épicos — isso é o PRD.
+> Fonte de intenção (entrevista de discovery), insumo da definição do PRD.
+> Não contém metas medíveis nem épicos — isso é o PRD.
 
 ## Em uma frase
 Um painel Streamlit que mostra de onde saem e pra onde vão os pacientes internados na Paraíba (SIH/DATASUS 2025), com índice de dependência por região de saúde — uma ferramenta que a SES-PB poderia usar de verdade em decisões de regionalização/PPI.
@@ -29,7 +29,7 @@ Quase metade das internações da PB acontece fora do município de residência 
 
 ## Restrições
 - Idiomas: pt-BR. · Orçamento: não se aplica (projeto acadêmico).
-- Dupla: Augusto (técnico, `src/` + `notebooks/01-*`) + Pedro (não-técnico, `notebooks/90-*` + `reports/`) — territórios separados, colaboração via GitHub com `STATUS.md` em linguagem leiga.
+- Dupla: Augusto (técnico, `src/` + `notebooks/01-*`) + Pedro (não-técnico, `notebooks/90-*` + `reports/`) — territórios separados, colaboração via GitHub.
 - Não pode faltar: demo funcionando offline (nada depende de fonte viva), reprodutibilidade (`streamlit run` + parquets no repo), recomendações práticas pra SES-PB.
 - Evitar: escopo que não pontue na rubrica P3; qualquer coisa que exija linkage individual sensível; ângulo que já exista em painel público.
 - P1 e P2 já foram apresentados (com o projeto antigo) — a única entrega restante é o P3.

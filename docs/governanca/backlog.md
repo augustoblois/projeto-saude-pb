@@ -1,6 +1,6 @@
 # Backlog — Mapa de Evasão Assistencial da PB
 
-> Fonte: docs/governanca/prd.md (aprovado). Gerado pelo scrum-master. Atualizado após o gate do backlog (decisões G-1/G-2/G-3 fechadas pelo humano).
+> Fonte: docs/governanca/prd.md (aprovado). Atualizado após o gate do backlog (decisões G-1/G-2/G-3 fechadas pelo humano).
 > Projeto de ANÁLISE DE DADOS — "fatia vertical" aqui = um resultado analítico completo e verificável (dado tratado → número validado → visível/documentado), não feature de web-app.
 
 ## Definition of Done (todas as stories — barra universal pro checkbox)

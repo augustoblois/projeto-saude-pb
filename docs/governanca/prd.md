@@ -1,6 +1,6 @@
 # PRD — Mapa de Evasão Assistencial da PB
 
-> Fonte: docs/governanca/briefing.md (aprovado). Gerado pelo pm-agent.
+> Fonte: docs/governanca/briefing.md (aprovado).
 > Projeto de ANÁLISE DE DADOS (UFPB, disciplina Análise de Dados) — não é web-app fullstack. Stack: Python/pandas/Jupyter + Streamlit.
 
 ## ⚠️ Gaps para o gate
@@ -118,7 +118,7 @@ Sustentando os dois: o pipeline de congelamento (`src/congelar_sih.py`) como nar
 - **RNF-05 — Integridade analítica.** Todo número exibido no painel é derivável dos parquets do repo por notebook/script versionado — nenhum número "mágico" digitado à mão.
 
 ## Épicos
-> O PM é dono; o scrum-master fatia em stories. Ordenados por prioridade. Fases de projeto de dados, não fatias de web-app.
+> Ordenados por prioridade. Fases de projeto de dados, não fatias de web-app.
 
 - **EP-01 — Tratamento e enriquecimento dos dados** · `P0` · serve: O2, O3, O5 · intento (outcome): a dupla trabalha sobre uma base única e confiável — SIH-PB 2025 com nomes de municípios, região de saúde de residência e de internação atribuídas a cada registro (completude dos 12 meses já verificada no congelamento).
 - **EP-02 — Análise origem→destino** · `P0` · serve: O2 · intento (outcome): qualquer pergunta "de onde vem / pra onde vai" tem resposta numérica validada — matriz O-D por município e por região, taxas de evasão, e as perguntas PA-1, PA-3, PA-4 e PA-5 respondidas com evidência.

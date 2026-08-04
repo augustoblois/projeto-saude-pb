@@ -140,7 +140,7 @@ Conferimos tudo contra as fontes oficiais do DATASUS (informe técnico em PDF + 
 ## Etapa 24 — Planos de estudo e desbloqueio dos testes finais (27/07)
 **O QUÊ:** Três novos documentos de estudo em `docs/`: `plano-estudos.md` (cronograma mestre dos 10 dias 28/07–06/08, explica a divisão de trabalho), `plano-estudos-augusto.md` (trilha técnica — origem dos dados, tratamento, região, matriz O-D, índice, painel, como rodar novamente), `plano-estudos-pedro.md` (trilha de gestão — achados, recomendações, limitações, painel como gestor vê, ensaio). Cada trilha é 2h/dia, autocontida. Cronograma: 28/07–03/08 aprendem, 04/08 ensinam um pro outro (30 min cada, sem consultar arquivo), 05–06/08 ensaio da demo, 06/08 teste de aprovação (responder 3 perguntas sobre a metade do outro).
 **POR QUÊ:** Projeto tem 100% do conteúdo pronto mas precisa que duas pessoas carreguem metades diferentes — uma técnica, outra de gestão. Estudar cada um sua metade e depois ensinar a do outro ganha tempo e fixa conhecimento melhor que revisar tudo sozinho. Também desobstrói dois testes pendurados: mapa (US-12, agora 28/07) e ensaio (US-17, agora 05–06/08).
-**ONDE:** `docs/plano-estudos.md`, `docs/plano-estudos-augusto.md`, `docs/plano-estudos-pedro.md`, STATUS.md (seção "Pra você, Pedro" atualizada), CLAUDE.md (regra de linguagem revista — não é sobre o leitor, é sobre o texto).
+**ONDE:** `docs/plano-estudos.md`, `docs/plano-estudos-augusto.md`, `docs/plano-estudos-pedro.md`.
 
 ---
 

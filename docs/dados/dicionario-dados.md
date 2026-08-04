@@ -1,7 +1,7 @@
 # Dicionário de dados — SIH/DATASUS grupo RD (base tratada 2025)
 
 > US-03 do backlog. Base auditada: `data/processed/sih_pb_2025_tratado.parquet` — 258.125 linhas, 118 colunas, 100% referente a AIH de residentes/atendidos na PB em 2025.
-> Auditoria empírica rodada em 2026-07-23 (ver `Read/Bash` no histórico da sessão — não há script versionado no repo, é output de uma sessão exploratória de agente).
+> Auditoria empírica rodada em 2026-07-23 direto sobre o parquet congelado — não há script versionado no repo, é o resultado de uma checagem exploratória pontual.
 
 ## Fonte do dicionário oficial — CONFIRMADA
 
