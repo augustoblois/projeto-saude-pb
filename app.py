@@ -31,6 +31,9 @@ MESES = {
 
 TODOS = "Todos"
 
+# Rótulo com que o notebook marca, na matriz regional, quem mora fora do estado.
+FORA_DA_PB = "Fora da PB"
+
 # Faixas da definição (docs/dados/definicao-indice-dependencia.md, seção 5). Cores escolhidas
 # para funcionar tanto no tema claro quanto no escuro — e a leitura não depende só delas:
 # a faixa também vem escrita por extenso na tabela e no cartão da região.
@@ -99,13 +102,44 @@ CATEGORIA_EVASAO_INFO = {
 # Carga (cacheada: lê do disco uma vez por sessão, não a cada clique)
 # --------------------------------------------------------------------------- #
 @st.cache_data
-def carregar_matriz_municipal() -> pd.DataFrame:
+def carregar_matriz_bruta() -> pd.DataFrame:
+    """A matriz como saiu do notebook: TODA internação ocorrida em hospital da Paraíba.
+
+    Inclui quem mora em outro estado e veio internar aqui. O painel não analisa essas
+    linhas (ver `carregar_matriz_municipal`) — esta função existe só para a aba "De onde
+    vêm os dados" poder declarar, com o número na mão, o que ficou de fora e por quê.
+    """
     return pd.read_parquet(DIR_PROCESSED / "matriz_od_municipal_mensal.parquet")
 
 
 @st.cache_data
+def carregar_matriz_municipal() -> pd.DataFrame:
+    """A matriz do painel: só internações de quem MORA na Paraíba.
+
+    O filtro fica aqui, na carga, e não em cada função que consome a matriz. É uma
+    decisão de robustez: o painel inteiro pergunta "para onde vai o morador da Paraíba",
+    e a base traz junto 0,6% de internações de gente que mora em outro estado e veio
+    internar aqui. Quando o filtro vive espalhado, basta uma função esquecer dele para
+    a capa passar a falar de uma população e o mapa logo abaixo de outra — que foi
+    exatamente o que aconteceu antes desta mudança. Filtrando na porta de entrada, não
+    existe caminho no código que alcance a base completa por engano.
+
+    Quem precisa do universo completo chama `carregar_matriz_bruta` de propósito.
+    """
+    df = carregar_matriz_bruta()
+    return df[df["uf_res"] == "PB"].reset_index(drop=True)
+
+
+@st.cache_data
 def carregar_matriz_regional() -> pd.DataFrame:
-    return pd.read_csv(DIR_PROCESSED / "matriz_od_regional_mensal.csv")
+    """Mesma regra da matriz municipal, no nível das 16 regiões de saúde.
+
+    Aqui os residentes de fora aparecem agrupados sob a região de origem "Fora da PB" —
+    um rótulo que não é uma região de saúde e não tem índice de dependência, porque
+    ninguém mede a autossuficiência de um lugar que não faz parte do estado.
+    """
+    df = pd.read_csv(DIR_PROCESSED / "matriz_od_regional_mensal.csv")
+    return df[df["regiao_res"] != FORA_DA_PB].reset_index(drop=True)
 
 
 @st.cache_data
@@ -384,9 +418,7 @@ def aba_matriz() -> None:
 def evasao_por_municipio(mes: str) -> pd.DataFrame:
     """Taxa de evasão de cada município da PB: % das internações dos seus moradores
     que aconteceu em hospital de outro município. Cacheada por mês."""
-    df = carregar_matriz_municipal()
-    df = df[df["uf_res"] == "PB"]
-    df = filtrar(df, "nome_mun_res", TODOS, mes)
+    df = filtrar(carregar_matriz_municipal(), "nome_mun_res", TODOS, mes)
     # coluna auxiliar: o volume só conta como "fora" quando a internação foi em outro município
     df = df.assign(fora=df["internacoes"].where(df["evasao_municipal"], 0))
     tab = df.groupby(["cod_mun_res", "nome_mun_res"], as_index=False).agg(
@@ -406,8 +438,7 @@ def captacao_por_municipio(mes: str, min_municipios: int = 4) -> pd.DataFrame:
     Destinos que captam menos de `min_municipios` municípios viram "Outros", para a
     legenda não explodir em dezenas de cores indistinguíveis.
     """
-    df = carregar_matriz_municipal()
-    df = filtrar(df[df["uf_res"] == "PB"], "nome_mun_res", TODOS, mes)
+    df = filtrar(carregar_matriz_municipal(), "nome_mun_res", TODOS, mes)
 
     # soma o ano (ou o mês escolhido) ANTES de procurar o maior destino —
     # senão o "maior" seria o maior de um mês isolado, não do recorte.
@@ -434,7 +465,7 @@ def maiores_fluxos(mes: str, quantos: int) -> pd.DataFrame:
     """Os N maiores fluxos entre municípios diferentes, já com as coordenadas
     de origem e destino prontas para virar linha no mapa."""
     df = carregar_matriz_municipal()
-    df = filtrar(df[df["evasao_municipal"] & (df["uf_res"] == "PB")], "nome_mun_res", TODOS, mes)
+    df = filtrar(df[df["evasao_municipal"]], "nome_mun_res", TODOS, mes)
     pares = (
         df.groupby(["cod_mun_res", "nome_mun_res", "cod_mun_int", "nome_mun_int"], as_index=False)[
             "internacoes"
@@ -703,8 +734,7 @@ def montar_mapa_tipo_evasao() -> go.Figure:
     projeto não usa geopandas para dissolver polígonos por região (nenhuma dependência
     nova). Um marcador por região é estável e não arrisca um choropleth quebrado.
     """
-    matriz = carregar_matriz_municipal()
-    base = matriz.loc[matriz["uf_res"] == "PB", ["cod_mun_res"]].drop_duplicates()
+    base = carregar_matriz_municipal()[["cod_mun_res"]].drop_duplicates()
     base["cor"] = "PB"
     fig = px.choropleth(
         base,
@@ -1363,14 +1393,61 @@ COMANDO_CONGELAR = "python src/congelar_sih.py"
 def cobertura_da_base() -> dict[str, int | str]:
     """Quantos meses e quantas internações o painel está mostrando, contados da própria
     base — pelo mesmo motivo de `numeros_de_capa`: um número digitado à mão envelhece
-    no dia em que um mês novo entrar, e este é justamente o texto que fala disso."""
+    no dia em que um mês novo entrar, e este é justamente o texto que fala disso.
+
+    Devolve os dois totais: o que o arquivo traz (`baixadas`) e o que o painel analisa
+    (`internacoes`). A diferença entre eles é a parcela declarada logo abaixo na tela —
+    e ela também sai da conta, nunca de um número escrito à mão.
+    """
     matriz = carregar_matriz_municipal()
     meses = sorted(int(m) for m in matriz["mes"].unique())
+    bruta = carregar_matriz_bruta()
+    baixadas = int(bruta["internacoes"].sum())
+    analisadas = int(matriz["internacoes"].sum())
+
+    # De que estados vem quem mora fora da PB, do maior para o menor.
+    de_fora = (
+        bruta[bruta["uf_res"] != "PB"]
+        .groupby("uf_res")["internacoes"]
+        .sum()
+        .sort_values(ascending=False)
+    )
     return {
         "n_meses": len(meses),
         "primeiro": MESES[meses[0]],
         "ultimo": MESES[meses[-1]],
-        "internacoes": int(matriz["internacoes"].sum()),
+        "internacoes": analisadas,
+        "baixadas": baixadas,
+        "de_fora": baixadas - analisadas,
+        "de_fora_pct": 100 * (baixadas - analisadas) / baixadas,
+        "ufs_de_fora": ", ".join(
+            f"{uf} ({mil(v)})" for uf, v in de_fora.head(4).items()
+        ),
+        "n_ufs_de_fora": len(de_fora),
+    }
+
+
+@st.cache_data
+def fluxo_interestadual() -> dict[str, float | int | str]:
+    """O sentido de SAÍDA da fronteira: paraibanos internados em PE, RN ou CE.
+
+    Vem da tabela da PA-5 (`01-pa5-interestadual.ipynb`), e não da matriz do painel, por
+    um motivo da própria fonte: o SIH organiza os arquivos pela UF do HOSPITAL, então um
+    paraibano internado em Recife nunca aparece no arquivo da Paraíba. Foi preciso baixar
+    os arquivos dos três vizinhos e filtrar quem mora aqui — é outra base, e por isso
+    esses casos não entram em nenhum número das outras abas.
+    """
+    df = pd.read_csv(DIR_OUTPUTS / "tables" / "pa5_ranking_destinos.csv")
+    maior = df.loc[df["internacoes"].idxmax()]
+    total = int(df["internacoes"].sum())
+    de_fora = int(carregar_matriz_bruta()["internacoes"].sum()) - int(
+        carregar_matriz_municipal()["internacoes"].sum()
+    )
+    return {
+        "total": total,
+        "destino_principal": f"{maior['nome_mun_destino']}/{maior['uf_destino']}",
+        "pct_principal": float(maior["pct_do_total_fora"]),
+        "razao": total / de_fora,
     }
 
 
@@ -1392,8 +1469,8 @@ def aba_sobre() -> None:
              "nota": "Sistema de Informações Hospitalares do DATASUS / Ministério da Saúde."},
             {"rotulo": "Período coberto", "valor": f"{cob['n_meses']} meses", "icone": "calendar",
              "nota": f"De {cob['primeiro'].lower()} a {cob['ultimo'].lower()} de 2025."},
-            {"rotulo": "Internações na base", "valor": mil(cob["internacoes"]), "icone": "cross",
-             "nota": "Cada uma com o município de moradia e o de internação."},
+            {"rotulo": "Internações analisadas", "valor": mil(cob["internacoes"]), "icone": "cross",
+             "nota": "De moradores da Paraíba, cada uma com o município de moradia e o de internação."},
         ]
     )
 
@@ -1407,10 +1484,45 @@ município ele foi internado**. É a diferença entre esses dois campos que cham
 *evasão*.
 
 Baixamos os arquivos da Paraíba de **{cob["primeiro"].lower()} a {cob["ultimo"].lower()} de
-2025** — {cob["n_meses"]} meses, {mil(cob["internacoes"])} internações — direto do
+2025** — {cob["n_meses"]} meses, {mil(cob["baixadas"])} internações — direto do
 servidor do DATASUS.
 """
     )
+
+    inter = fluxo_interestadual()
+    with st.expander("A fronteira atravessa nos dois sentidos", expanded=True):
+        st.markdown(
+            f"""
+O arquivo que o DATASUS publica para a Paraíba traz **as internações que aconteceram em
+hospitais daqui** — e não "as internações dos paraibanos". São coisas diferentes, porque
+hospital não pede comprovante de residência, e a divisa não é uma parede. Há gente
+cruzando a fronteira nos dois sentidos, e o painel trata cada sentido de um jeito.
+
+**Quem vem de fora e interna aqui: {mil(cob["de_fora"])} internações
+({pct(cob["de_fora_pct"])} do arquivo).** Moradores de {cob["n_ufs_de_fora"]} estados —
+os maiores volumes são {cob["ufs_de_fora"]}. É o vizinho de Pernambuco que interna em
+Patos, o do Rio Grande do Norte que interna em Catolé do Rocha.
+
+**Essas internações ficam de fora de tudo o que este painel mostra.** Os
+{mil(cob["internacoes"])} casos analisados são só de quem **mora na Paraíba**. O motivo
+não é conveniência, é a pergunta que o projeto faz: *a região de saúde onde a pessoa mora
+dá conta de atendê-la?* Quem mora em Pernambuco não tem região de saúde na Paraíba — não
+há autossuficiência a medir, e incluir esse caso inflaria o índice de dependência de um
+lugar que nunca foi responsável por aquele morador.
+
+**Quem mora aqui e interna fora: {mil(inter["total"])} internações.** Este é o sentido
+mais volumoso — {inter["razao"]:.1f} vezes o de entrada — e ele **também não está na base
+principal**, por um motivo técnico: o SIH organiza os arquivos pelo estado *do hospital*,
+então um paraibano internado em Recife está no arquivo de Pernambuco. Ele foi medido à
+parte, baixando os arquivos de PE, RN e CE: {pct(inter["pct_principal"])} desse fluxo vai
+para um único destino, **{inter["destino_principal"]}**. O que ele significa está na aba
+**“O que descobrimos”**, no Achado 5 e na Recomendação 4.
+
+**A consequência honesta disso:** como a saída interestadual não entra nos cálculos desta
+tela, **todo índice deste painel é um piso**. A dependência real de cada região é igual ou
+maior que a mostrada aqui — nunca menor.
+"""
+        )
 
     with st.expander("Por que o painel funciona sem internet", expanded=True):
         st.markdown(
@@ -1497,8 +1609,8 @@ def main() -> None:
         titulo="Para onde o paraibano vai",
         destaque="quando precisa internar",
         subtitulo=(
-            f"{mil(capa['internacoes'])} internações pelo SUS em 2025, rastreadas da cidade "
-            "onde a pessoa mora até o hospital onde ela foi atendida."
+            f"{mil(capa['internacoes'])} internações de moradores da Paraíba pelo SUS em 2025, "
+            "rastreadas da cidade onde a pessoa mora até o hospital onde ela foi atendida."
         ),
     )
 
@@ -1510,7 +1622,7 @@ def main() -> None:
                 "rotulo": "Internações em 2025",
                 "valor": mil(capa["internacoes"]),
                 "icone": "cross",
-                "nota": "Todas as internações pagas pelo SUS na Paraíba.",
+                "nota": "Internações de moradores da Paraíba pagas pelo SUS.",
             },
             {
                 "rotulo": "Saíram da própria cidade",
