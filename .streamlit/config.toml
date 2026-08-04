@@ -1,40 +1,54 @@
 # Tema do painel — travado no repositório de propósito.
 #
 # Sem este arquivo o Streamlit herda o tema do NAVEGADOR de quem abre: a mesma tela
-# apareceria clara na máquina do professor e escura na nossa, e o mapa (que tem fundo
-# próprio) ficaria coerente numa e quebrado na outra. Fixando aqui, a apresentação é
+# apareceria clara na máquina do professor e escura na nossa, e os mapas (que têm fundo
+# próprio) ficariam coerentes numa e quebrados na outra. Fixando aqui, a apresentação é
 # a mesma em qualquer máquina.
 #
-# A paleta é escura porque o produto é um mapa de fluxos: linha luminosa sobre fundo
-# escuro tem muito mais contraste do que linha escura sobre fundo branco.
+# A paleta é a de um documento impresso: papel, tinta e uma única cor de acento. O motivo
+# está escrito por extenso no topo de `ui.py` — e os valores abaixo são os MESMOS tokens
+# declarados lá. São dois consumidores do mesmo valor: este arquivo pinta os widgets
+# nativos (input, tabela, slider), o ui.py pinta o nosso CSS e os gráficos. Mudar uma cor
+# exige tocar nos dois.
 
 [theme]
-base = "dark"
+base = "light"
 
-# Ciano — cor do fluxo. É o acento do app inteiro: link, borda ativa, aba selecionada
-# e as linhas do mapa usam esta mesma cor, para que "ciano = deslocamento" seja lido
-# uma vez e valha em toda a tela.
-primaryColor = "#38BDF8"
+# Óxido — a única cor de acento do painel. Marca o que exige atenção: aba ativa, número
+# do achado central, faixa de dependência alta, link.
+primaryColor = "#A8341E"
 
-# Fundo quase-preto com viés azul (não preto puro: preto puro sobre monitor de projetor
-# esconde a diferença entre as camadas).
-backgroundColor = "#0B0F1A"
+# Papel, não branco de tela: o branco puro estoura no projetor e cansa a leitura; um
+# off-white levemente quente é o que se lê em documento impresso.
+backgroundColor = "#F4F3EE"
 
-# Superfície dos cards, inputs e cabeçalho de tabela — um degrau acima do fundo.
-secondaryBackgroundColor = "#131A2B"
+# Superfície secundária MAIS ESCURA que o fundo — o inverso do que um tema escuro faz.
+# Em papel, uma faixa destacada é uma área impressa, não uma área iluminada.
+secondaryBackgroundColor = "#EAE8E0"
 
-textColor = "#E8EDF7"
-linkColor = "#38BDF8"
+textColor = "#14140F"
+linkColor = "#A8341E"
 
-# Stack do sistema: nada é baixado da rede (o painel roda offline por decisão de projeto).
+# As fontes vivem em `static/fontes/` e são declaradas em @font-face no ui.py (o painel
+# roda offline: nada de Google Fonts). Aqui fica só a família de recurso, para os widgets
+# nativos que o Streamlit pinta antes de o nosso CSS carregar.
 font = "sans-serif"
 
-baseRadius = "medium"
-borderColor = "#22304A"
-dataframeBorderColor = "#22304A"
-dataframeHeaderBackgroundColor = "#1A2438"
-codeBackgroundColor = "#131A2B"
+# Cantos vivos em todo o painel: raio zero é decisão de linguagem visual (documento, não
+# aplicativo), e o "medium" padrão é justamente o meio-termo que não decide nada.
+baseRadius = "none"
+borderColor = "#D4D1C6"
+dataframeBorderColor = "#A8A497"
+dataframeHeaderBackgroundColor = "#EAE8E0"
+codeBackgroundColor = "#EAE8E0"
 
 [client]
 # Esconde o menu de deploy/hambúrguer do Streamlit Cloud durante a apresentação.
 toolbarMode = "minimal"
+
+[server]
+# Serve a pasta `static/` em /app/static/. É o que permite carregar as fontes IBM Plex
+# do PRÓPRIO projeto: o painel roda offline (regra nº 1), e um <link> para o Google Fonts
+# dependeria de rede. Servidas como arquivo, elas entram no cache do navegador uma vez —
+# embutir os 73 KB em base64 no CSS os reenviaria a cada clique do usuário.
+enableStaticServing = true

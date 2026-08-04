@@ -37,7 +37,7 @@ FORA_DA_PB = "Fora da PB"
 # Faixas da definição (docs/dados/definicao-indice-dependencia.md, seção 5). Cores escolhidas
 # para funcionar tanto no tema claro quanto no escuro — e a leitura não depende só delas:
 # a faixa também vem escrita por extenso na tabela e no cartão da região.
-CORES_FAIXA = {"baixa": "#2e9e6b", "média": "#d9a12b", "alta": "#c0433a"}
+CORES_FAIXA = {"baixa": ui.VERDE, "média": ui.OCRE, "alta": ui.OXIDO}
 
 # Tradução dos códigos ESPEC (especialidade do leito) do SIH — nenhum código aparece
 # na tela, só o nome. Mesma tabela usada no notebook 01-pa6-perfil-demanda.ipynb.
@@ -56,12 +56,12 @@ TIPOS_EVASAO_ORDEM = [
     "Demanda represada", "Evasão evitável", "Não classificado",
 ]
 CORES_TIPO_EVASAO = {
-    "Referência legítima": "#1E8449",
-    "Alta complexidade eletiva": "#2E86C1",
-    "Urgência cirúrgica sem retaguarda": "#6C3483",
-    "Demanda represada": "#B9770E",
-    "Evasão evitável": "#B03A2E",
-    "Não classificado": "#BFC9CA",
+    "Referência legítima": "#37614B",              # verde-mata — o sistema funcionando
+    "Alta complexidade eletiva": "#2F5D6B",        # azul-petróleo
+    "Urgência cirúrgica sem retaguarda": "#5B4A75",  # violeta acinzentado
+    "Demanda represada": ui.OCRE,
+    "Evasão evitável": ui.OXIDO,                   # o acento: é o que exige providência
+    "Não classificado": ui.REGUA_FORTE,
 }
 # O que cada caixa significa e a ação que ela implica para a gestão — mesmo par
 # significado/ação decidido no notebook (dicionário `acao_por_tipo`), só reescrito em
@@ -285,14 +285,14 @@ def pct(v: float) -> str:
 # --------------------------------------------------------------------------- #
 def aba_matriz() -> None:
     ui.cabecalho_secao(
-        "route",
+        "1",
         "Quem sai de onde, e vai para onde",
         "Cada linha da tabela é um caminho percorrido por pacientes: a cidade onde eles moram "
         "e a cidade onde acabaram internados. Quando as duas são diferentes, alguém precisou "
         "viajar para conseguir um leito.",
     )
 
-    ui.dica(
+    ui.nota(
         "Escolha uma cidade abaixo para ver <strong>para onde os moradores dela vão</strong>, ou "
         "deixe em “Todas” para ver o estado inteiro. Cada internação aqui é uma "
         "<strong>AIH</strong> — o nome da autorização que o SUS emite a cada internação. "
@@ -340,26 +340,23 @@ def aba_matriz() -> None:
     pct_fora = 100 * fora / total if total else 0.0
 
     onde = "da própria cidade" if nivel == "Cidades" else "da própria região"
-    ui.cartoes_numero(
+    ui.faixa_indicadores(
         [
             {
                 "rotulo": "Internações no recorte",
                 "valor": mil(total),
-                "icone": "cross",
                 "nota": "Total de internações que este filtro seleciona.",
             },
             {
                 "rotulo": f"Tiveram de sair {onde}",
                 "valor": mil(fora),
-                "icone": "route",
-                "cor": ui.ALERTA,
+                "cor": ui.OXIDO,
                 "nota": f"Foram internadas fora {onde} onde moram.",
             },
             {
                 "rotulo": "Proporção que se deslocou",
                 "valor": pct(pct_fora),
-                "icone": "trending-up",
-                "cor": ui.ALERTA if pct_fora >= 50 else ui.TEXTO,
+                "cor": ui.OXIDO if pct_fora >= 50 else ui.TINTA,
                 "nota": "Quanto do total acima precisou viajar.",
             },
         ]
@@ -452,8 +449,12 @@ def captacao_por_municipio(mes: str, min_municipios: int = 4) -> pd.DataFrame:
     tab = principal.merge(evasao_por_municipio(mes), on=["cod_mun_res", "nome_mun_res"])
     tab["pct_destino"] = (100 * tab["internacoes_destino"] / tab["internacoes"]).round(1)
 
+    # Dois cortes, não um: além do piso de municípios captados, o número de polos nomeados
+    # é limitado ao tamanho da paleta. Antes eram até 20 cores na legenda — o olho não
+    # distingue 20 matizes, então as últimas viravam ruído colorido com nome próprio.
+    # Os que sobram são pequenos por definição e cabem melhor em "Outros".
     captadores = tab["destino_principal"].value_counts()
-    principais = captadores[captadores >= min_municipios].index
+    principais = captadores[captadores >= min_municipios].index[: len(ui.PALETA_CATEGORICA)]
     tab["captador"] = tab["destino_principal"].where(
         tab["destino_principal"].isin(principais), "Outros"
     )
@@ -552,13 +553,13 @@ def montar_mapa(mes: str, quantos_fluxos: int) -> go.Figure:
     tem_outros = "Outros" in captacao["captador"].values
 
     # uma cor distinta por polo — cor repetida daria a entender que duas cidades são
-    # o mesmo polo. Paleta montada à mão: Dark24 traz tons quase pretos que somem no
-    # tema escuro do painel, e cinzas que se confundiriam com o "Outros".
-    paleta = px.colors.qualitative.Bold[:10] + px.colors.qualitative.Vivid[:10]
-    cores = dict(zip(ordem, paleta))
+    # o mesmo polo. A paleta é a do projeto (ui.PALETA_CATEGORICA): tons de terra e
+    # mineral, todos escuros o bastante para ler sobre o papel, em vez das sequências
+    # embutidas do Plotly, que trazem néons que só funcionam sobre fundo preto.
+    cores = dict(zip(ordem, ui.PALETA_CATEGORICA))
     if tem_outros:
         ordem.append("Outros")
-        cores["Outros"] = "#9aa0a6"
+        cores["Outros"] = "#CFCCC2"   # papel sujo: presente, sem competir com os nomeados
 
     fig = px.choropleth(
         captacao,
@@ -584,38 +585,43 @@ def montar_mapa(mes: str, quantos_fluxos: int) -> go.Figure:
             "taxa_evasao_pct": "% que se interna fora do município",
         },
     )
-    # Contorno escuro entre municípios: sobre o fundo escuro do painel, o branco anterior
-    # brilhava mais que o próprio dado e transformava a malha numa grade luminosa.
-    fig.update_traces(marker_line_color="rgba(11,15,26,0.55)", marker_line_width=0.5)
+    # Contorno na cor do papel entre municípios: é o fio branco que separa duas manchas
+    # de cor num mapa impresso. Sobre papel, um contorno escuro engrossaria a malha até
+    # ela virar uma grade — a divisa precisa existir sem chamar atenção.
+    fig.update_traces(marker_line_color=ui.PAPEL, marker_line_width=0.6)
 
     fluxos = maiores_fluxos(mes, quantos_fluxos)
     maior = fluxos["internacoes"].max() if len(fluxos) else 1
     for _, f in fluxos.iterrows():
         lon, lat = arco(f["lon_res"], f["lat_res"], f["lon_int"], f["lat_int"])
         peso = f["internacoes"] / maior
-        espessura = 0.8 + 3.6 * peso
+        # piso de 1,4px (era 0,8): abaixo disso o traço fica mais fino que o casing que o
+        # envolve, e o fluxo aparece como um risco claro no mapa em vez de uma linha
+        espessura = 1.4 + 3.4 * peso
         rotulo = (
             f"{f['nome_mun_res']} → {f['nome_mun_int']}: "
             f"{f['internacoes']:,} internações".replace(",", ".")
         )
 
-        # Duas passadas na MESMA curva formam o brilho: primeiro um traço largo e quase
-        # transparente (o halo, que "vaza" luz para os lados), depois um traço fino e
-        # opaco por cima (o núcleo). É como um letreiro de neon é desenhado — e é o que
-        # faz a linha se destacar sobre qualquer cor de município por baixo.
+        # Duas passadas na MESMA curva, como uma rodovia é desenhada em mapa impresso:
+        # primeiro um traço mais largo na cor do papel (o "casing", que abre uma canaleta
+        # clara no fundo colorido), depois o traço de tinta por cima. Sem o casing, uma
+        # linha escura cruzando um município de cor escura simplesmente desaparece.
         fig.add_trace(
             go.Scattergeo(
                 lon=lon, lat=lat, mode="lines",
-                line=dict(width=espessura * 3.2, color="rgba(56,189,248,0.13)"),
+                # o casing acompanha a espessura do traço em vez de somar um valor fixo:
+                # somando, o fluxo mais fino ficava com uma canaleta 4x mais larga que ele
+                line=dict(width=espessura * 1.6, color="rgba(244,243,238,0.7)"),
                 hoverinfo="skip", showlegend=False,
             )
         )
         fig.add_trace(
             go.Scattergeo(
                 lon=lon, lat=lat, mode="lines",
-                # fluxo maior fica mais opaco: o volume é lido pela espessura E pelo
-                # brilho, então os grandes saltam mesmo com muitas linhas na tela
-                line=dict(width=espessura, color=f"rgba(125,211,252,{0.45 + 0.5 * peso:.2f})"),
+                # fluxo maior fica mais opaco: o volume é lido pela espessura E pela
+                # densidade da tinta, então os grandes saltam mesmo com muitas linhas
+                line=dict(width=espessura, color=f"rgba(20,20,15,{0.78 + 0.22 * peso:.2f})"),
                 hoverinfo="text", text=rotulo, showlegend=False,
             )
         )
@@ -638,14 +644,15 @@ def montar_mapa(mes: str, quantos_fluxos: int) -> go.Figure:
     polos = polos.sort_values("internacoes", ascending=False)
 
     # O pino é montado em três marcadores concêntricos no mesmo ponto, do maior para o
-    # menor — halo, anel e núcleo. O Scattergeo não aceita um símbolo desenhado por nós
-    # (isso exigiria mapbox e, portanto, rede), então o "alvo" das referências é obtido
-    # empilhando círculos, que é o que dá a ele o aspecto de foco luminoso.
+    # menor. O Scattergeo não aceita um símbolo desenhado por nós (isso exigiria mapbox e,
+    # portanto, rede), então o símbolo de cidade-polo é obtido empilhando círculos: uma
+    # aura de papel que abre espaço no fundo, um anel de tinta fraca e o núcleo cheio —
+    # o mesmo desenho de uma capital num mapa impresso.
     base = 7 + 15 * polos["internacoes"] / polos["internacoes"].max()
     for escala, cor, borda in [
-        (3.0, "rgba(56,189,248,0.10)", None),                  # halo externo
-        (1.9, "rgba(56,189,248,0.22)", None),                  # anel médio
-        (1.0, "#38BDF8", dict(width=2, color="#0B0F1A")),      # núcleo
+        (1.9, "rgba(244,243,238,0.6)", None),                   # aura de papel
+        (1.5, "rgba(20,20,15,0.14)", None),                      # anel
+        (1.0, ui.TINTA, dict(width=1.5, color=ui.PAPEL)),       # núcleo
     ]:
         fig.add_trace(
             go.Scattergeo(
@@ -662,9 +669,9 @@ def montar_mapa(mes: str, quantos_fluxos: int) -> go.Figure:
             mode="text",
             text=rotulos,
             textposition=posicoes,
-            # nome quase branco sobre fundo escuro; o peso vem do tamanho, não mais de
-            # uma família "Black", que engrossava demais em tela de projetor
-            textfont=dict(size=13, color="#E8EDF7", family="Arial"),
+            # nome em tinta cheia, na mesma família do resto do painel: o rótulo do mapa
+            # é texto do documento, não legenda de gráfico
+            textfont=dict(size=13, color=ui.TINTA, family="Plex Sans, Segoe UI, sans-serif"),
             hoverinfo="text",
             hovertext=[
                 f"{n}: recebeu {v:,} internações de fora".replace(",", ".")
@@ -696,24 +703,24 @@ def aplicar_tema_mapa(fig: go.Figure, titulo_legenda: str) -> None:
     fig.update_layout(
         margin=dict(l=0, r=0, t=0, b=0),
         height=620,
-        # o mapa vinha com fundo branco padrão do Plotly dentro de um painel escuro —
-        # era o retângulo claro no meio da tela
-        paper_bgcolor=ui.FUNDO,
-        plot_bgcolor=ui.FUNDO,
-        font=dict(color=ui.TEXTO_SUAVE, size=12),
+        # o fundo do mapa é o próprio papel da página: o mapa não é uma peça colada por
+        # cima do documento, é uma figura impressa nele
+        paper_bgcolor=ui.PAPEL,
+        plot_bgcolor=ui.PAPEL,
+        font=dict(color=ui.TINTA_SUAVE, size=12, family="Plex Sans, Segoe UI, sans-serif"),
         legend=dict(
-            title=dict(text=titulo_legenda, font=dict(color=ui.TEXTO, size=12)),
+            title=dict(text=titulo_legenda, font=dict(color=ui.TINTA, size=12)),
             yanchor="top", y=0.98, xanchor="left", x=0.01,
-            bgcolor="rgba(19,26,43,0.82)",   # a legenda flutua sobre o mapa: precisa de
-            bordercolor=ui.BORDA,            # um fundo próprio para o texto não competir
-            borderwidth=1,                   # com os municípios coloridos por baixo
-            font=dict(color=ui.TEXTO_SUAVE, size=11),
+            bgcolor="rgba(244,243,238,0.92)",  # a legenda flutua sobre o mapa: precisa de
+            bordercolor=ui.REGUA_FORTE,        # um fundo próprio para o texto não competir
+            borderwidth=1,                     # com os municípios coloridos por baixo
+            font=dict(color=ui.TINTA_SUAVE, size=11),
         ),
         dragmode="pan",
         hoverlabel=dict(
-            bgcolor=ui.SUPERFICIE_ALTA,
-            bordercolor=ui.BORDA_FORTE,
-            font=dict(color=ui.TEXTO, size=12),
+            bgcolor=ui.PAPEL_ALTO,
+            bordercolor=ui.TINTA,
+            font=dict(color=ui.TINTA, size=12, family="Plex Sans, Segoe UI, sans-serif"),
         ),
     )
 
@@ -727,7 +734,7 @@ CAMADA_TIPO_EVASAO = "Por que elas precisam sair"
 
 def montar_mapa_tipo_evasao() -> go.Figure:
     """Camada opcional: um marcador por região de saúde, colorido pelo tipo de evasão que
-    domina o volume evadido dela (PA6). A malha municipal continua de fundo, em cinza
+    domina o volume evadido dela (PA6). A malha municipal continua de fundo, em papel
     neutro, só para dar contexto geográfico — a informação nova está nos marcadores.
 
     Marcadores em vez de choropleth por região: a malha disponível é municipal, e o
@@ -742,12 +749,12 @@ def montar_mapa_tipo_evasao() -> go.Figure:
         locations="cod_mun_res",
         featureidkey="properties.cod_mun",
         color="cor",
-        # cinza-azulado escuro, um degrau acima do fundo: a malha aqui é só contexto
-        # geográfico, e não pode competir com os marcadores, que são a informação
-        color_discrete_map={"PB": ui.SUPERFICIE_ALTA},
+        # papel um degrau mais escuro que o fundo: a malha aqui é só contexto geográfico,
+        # e não pode competir com os marcadores, que são a informação
+        color_discrete_map={"PB": ui.PAPEL_FUNDO},
     )
     fig.update_traces(
-        marker_line_color=ui.BORDA, marker_line_width=0.5, showlegend=False
+        marker_line_color=ui.PAPEL, marker_line_width=0.6, showlegend=False
     )
 
     dados = carregar_recomendacao_regiao().merge(centroide_regioes(), on="regiao", how="left")
@@ -774,11 +781,13 @@ def montar_mapa_tipo_evasao() -> go.Figure:
                     color=CORES_TIPO_EVASAO[tipo],
                     # contorno na cor do fundo: separa marcadores que se encostam sem
                     # acrescentar um anel branco brilhante a cada um deles
-                    line=dict(width=2, color=ui.FUNDO),
+                    line=dict(width=2, color=ui.PAPEL),
                 ),
                 text=sub["regiao"].str.replace(" - PB", "", regex=False),
                 textposition="top center",
-                textfont=dict(size=10, color=ui.TEXTO_SUAVE),
+                textfont=dict(
+                    size=10, color=ui.TINTA_SUAVE, family="Plex Sans, Segoe UI, sans-serif"
+                ),
                 name=tipo,
                 hoverinfo="text",
                 hovertext=[
@@ -800,7 +809,7 @@ def montar_mapa_tipo_evasao() -> go.Figure:
 
 def aba_mapa() -> None:
     ui.cabecalho_secao(
-        "map",
+        "2",
         "O caminho desenhado no mapa",
         "A mesma informação da tabela anterior, agora sobre o desenho da Paraíba: dá para ver "
         "de relance que o estado inteiro converge para pouquíssimos endereços.",
@@ -836,7 +845,7 @@ def aba_mapa() -> None:
         )
 
     if camada == CAMADA_CAPTACAO:
-        ui.dica(
+        ui.nota(
             "Cada município está pintado com a <strong>cor da cidade que mais interna os moradores "
             "dele</strong> — quem tem a mesma cor manda gente para o mesmo hospital, e as manchas de "
             "cor são as áreas de influência de cada polo. As <strong>linhas luminosas</strong> são os "
@@ -844,39 +853,35 @@ def aba_mapa() -> None:
             "<strong>círculos brilhantes</strong> marcam as cidades que mais recebem pacientes de fora. "
             "Passe o mouse sobre qualquer município ou linha para ver os números.",
             titulo="Como ler este mapa",
-            icone_nome="map-pin",
         )
 
         st.plotly_chart(montar_mapa(str(mes), quantos), width="stretch")
 
         polos = polos_receptores(str(mes), quantos=2)
         total_polos = int(polos["internacoes"].sum())
-        ui.cartoes_numero(
+        ui.faixa_indicadores(
             [
                 {
                     "rotulo": f"Recebido por {polos.iloc[0]['nome_mun_int']} e {polos.iloc[1]['nome_mun_int']}",
                     "valor": mil(total_polos),
-                    "icone": "map-pin",
-                    "cor": ui.ACENTO,
+                    "cor": ui.OXIDO,
                     "nota": "Internações de gente que mora em outra cidade, no período selecionado.",
                 },
                 {
                     "rotulo": "Caminhos desenhados agora",
                     "valor": str(quantos),
-                    "icone": "route",
                     "nota": "Dos maiores para os menores — ajuste na barra acima.",
                 },
             ]
         )
     else:
-        ui.dica(
+        ui.nota(
             "Cada <strong>círculo colorido</strong> é uma das 16 regiões de saúde da Paraíba, e a cor "
             "diz qual é o <strong>motivo principal</strong> de os moradores dela se internarem fora. "
             "O tamanho do círculo acompanha quanta gente saiu. Passe o mouse sobre um deles para ler "
             "a região, o motivo e a providência que ele pede. "
             "Este mapa cobre o ano inteiro — o filtro de período acima não se aplica a ele.",
             titulo="Como ler este mapa",
-            icone_nome="compass",
         )
         st.plotly_chart(montar_mapa_tipo_evasao(), width="stretch")
 
@@ -931,6 +936,9 @@ def grafico_ranking(df: pd.DataFrame) -> go.Figure:
     )
     fig.update_traces(
         textposition="outside",
+        # o número na ponta da barra é dado, e todo dado deste painel é monoespaçado —
+        # é o que mantém a mesma leitura entre gráfico, faixa de indicadores e tabela
+        textfont=dict(family="Plex Mono, Consolas, monospace", size=11, color=ui.TINTA_SUAVE),
         hovertemplate="<b>%{y}</b><br>Índice: %{x:.1f}%<br>"
         "Posição no ranking: %{customdata[0]}ª de 16<br>"
         "Internações de moradores: %{customdata[1]:,}<br>"
@@ -944,14 +952,18 @@ def grafico_ranking(df: pd.DataFrame) -> go.Figure:
     ]:
         fig.add_vline(
             x=valor,
-            line=dict(color="#888", width=1.5, dash="dot"),
+            line=dict(color=ui.REGUA_FORTE, width=1.5, dash="dot"),
             annotation_text=texto,
             annotation_position="top",
+            # sem o deslocamento, o rótulo da linha encosta na legenda logo acima e as
+            # duas leituras se atrapalham
+            annotation_yshift=6,
+            annotation_font=dict(size=11, color=ui.TINTA_FRACA),
         )
 
     fig.update_layout(
         height=560,
-        margin=dict(l=0, r=40, t=40, b=0),
+        margin=dict(l=0, r=40, t=64, b=0),
         xaxis_range=[0, 100],
         legend=dict(title="Dependência", orientation="h", yanchor="bottom", y=1.02, x=0),
     )
@@ -969,26 +981,23 @@ def cartao_regiao(df: pd.DataFrame) -> None:
     ui.lista_municipios(regiao, municipios_por_regiao().get(regiao, []))
 
     faixa = str(linha["faixa_dependencia"])
-    ui.cartoes_numero(
+    ui.faixa_indicadores(
         [
             {
                 "rotulo": "Depende de fora",
                 "valor": pct(linha["indice_dependencia_pct"]),
-                "icone": "route",
-                "cor": CORES_FAIXA.get(faixa, ui.TEXTO),
+                "cor": CORES_FAIXA.get(faixa, ui.TINTA),
                 "nota": f"Dependência {faixa}. É a fatia das internações dos moradores "
                 "que aconteceu em hospital de outra região.",
             },
             {
                 "rotulo": "Posição no estado",
-                "valor": f"{int(linha['posicao'])}ª de {len(df)}",
-                "icone": "trending-up",
+                "valor": f"{int(linha['posicao'])}ª/{len(df)}",
                 "nota": "1ª é a região que mais depende de fora.",
             },
             {
                 "rotulo": "Internações de moradores",
                 "valor": mil(linha["internacoes_residentes"]),
-                "icone": "cross",
                 "nota": "Total em 2025, dentro e fora da região somados.",
             },
         ]
@@ -1010,7 +1019,7 @@ def cartao_regiao(df: pd.DataFrame) -> None:
             f" Quem sai vai principalmente para a <strong>{nome_destino}</strong>: "
             f"{mil(volume)} internações, {share:.0f}% de tudo o que saiu daqui."
         )
-    ui.dica(frase, titulo="O que este quadro diz", icone_nome="info")
+    ui.nota(frase, titulo="O que este quadro diz")
 
 
 def aba_indice() -> None:
@@ -1021,7 +1030,7 @@ def aba_indice() -> None:
     n_alta = int((df["faixa_dependencia"] == "alta").sum())
 
     ui.cabecalho_secao(
-        "chart-bar",
+        "3.1",
         "Que regiões não conseguem se virar sozinhas",
         "A Paraíba é dividida oficialmente em 16 regiões de saúde — grupos de municípios que "
         "deveriam se sustentar entre si. Aqui está o quanto cada uma delas de fato consegue.",
@@ -1037,7 +1046,7 @@ def aba_indice() -> None:
         legenda="regiões que dependem mais de fora do que de si mesmas",
     )
 
-    ui.dica(
+    ui.nota(
         "Para cada região, medimos <strong>quanto da internação dos moradores dela acontece "
         "fora dela</strong>. Zero por cento seria uma região que resolve tudo em casa; cem por "
         "cento, uma que não resolve nada. A média da Paraíba é "
@@ -1046,14 +1055,13 @@ def aba_indice() -> None:
         "As barras <strong>vermelhas</strong> passam de 50%: ali, a maioria dos moradores se "
         "interna fora. A conta completa, com fórmula e limitações, está no fim desta aba.",
         titulo="O que é este número",
-        icone_nome="target",
     )
 
     st.plotly_chart(grafico_ranking(df), width="stretch")
 
     st.markdown("---")
     ui.cabecalho_secao(
-        "search",
+        "3.2",
         "Uma região de cada vez",
         "Os nomes das regiões são códigos administrativos. Escolha uma abaixo para ver que "
         "cidades ela cobre e o que acontece com os moradores dela.",
@@ -1062,7 +1070,7 @@ def aba_indice() -> None:
 
     st.markdown("---")
     ui.cabecalho_secao(
-        "table",
+        "3.3",
         "As 16 regiões lado a lado",
         "O índice aparece sempre ao lado do volume: região pequena tem número mais instável, "
         "e comparar porcentagens sem olhar o tamanho leva a conclusão injusta.",
@@ -1096,7 +1104,7 @@ def aba_indice() -> None:
 
     st.markdown("---")
     ui.cabecalho_secao(
-        "file-text",
+        "3.4",
         "Como este número é calculado",
         "Texto integral da definição aprovada do projeto — o mesmo documento que está no "
         "repositório, exibido aqui para que o índice possa ser conferido sem sair do painel.",
@@ -1134,6 +1142,7 @@ def numeros_de_capa() -> dict[str, float | int]:
 
     return {
         "internacoes": total,
+        "fora": fora,
         "fora_pct": fora / total * 100,
         "polos_nomes": " e ".join(polos.index),
         "polos_pct": polos.sum() / fora * 100,
@@ -1172,7 +1181,7 @@ def grafico_assinatura_regiao(sub: pd.DataFrame) -> go.Figure:
         "Taxa de evasão da especialidade: %{customdata[1]:.1f}%<br>"
         "Internações de moradores nesta especialidade: %{customdata[0]:,}<extra></extra>",
     )
-    fig.add_vline(x=0, line=dict(color=ui.BORDA_FORTE, width=1.5, dash="dot"))
+    fig.add_vline(x=0, line=dict(color=ui.REGUA_FORTE, width=1.5, dash="dot"))
     fig.update_layout(
         height=max(220, 70 + 55 * len(ordenado)),
         margin=dict(l=0, r=40, t=10, b=0),
@@ -1185,7 +1194,7 @@ def bloco_o_que_falta_por_regiao(df_reco: pd.DataFrame, df_assinatura: pd.DataFr
     """US do notebook PA6 plugada no painel: destino, especialidade que mais falta e
     composição das seis caixas da régua de classificação, região por região."""
     ui.cabecalho_secao(
-        "stethoscope",
+        "4.3",
         "O que falta em cada região",
         "A seção anterior conta QUANTA gente cada região perde. Esta conta DE QUÊ: que tipo de "
         "internação está saindo, e o que isso pede da Secretaria — porque falta de leito clínico "
@@ -1199,26 +1208,23 @@ def bloco_o_que_falta_por_regiao(df_reco: pd.DataFrame, df_assinatura: pd.DataFr
 
     ui.lista_municipios(regiao, municipios_por_regiao().get(regiao, []))
 
-    ui.cartoes_numero(
+    ui.faixa_indicadores(
         [
             {
                 "rotulo": "Depende de fora",
                 "valor": pct(linha["indice_dependencia_pct"]),
-                "icone": "route",
-                "cor": ui.ALERTA,
+                "cor": ui.OXIDO,
                 "nota": "Das internações dos moradores, esta fatia aconteceu em outra região.",
             },
             {
                 "rotulo": f"Vai principalmente para {linha['destino_principal']}",
                 "valor": pct(linha["pct_para_destino_principal"]),
-                "icone": "map-pin",
-                "cor": ui.ACENTO,
+                "cor": ui.OXIDO,
                 "nota": "De tudo que saiu da região, esta fatia parou nesse destino.",
             },
             {
                 "rotulo": "Pessoas que saíram no ano",
                 "valor": mil(linha["volume_evadido_total"]),
-                "icone": "users",
                 "nota": "Internações de moradores realizadas fora da região em 2025.",
             },
         ]
@@ -1235,13 +1241,12 @@ def bloco_o_que_falta_por_regiao(df_reco: pd.DataFrame, df_assinatura: pd.DataFr
     if sub.empty:
         st.info("Nenhuma especialidade desta região passou do piso mínimo de casos para comparação.")
     else:
-        ui.dica(
+        ui.nota(
             "O zero deste gráfico é a <strong>média da própria região</strong>, não a do estado. "
             "Uma barra para a direita é um tipo de internação que esta região manda para fora "
             "<strong>mais do que ela costuma mandar</strong> — é ali que falta serviço. Uma barra "
             "para a esquerda é o que ela resolve melhor do que a média dela mesma.",
             titulo="Como ler este gráfico",
-            icone_nome="chart-bar",
         )
         st.plotly_chart(grafico_assinatura_regiao(sub), width="stretch")
 
@@ -1339,7 +1344,12 @@ def aba_achados() -> None:
         etiqueta=central[0],
         frase=frase.strip().strip("*"),
         numero=pct(capa["fora_pct"]),
-        legenda="das internações acontecem fora da cidade onde a pessoa mora",
+        # A legenda traz o que o percentual esconde — o volume absoluto — em vez de
+        # repetir em outras palavras a frase que está logo acima dela.
+        legenda=(
+            f"{mil(capa['fora'])} das {mil(capa['internacoes'])} internações de moradores "
+            "da Paraíba em 2025 aconteceram em outra cidade"
+        ),
     )
     ui.escrever(f'<div class="ui-achado-corpo">{ui.markdown_para_html(apoio)}</div>')
 
@@ -1347,7 +1357,7 @@ def aba_achados() -> None:
     # A contagem sai do próprio documento: o título dizia "os cinco achados" enquanto a
     # narrativa já tinha sete, e um número escrito à mão volta a divergir na próxima vez.
     ui.cabecalho_secao(
-        "search",
+        "4.1",
         f"Os {len(achados)} achados",
         "Cada um é uma conclusão fechada, com o número que a sustenta e o que ela implica "
         "para quem decide onde instalar serviço de saúde na Paraíba.",
@@ -1358,7 +1368,7 @@ def aba_achados() -> None:
 
     st.markdown("---")
     ui.cabecalho_secao(
-        "lightbulb",
+        "4.2",
         "O que fazer a respeito",
         "Nenhuma recomendação aparece sem a evidência que a sustenta: cada uma termina com "
         "os códigos dos números que a ancoram, rastreáveis em reports/sumario-evidencias.md.",
@@ -1456,20 +1466,20 @@ def aba_sobre() -> None:
     # menos destaque visual que as demais: quem chega aqui já quer ler texto, não ser
     # convencido de nada.
     ui.cabecalho_secao(
-        "database",
+        "5",
         "De onde vêm estes números",
         "Uma fonte pública, baixada uma vez e guardada dentro do projeto. Nada aqui foi "
         "estimado, ajustado ou completado por nós.",
     )
 
     cob = cobertura_da_base()
-    ui.cartoes_numero(
+    ui.faixa_indicadores(
         [
-            {"rotulo": "Fonte", "valor": "SIH/SUS", "icone": "database",
+            {"rotulo": "Fonte", "valor": "SIH/SUS",
              "nota": "Sistema de Informações Hospitalares do DATASUS / Ministério da Saúde."},
-            {"rotulo": "Período coberto", "valor": f"{cob['n_meses']} meses", "icone": "calendar",
+            {"rotulo": "Período coberto", "valor": f"{cob['n_meses']} meses",
              "nota": f"De {cob['primeiro'].lower()} a {cob['ultimo'].lower()} de 2025."},
-            {"rotulo": "Internações analisadas", "valor": mil(cob["internacoes"]), "icone": "cross",
+            {"rotulo": "Internações analisadas", "valor": mil(cob["internacoes"]),
              "nota": "De moradores da Paraíba, cada uma com o município de moradia e o de internação."},
         ]
     )
@@ -1604,45 +1614,49 @@ def main() -> None:
     ui.injetar_estilo()
 
     capa = numeros_de_capa()
+    cob = cobertura_da_base()
     ui.capa(
-        etiqueta="Paraíba · 2025 · SIH/DATASUS",
         titulo="Para onde o paraibano vai",
         destaque="quando precisa internar",
         subtitulo=(
             f"{mil(capa['internacoes'])} internações de moradores da Paraíba pelo SUS em 2025, "
             "rastreadas da cidade onde a pessoa mora até o hospital onde ela foi atendida."
         ),
+        # O bloco de procedência no alto da folha: quem quiser conferir o trabalho começa
+        # por aqui, e ele responde as três perguntas de origem antes da primeira pergunta.
+        procedencia=[
+            "SIH/SUS · DATASUS",
+            f"{cob['n_meses']} meses · 2025",
+            "unidade: AIH",
+            "recorte: residentes PB",
+        ],
     )
 
     # Os quatro números de capa ficam ANTES das abas, não dentro de uma delas: são a
     # resposta curta do projeto, e quem abre o painel deve recebê-la sem precisar clicar.
-    ui.cartoes_numero(
+    ui.faixa_indicadores(
         [
             {
                 "rotulo": "Internações em 2025",
                 "valor": mil(capa["internacoes"]),
-                "icone": "cross",
                 "nota": "Internações de moradores da Paraíba pagas pelo SUS.",
             },
             {
                 "rotulo": "Saíram da própria cidade",
                 "valor": pct(capa["fora_pct"]),
-                "icone": "route",
-                "cor": ui.ALERTA,
+                "cor": ui.OXIDO,
                 "nota": "Precisaram viajar para se internar.",
             },
             {
                 "rotulo": f"Absorvido por {capa['polos_nomes']}",
                 "valor": pct(capa["polos_pct"]),
-                "icone": "map-pin",
-                "cor": ui.ACENTO,
                 "nota": "De tudo que se deslocou, esta fatia parou em duas cidades.",
             },
             {
                 "rotulo": "Regiões que dependem de fora",
-                "valor": f"{capa['regioes_alta']} de {capa['regioes_total']}",
-                "icone": "triangle-alert",
-                "cor": ui.CRITICO,
+                # "8/16" e não "8 de 16": o valor é monoespaçado, e em largura fixa a
+                # palavra "de" fica com o mesmo peso visual dos números que ela separa.
+                "valor": f"{capa['regioes_alta']}/{capa['regioes_total']}",
                 "nota": "Internam a maioria dos moradores fora da região.",
             },
         ]
