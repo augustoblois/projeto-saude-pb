@@ -31,17 +31,20 @@ python -m venv .venv
 pip install -r requirements.txt
 ```
 
-`.venv` é uma cópia isolada do Python só para este projeto — evita que as versões instaladas aqui colidam com as de outro projeto na mesma máquina. As versões em `requirements.txt` estão fixadas (`==`) nas que foram efetivamente testadas, para que o ambiente instalado hoje seja o mesmo daqui a alguns meses.
+`.venv` é uma cópia isolada do Python só para este projeto — evita que as versões instaladas aqui colidam com as de outro projeto na mesma máquina. As versões estão fixadas (`==`) nas que foram efetivamente testadas, para que o ambiente instalado hoje seja o mesmo daqui a alguns meses.
 
-| Pacote | Papel no projeto |
-|---|---|
-| `pandas`, `numpy` | tratamento e agregação da base tabular |
-| `pyarrow` | leitura/escrita dos arquivos `.parquet` |
-| `jupyter` | ambiente dos notebooks de análise |
-| `matplotlib` | figuras estáticas de `outputs/figures/` |
-| `streamlit` | o painel interativo (`app.py`) |
-| `plotly` | gráficos e mapa dentro do painel |
-| `pysus`, `pyreaddbc` | leitura dos `.dbc` originais do DATASUS — só usados para reprocessar dados; o painel não depende deles |
+As dependências estão em dois arquivos, porque são dois usos diferentes:
+
+| Arquivo | Para quê | Pacotes |
+|---|---|---|
+| `requirements.txt` | rodar o painel — é o que basta para ver o projeto funcionando, e é o que o servidor do painel publicado instala | `streamlit`, `plotly` (gráficos e mapa), `pandas`/`numpy` (agregação), `pyarrow` (leitura dos `.parquet`) |
+| `requirements-dev.txt` | reproduzir a análise — abrir os notebooks ou recongelar os dados | `jupyter`, `matplotlib` (figuras de `outputs/figures/`), `pysus`/`pyreaddbc` (leitura dos `.dbc` originais do DATASUS) |
+
+Para o segundo caso, instale os dois (o `-dev` já puxa o outro):
+
+```powershell
+pip install -r requirements-dev.txt
+```
 
 **3. Abrir o painel**
 
@@ -65,7 +68,7 @@ O que aparece: as abas **matriz origem→destino** (para onde vão as internaç�
 
 ### Reproduzir os dados processados (opcional)
 
-`data/processed/` já vem pronto no repositório — o painel não depende deste passo. Para regerar tudo do zero, execute os notebooks de `notebooks/` nesta ordem, com o ambiente virtual ativado:
+`data/processed/` já vem pronto no repositório — o painel não depende deste passo. Para regerar tudo do zero, instale também o `requirements-dev.txt` (acima) e execute os notebooks de `notebooks/` nesta ordem, com o ambiente virtual ativado:
 
 1. `01-tratamento-base.ipynb` — junta os 12 meses de 2025 e acrescenta os nomes dos municípios
 2. `01-regiao-saude.ipynb` — atribui a região de saúde de residência e de internação

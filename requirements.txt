@@ -1,19 +1,13 @@
-# Dependências diretas do projeto, pinadas nas versões realmente testadas
-# (ambiente de referência: Python 3.13.3, Windows).
+# Dependências para RODAR O PAINEL (`streamlit run app.py`), pinadas nas versões
+# realmente testadas (ambiente de referência: Python 3.13.3, Windows).
+#
+# Só o que o painel importa. É este arquivo que o Streamlit Community Cloud lê
+# para montar o ambiente do app publicado — mantê-lo enxuto é o que garante que
+# o build sobe. Para reprocessar os dados ou abrir os notebooks, instale também
+# `requirements-dev.txt`.
 
-# Análise de dados
+streamlit==1.60.0
+plotly==6.9.0
 pandas==2.3.3
 numpy==2.5.1
 pyarrow==24.0.0
-
-# Notebooks e gráficos
-jupyter==1.1.1
-matplotlib==3.11.1
-
-# Painel
-streamlit==1.60.0
-plotly==6.9.0
-
-# Coleta no DATASUS (só para reprocessar dados; os parquets já vêm no repo)
-pysus==2.7.0
-pyreaddbc==2.0.4

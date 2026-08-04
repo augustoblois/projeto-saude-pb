@@ -1,0 +1,16 @@
+# Dependências para REPRODUZIR A ANÁLISE — abrir os notebooks `01-*` e, se for o
+# caso, recongelar os dados do DATASUS com os scripts de `src/`.
+#
+# Quem só quer ver o painel não precisa de nada daqui.
+# Instalação:  pip install -r requirements.txt -r requirements-dev.txt
+
+-r requirements.txt
+
+# Notebooks e gráficos estáticos de `outputs/figures/`
+jupyter==1.1.1
+matplotlib==3.11.1
+
+# Coleta no DATASUS. `pyreaddbc` compila a biblioteca C que descompacta os `.dbc`
+# do SIH; só é necessário para regerar `data/raw/*.parquet`, que já vêm no repo.
+pysus==2.7.0
+pyreaddbc==2.0.4
