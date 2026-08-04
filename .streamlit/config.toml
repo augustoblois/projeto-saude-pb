@@ -1,0 +1,40 @@
+# Tema do painel — travado no repositório de propósito.
+#
+# Sem este arquivo o Streamlit herda o tema do NAVEGADOR de quem abre: a mesma tela
+# apareceria clara na máquina do professor e escura na nossa, e o mapa (que tem fundo
+# próprio) ficaria coerente numa e quebrado na outra. Fixando aqui, a apresentação é
+# a mesma em qualquer máquina.
+#
+# A paleta é escura porque o produto é um mapa de fluxos: linha luminosa sobre fundo
+# escuro tem muito mais contraste do que linha escura sobre fundo branco.
+
+[theme]
+base = "dark"
+
+# Ciano — cor do fluxo. É o acento do app inteiro: link, borda ativa, aba selecionada
+# e as linhas do mapa usam esta mesma cor, para que "ciano = deslocamento" seja lido
+# uma vez e valha em toda a tela.
+primaryColor = "#38BDF8"
+
+# Fundo quase-preto com viés azul (não preto puro: preto puro sobre monitor de projetor
+# esconde a diferença entre as camadas).
+backgroundColor = "#0B0F1A"
+
+# Superfície dos cards, inputs e cabeçalho de tabela — um degrau acima do fundo.
+secondaryBackgroundColor = "#131A2B"
+
+textColor = "#E8EDF7"
+linkColor = "#38BDF8"
+
+# Stack do sistema: nada é baixado da rede (o painel roda offline por decisão de projeto).
+font = "sans-serif"
+
+baseRadius = "medium"
+borderColor = "#22304A"
+dataframeBorderColor = "#22304A"
+dataframeHeaderBackgroundColor = "#1A2438"
+codeBackgroundColor = "#131A2B"
+
+[client]
+# Esconde o menu de deploy/hambúrguer do Streamlit Cloud durante a apresentação.
+toolbarMode = "minimal"
