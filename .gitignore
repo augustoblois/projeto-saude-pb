@@ -30,3 +30,6 @@ docs/plano-estudos-pedro.md
 # SO / editor
 .DS_Store
 Thumbs.db
+
+# Documentação compilada
+*.pdf

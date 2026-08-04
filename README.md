@@ -2,6 +2,9 @@
 
 Projeto semestral da disciplina de Análise de Dados (UFPB, 2026.1).
 
+**Painel publicado:** https://projeto-saude-pb.streamlit.app
+**Relatório final:** [`reports/relatorio-final.md`](reports/relatorio-final.md)
+
 Analisamos as internações hospitalares do SUS na Paraíba (SIH/DATASUS, ano de 2025) para responder: **quando alguém precisa internar, ele consegue atendimento na sua própria região de saúde — ou é obrigado a viajar?** O resultado é uma matriz origem→destino das internações e um índice de dependência por região de saúde, apresentados em um painel interativo (Streamlit) voltado à Secretaria Estadual de Saúde da PB.
 
 O achado central: quase metade das internações do estado (50,5% no ano) acontece fora do município de residência do paciente, e esse fluxo — quem sai, de onde, para onde — não aparece em nenhum painel público hoje.

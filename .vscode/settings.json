@@ -1,0 +1,12 @@
+{
+  // Exportação do relatório final para PDF (extensão "Markdown PDF", de yzane).
+  // Sem cabeçalho/rodapé: o padrão da extensão imprime o caminho do arquivo e a
+  // data em toda página, o que não cabe num documento de entrega.
+  "markdown-pdf.format": "A4",
+  "markdown-pdf.displayHeaderFooter": false,
+  "markdown-pdf.printBackground": true,
+  "markdown-pdf.margin.top": "20mm",
+  "markdown-pdf.margin.bottom": "20mm",
+  "markdown-pdf.margin.left": "18mm",
+  "markdown-pdf.margin.right": "18mm"
+}
